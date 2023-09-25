@@ -3,17 +3,17 @@ Everything in here is of course optional. If you want to add/remove something, a
 This example README has some dummy APIs you'll need to replace and only acts as a placeholder for some inspiration that you can fill in with your own functionalities.
 -->
 ![](nuget.png)
-# Plugin.Maui.Feature
+# Plugin.Maui.KeyListener
 
-`Plugin.Maui.Feature` provides the ability to do this amazing thing in your .NET MAUI application.
+`Plugin.Maui.KeyListener` provides `KeyboardBehavior` to listen for keyboard up (pressed) and down (released) events on any view in a .NET MAUI application. This is useful in situations where a `KeyboardAccelerator` isn't suitable.
 
 ## Install Plugin
 
-[![NuGet](https://img.shields.io/nuget/v/Plugin.Maui.Feature.svg?label=NuGet)](https://www.nuget.org/packages/Plugin.Maui.Feature/)
+[![NuGet](https://img.shields.io/nuget/v/Plugin.Maui.KeyListener.svg?label=NuGet)](https://www.nuget.org/packages/Plugin.Maui.KeyListener/)
 
-Available on [NuGet](http://www.nuget.org/packages/Plugin.Maui.Feature).
+Available on [NuGet](http://www.nuget.org/packages/Plugin.Maui.KeyListener).
 
-Install with the dotnet CLI: `dotnet add package Plugin.Maui.Feature`, or through the NuGet Package Manager in Visual Studio.
+Install with the dotnet CLI: `dotnet add package Plugin.Maui.KeyListener`, or through the NuGet Package Manager in Visual Studio.
 
 ### Supported Platforms
 
@@ -26,103 +26,65 @@ Install with the dotnet CLI: `dotnet add package Plugin.Maui.Feature`, or throug
 
 ## API Usage
 
-`Plugin.Maui.Feature` provides the `Feature` class that has a single property `Property` that you can get or set.
+`Plugin.Maui.KeyListener` provides the `Feature` class that has a single property `Property` that you can get or set.
 
 You can either use it as a static class, e.g.: `Feature.Default.Property = 1` or with dependency injection: `builder.Services.AddSingleton<IFeature>(Feature.Default);`
 
-### Permissions
+### Regisgtration
 
-Before you can start using Feature, you will need to request the proper permissions on each platform.
-
-#### iOS
-
-No permissions are needed for iOS.
-
-#### Android
-
-No permissions are needed for Android.
-
-### Dependency Injection
-
-You will first need to register the `Feature` with the `MauiAppBuilder` following the same pattern that the .NET MAUI Essentials libraries follow.
+Before you can start using `KeyboardBehavior`, you need to register to use it in your `MauiProgram`:
 
 ```csharp
-builder.Services.AddSingleton(Feature.Default);
-```
-
-You can then enable your classes to depend on `IFeature` as per the following example.
-
-```csharp
-public class FeatureViewModel
+public static MauiApp CreateMauiApp()
 {
-    readonly IFeature feature;
+    var builder = MauiApp.CreateBuilder();
+    builder
+        .UseMauiApp<App>()
+        .UseKeyListener();    
 
-    public FeatureViewModel(IFeature feature)
-    {
-        this.feature = feature;
-    }
-
-    public void StartFeature()
-    {
-        feature.ReadingChanged += (sender, reading) =>
-        {
-            Console.WriteLine(reading.Thing);
-        };
-
-        feature.Start();
-    }
+    return builder.Build();
 }
 ```
 
-### Straight usage
+### Listening
 
-Alternatively if you want to skip using the dependency injection approach you can use the `Feature.Default` property.
+Add the behavior to the visual element where you want to listen for keyboard events. These events will bubble up no matter where you have focus.
 
 ```csharp
-public class FeatureViewModel
+public class MainPage : ContentPage
 {
-    public void StartFeature()
-    {
-        feature.ReadingChanged += (sender, reading) =>
-        {
-            Console.WriteLine(feature.Thing);
-        };
+    KeyboardBehavior keyboardBehavior = new ();
+    
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+	{
+		keyboardBehavior.KeyDown += OnKeyDown;
+		keyboardBehavior.KeyUp += OnKeyUp;
+		this.Behaviors.Add(keyboardBehavior);
 
-        Feature.Default.Start();
+		base.OnNavigatedTo(args);
+	}
+
+	protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+	{
+        keyboardBehavior.KeyDown -= OnKeyDown;
+		keyboardBehavior.KeyUp -= OnKeyUp;
+		this.Behaviors.Remove(keyboardBehavior);
+
+		base.OnNavigatedFrom(args);
+	}
+
+    void OnKeyUp(object sender, KeyPressedEventArgs args)
+    {
+        // do something
+    }
+
+    void OnKeyDown(object sender, KeyPressedEventArgs args)
+    {
+        // do something
     }
 }
 ```
-
-### Feature
-
-Once you have created a `Feature` you can interact with it in the following ways:
-
-#### Events
-
-##### `ReadingChanged`
-
-Occurs when feature reading changes.
-
-#### Properties
-
-##### `IsSupported`
-
-Gets a value indicating whether reading the feature is supported on this device.
-
-##### `IsMonitoring`
-
-Gets a value indicating whether the feature is actively being monitored.
-
-#### Methods
-
-##### `Start()`
-
-Start monitoring for changes to the feature.
-
-##### `Stop()`
-
-Stop monitoring for changes to the feature.
 
 # Acknowledgements
 
-This project could not have came to be without these projects and people, thank you! <3
+This is almost all code from@pureween, with some additions by moi! <3
