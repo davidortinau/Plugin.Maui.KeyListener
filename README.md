@@ -1,11 +1,10 @@
-<!-- 
-Everything in here is of course optional. If you want to add/remove something, absolutely do so as you see fit.
-This example README has some dummy APIs you'll need to replace and only acts as a placeholder for some inspiration that you can fill in with your own functionalities.
--->
+
 ![](nuget.png)
 # Plugin.Maui.KeyListener
 
 `Plugin.Maui.KeyListener` provides `KeyboardBehavior` to listen for keyboard up (pressed) and down (released) events on any view in a .NET MAUI application. This is useful in situations where a `KeyboardAccelerator` isn't suitable.
+
+> **Current status:** I've got macOS working, and Windows via global window events. Android and iOS need some love.
 
 ## Install Plugin
 
@@ -85,6 +84,10 @@ public class MainPage : ContentPage
 }
 ```
 
+# Sample
+
+There is a sample project here in the repository. I've also built a little game [GuessWord](https://www.github.com/davidortinau/GuessWord) that uses this plugin.
+
 # Acknowledgements
 
-This is almost all code from@pureween, with some additions by moi! <3
+This is almost all code from @pureween, with some additions by @davidortinau and contributors! <3
