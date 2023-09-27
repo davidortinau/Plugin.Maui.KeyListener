@@ -5,15 +5,15 @@ namespace Plugin.Maui.KeyListener;
 
 internal static class KeyboardKeysExtensions
 {
-    internal static UIKeyboardHidUsage ToPlatformKeys(this KeyboardKeys virtualKeys)
+    internal static UIKeyboardHidUsage ToPlatformKeys(this KeyboardKeys keyboardKeys)
     {
         List<UIKeyboardHidUsage> platformKeyValues = new();
 
-        foreach (KeyboardKeys virtualKey in Enum.GetValues(typeof(KeyboardKeys)))
+        foreach (KeyboardKeys keyboardKey in Enum.GetValues(typeof(KeyboardKeys)))
         {
-            if (virtualKeys.HasFlag(virtualKey))
+            if (keyboardKeys.HasFlag(keyboardKey))
             {
-                UIKeyboardHidUsage platformKey = ToPlatformKey(virtualKey);
+                UIKeyboardHidUsage platformKey = ToPlatformKey(keyboardKey);
 
                 if (platformKey != 0)
                     platformKeyValues.Add(platformKey);
@@ -25,15 +25,15 @@ internal static class KeyboardKeysExtensions
         return platformKeys;
     }
 
-    internal static List<UIKeyboardHidUsage> ToPlatformKeyValues(this KeyboardKeys virtualKeys)
+    internal static List<UIKeyboardHidUsage> ToPlatformKeyValues(this KeyboardKeys keyboardKeys)
     {
         List<UIKeyboardHidUsage> platformKeyValues = new();
 
-        foreach (KeyboardKeys virtualKey in Enum.GetValues(typeof(KeyboardKeys)))
+        foreach (KeyboardKeys keyboardKey in Enum.GetValues(typeof(KeyboardKeys)))
         {
-            if (virtualKeys.HasFlag(virtualKey))
+            if (keyboardKeys.HasFlag(keyboardKey))
             {
-                UIKeyboardHidUsage platformKey = ToPlatformKey(virtualKey);
+                UIKeyboardHidUsage platformKey = ToPlatformKey(keyboardKey);
 
                 if (platformKey != 0)
                     platformKeyValues.Add(platformKey);
@@ -43,44 +43,44 @@ internal static class KeyboardKeysExtensions
         return platformKeyValues;
     }
 
-    internal static KeyboardKeys ToVirtualKeys(this UIKeyboardHidUsage platformKeys)
+    internal static KeyboardKeys ToKeyboardKeys(this UIKeyboardHidUsage platformKeys)
     {
-        List<KeyboardKeys> virtualKeyValues = new();
+        List<KeyboardKeys> keyboardKeyValues = new();
 
         foreach (UIKeyboardHidUsage platformKey in Enum.GetValues(typeof(UIKeyboardHidUsage)))
         {
             if (platformKeys.HasFlag(platformKey))
             {
-                KeyboardKeys virtualKey = ToVirtualKey(platformKey);
+                KeyboardKeys keyboardKey = ToKeyboardKey(platformKey);
 
-                if (virtualKey != 0)
-                    virtualKeyValues.Add(virtualKey);
+                if (keyboardKey != 0)
+                    keyboardKeyValues.Add(keyboardKey);
             }
         }
 
-        var virtualKeys = ToVirtualKeys(virtualKeyValues);
+        var keyboardKeys = ToKeyboardKeys(keyboardKeyValues);
 
-        return virtualKeys;
+        return keyboardKeys;
     }
 
-    internal static KeyboardKeys ToVirtualKeys(this List<UIKeyboardHidUsage> platformKeys)
+    internal static KeyboardKeys ToKeyboardKeys(this List<UIKeyboardHidUsage> platformKeys)
     {
-        List<KeyboardKeys> virtualKeyValues = new();
+        List<KeyboardKeys> keyboardKeyValues = new();
 
         foreach (UIKeyboardHidUsage platformKey in platformKeys)
         {
             if (platformKeys.Contains(platformKey))
             {
-                KeyboardKeys virtualKey = ToVirtualKey(platformKey);
+                KeyboardKeys keyboardKey = ToKeyboardKey(platformKey);
 
-                if (virtualKey != 0)
-                    virtualKeyValues.Add(virtualKey);
+                if (keyboardKey != 0)
+                    keyboardKeyValues.Add(keyboardKey);
             }
         }
 
-        var virtualKeys = ToVirtualKeys(virtualKeyValues);
+        var keyboardKeys = ToKeyboardKeys(keyboardKeyValues);
 
-        return virtualKeys;
+        return keyboardKeys;
     }
 
     internal static UIKeyboardHidUsage ToPlatformKeys(List<UIKeyboardHidUsage> platformKeyValues)
@@ -93,17 +93,17 @@ internal static class KeyboardKeysExtensions
         return platformKeys;
     }
 
-    internal static KeyboardKeys ToVirtualKeys(List<KeyboardKeys> virtualKeyValues)
+    internal static KeyboardKeys ToKeyboardKeys(List<KeyboardKeys> keyboardKeyValues)
     {
-        KeyboardKeys virtualKeys = 0;
+        KeyboardKeys keyboardKeys = 0;
 
-        foreach (KeyboardKeys virtualKey in virtualKeyValues)
-            virtualKeys |= virtualKey;
+        foreach (KeyboardKeys keyboardKey in keyboardKeyValues)
+            keyboardKeys |= keyboardKey;
 
-        return virtualKeys;
+        return keyboardKeys;
     }
 
-    static UIKeyboardHidUsage ToPlatformKey(KeyboardKeys virtualKey) => virtualKey switch
+    static UIKeyboardHidUsage ToPlatformKey(KeyboardKeys keyboardKey) => keyboardKey switch
     {
         KeyboardKeys.A => UIKeyboardHidUsage.KeyboardA,
         KeyboardKeys.B => UIKeyboardHidUsage.KeyboardB,
@@ -186,7 +186,7 @@ internal static class KeyboardKeysExtensions
         _ => 0
     };
 
-    static KeyboardKeys ToVirtualKey(UIKeyboardHidUsage platformKey) => platformKey switch
+    static KeyboardKeys ToKeyboardKey(UIKeyboardHidUsage platformKey) => platformKey switch
     {
         UIKeyboardHidUsage.KeyboardA => KeyboardKeys.A,
         UIKeyboardHidUsage.KeyboardB => KeyboardKeys.B,

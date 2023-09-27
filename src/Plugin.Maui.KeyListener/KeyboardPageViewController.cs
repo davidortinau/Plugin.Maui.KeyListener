@@ -91,12 +91,12 @@ namespace Plugin.Maui.KeyListener
 
 			var firstTarget = targets.First();
 
-			char keyChar = presses.Keys.ToVirtualKeys().ToString().ToCharArray().FirstOrDefault();
+			char keyChar = presses.Keys.ToKeyboardKeys().ToString().ToCharArray().FirstOrDefault();
 
 			var eventArgs = new KeyPressedEventArgs
 			{
 				Modifiers = presses.Modifiers.ToVirtualModifiers(),
-				Keys = presses.Keys.ToVirtualKeys(),
+				Keys = presses.Keys.ToKeyboardKeys(),
 				KeyChar = keyChar
 			};
 
