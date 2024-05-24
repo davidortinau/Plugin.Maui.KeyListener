@@ -2,10 +2,6 @@
 {
 	public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 	{
-		KeyboardBehaviorTriggers _triggers;
-
-		public KeyboardBehaviorTriggers Triggers => _triggers ??= new KeyboardBehaviorTriggers();
-
 		public bool UsePreviewEvents { get; set; }
 
 		public event EventHandler<KeyPressedEventArgs> KeyDown;

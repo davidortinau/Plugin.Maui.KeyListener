@@ -48,7 +48,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		char keyChar = ((char)e.Key);
 		var eventArgs = new KeyPressedEventArgs
 		{
-			Keys = e.Key.ToKeyboardKeys(),
+			Key = e.Key.ToKeyboardKey(),
 			KeyChar = keyChar
 		};
 
@@ -62,7 +62,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		char keyChar = ((char)e.Key);
 		var eventArgs = new KeyPressedEventArgs
 		{
-			Keys = e.Key.ToKeyboardKeys(),
+			Key = e.Key.ToKeyboardKey(),
 			KeyChar = keyChar
 		};
 
@@ -76,7 +76,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		char keyChar = ((char)e.Key);
 		var eventArgs = new KeyPressedEventArgs
 		{
-			Keys = e.Key.ToKeyboardKeys(),
+			Key = e.Key.ToKeyboardKey(),
 			KeyChar = keyChar
 		};
 
@@ -89,7 +89,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		char keyChar = ((char)e.Key);
 		var eventArgs = new KeyPressedEventArgs
 		{
-			Keys = e.Key.ToKeyboardKeys(),
+			Key = e.Key.ToKeyboardKey(),
 			KeyChar = keyChar
 		};
 		this.RaiseKeyUp(eventArgs);

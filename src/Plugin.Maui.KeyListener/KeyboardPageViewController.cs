@@ -16,19 +16,19 @@ namespace Plugin.Maui.KeyListener
 
 		public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
-			ProcessPressses(UIPressesData.Create(presses, evt));
+			ProcessPresses(UIPressesData.Create(presses, evt));
 			base.PressesBegan(presses, evt);
 		}
 
 		public override void PressesCancelled(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
-			ProcessPressses(UIPressesData.Create(presses, evt), true);
+			ProcessPresses(UIPressesData.Create(presses, evt), true);
 			base.PressesCancelled(presses, evt);
 		}
 
 		public override void PressesEnded(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
-			ProcessPressses(UIPressesData.Create(presses, evt), true);
+			ProcessPresses(UIPressesData.Create(presses, evt), true);
 			base.PressesEnded(presses, evt);
 		}
 
@@ -76,7 +76,7 @@ namespace Plugin.Maui.KeyListener
 				_keyboardBehaviors.Remove(target);
 		}
 
-		void ProcessPressses(UIPressesData presses, bool isKeyUp = false)
+		void ProcessPresses(UIPressesData presses, bool isKeyUp = false)
 		{
 			if (!_hasRegistrations)
 				return;
@@ -91,13 +91,13 @@ namespace Plugin.Maui.KeyListener
 
 			var firstTarget = targets.First();
 
-			char keyChar = presses.Keys.ToKeyboardKeys().ToString().ToCharArray().FirstOrDefault();
+			var keyChar = presses.Keys.FirstOrDefault().ToKeyboardKey().ToChar();
 
 			var eventArgs = new KeyPressedEventArgs
 			{
 				Modifiers = presses.Modifiers.ToVirtualModifiers(),
-				Keys = presses.Keys.ToKeyboardKeys(),
-				KeyChar = keyChar
+				Key = presses.Keys.ToKeyboardKeys(),
+				KeyChar = keyChar ?? default
 			};
 
 			if (isKeyUp) firstTarget.RaiseKeyUp(eventArgs);

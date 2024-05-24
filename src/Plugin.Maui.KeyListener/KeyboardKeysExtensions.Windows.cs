@@ -4,106 +4,9 @@ using Windows.System;
 
 namespace Plugin.Maui.KeyListener;
 
-internal static class KeyboardKeysExtensions
+internal static partial class KeyboardKeysExtensions
 {
-	internal static VirtualKey ToPlatformKeys(this KeyboardKeys keyboardKeys)
-	{
-		List<VirtualKey> platformKeyValues = new();
-
-		foreach (KeyboardKeys keyboardKey in Enum.GetValues(typeof(KeyboardKeys)))
-		{
-			if (keyboardKeys.HasFlag(keyboardKey))
-			{
-				VirtualKey platformKey = ToPlatformKey(keyboardKey);
-
-				if (platformKey != 0)
-					platformKeyValues.Add(platformKey);
-			}
-		}
-
-		var platformKeys = ToPlatformKeys(platformKeyValues);
-
-		return platformKeys;
-	}
-
-	internal static List<VirtualKey> ToPlatformKeyValues(this KeyboardKeys keyboardKeys)
-	{
-		List<VirtualKey> platformKeyValues = new();
-
-		foreach (KeyboardKeys keyboardKey in Enum.GetValues(typeof(KeyboardKeys)))
-		{
-			if (keyboardKeys.HasFlag(keyboardKey))
-			{
-				VirtualKey platformKey = ToPlatformKey(keyboardKey);
-
-				if (platformKey != 0)
-					platformKeyValues.Add(platformKey);
-			}
-		}
-
-		return platformKeyValues;
-	}
-	internal static KeyboardKeys ToKeyboardKeys(this VirtualKey platformKeys)
-	{
-		List<KeyboardKeys> keyboardKeyValues = new();
-
-		foreach (VirtualKey platformKey in Enum.GetValues(typeof(VirtualKey)))
-		{
-			if (platformKeys.HasFlag(platformKey))
-			{
-				KeyboardKeys keyboardKey = ToKeyboardKey(platformKey);
-
-				if (keyboardKey != 0)
-					keyboardKeyValues.Add(keyboardKey);
-			}
-		}
-
-		var keyboardKeys = ToKeyboardKeys(keyboardKeyValues);
-
-		return keyboardKeys;
-	}
-
-	internal static KeyboardKeys ToKeyboardKeys(this List<VirtualKey> platformKeys)
-	{
-		List<KeyboardKeys> keyboardKeyValues = new();
-
-		foreach (VirtualKey platformKey in platformKeys)
-		{
-			if (platformKeys.Contains(platformKey))
-			{
-				KeyboardKeys keyboardKey = ToKeyboardKey(platformKey);
-
-				if (keyboardKey != 0)
-					keyboardKeyValues.Add(keyboardKey);
-			}
-		}
-
-		var keyboardKeys = ToKeyboardKeys(keyboardKeyValues);
-
-		return keyboardKeys;
-	}
-
-	internal static VirtualKey ToPlatformKeys(List<VirtualKey> platformKeyValues)
-	{
-		VirtualKey platformKeys = 0;
-
-		foreach (VirtualKey platformKey in platformKeyValues)
-			platformKeys |= platformKey;
-
-		return platformKeys;
-	}
-
-	internal static KeyboardKeys ToKeyboardKeys(List<KeyboardKeys> keyboardKeyValues)
-	{
-		KeyboardKeys keyboardKeys = 0;
-
-		foreach (KeyboardKeys keyboardKey in keyboardKeyValues)
-			keyboardKeys |= keyboardKey;
-
-		return keyboardKeys;
-	}
-
-	static VirtualKey ToPlatformKey(KeyboardKeys keyboardKey) => keyboardKey switch 
+	internal static VirtualKey ToPlatformKey(KeyboardKeys keyboardKey) => keyboardKey switch 
 	{ 
 		KeyboardKeys.A => VirtualKey.A, KeyboardKeys.B => VirtualKey.B, 
 		KeyboardKeys.C => VirtualKey.C, KeyboardKeys.D => VirtualKey.D, 
@@ -142,7 +45,7 @@ internal static class KeyboardKeysExtensions
 		_ => 0 
 	};
 
-	static KeyboardKeys ToKeyboardKey(VirtualKey platformKey) => platformKey switch
+	internal static KeyboardKeys ToKeyboardKey(this VirtualKey platformKey) => platformKey switch
 	{
 		VirtualKey.A => KeyboardKeys.A,
 		VirtualKey.B => KeyboardKeys.B,
@@ -232,7 +135,7 @@ internal static class KeyboardKeysExtensions
 		VirtualKey.NumberPad7 => KeyboardKeys.NumPad7,
 		VirtualKey.NumberPad8 => KeyboardKeys.NumPad8,
 		VirtualKey.NumberPad9 => KeyboardKeys.NumPad9,
-		_ => 0
+		_ => KeyboardKeys.None
 	};
 }
 #endif
