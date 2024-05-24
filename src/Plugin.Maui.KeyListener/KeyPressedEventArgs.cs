@@ -6,4 +6,5 @@ public sealed class KeyPressedEventArgs : EventArgs
     public KeyboardKeys Keys { get; internal set; }
 
     public char KeyChar { get; internal set; }
+	public bool Handled { get; set; }
 }
