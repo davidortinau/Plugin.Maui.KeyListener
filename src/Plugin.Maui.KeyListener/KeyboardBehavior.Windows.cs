@@ -15,21 +15,15 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 	{
 		base.OnAttachedTo(bindable, platformView);
 
-		var contentPanel = bindable is Page
-						 ? bindable.Handler.PlatformView as Microsoft.Maui.Platform.ContentPanel
-						 : (bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window).Content;
-
-		//var window = bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
-
 		if (UsePreviewEvents)
 		{
-			contentPanel.PreviewKeyDown += OnPreviewKeyDown;
-			contentPanel.PreviewKeyUp += OnPreviewKeyUp;
+			platformView.PreviewKeyDown += OnPreviewKeyDown;
+			platformView.PreviewKeyUp += OnPreviewKeyUp;
 		}
 		else
 		{
-			contentPanel.KeyDown += OnKeyDown;
-			contentPanel.KeyUp += OnKeyUp;
+			platformView.KeyDown += OnKeyDown;
+			platformView.KeyUp += OnKeyUp;
 		}
 	}
 
@@ -37,20 +31,15 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 	{
 		base.OnDetachedFrom(bindable, platformView);
 
-		var contentPanel = bindable is Page 
-						 ? bindable.Handler.PlatformView as Microsoft.Maui.Platform.ContentPanel
-						 : (bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window).Content;
-		//var window = bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
-
 		if (UsePreviewEvents)
 		{
-			contentPanel.PreviewKeyDown -= OnPreviewKeyDown;
-			contentPanel.PreviewKeyUp -= OnPreviewKeyUp;
+			platformView.PreviewKeyDown -= OnPreviewKeyDown;
+			platformView.PreviewKeyUp -= OnPreviewKeyUp;
 		}
 		else
 		{
-			contentPanel.KeyDown -= OnKeyDown;
-			contentPanel.KeyUp -= OnKeyUp;
+			platformView.KeyDown -= OnKeyDown;
+			platformView.KeyUp -= OnKeyUp;
 		}
 	}
 
