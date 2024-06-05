@@ -11,9 +11,14 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		UsePreviewEvents = true;
 	}
 
+	// See: https://github.com/CommunityToolkit/Maui/issues/1912
+	private List<Guid> _boundIds = [Guid.Empty];
+
 	protected override void OnAttachedTo(VisualElement bindable, FrameworkElement platformView)
 	{
-		base.OnAttachedTo(bindable, platformView);
+		// Handle case where element is bound multiple times, we only allow a single binding for this behavior
+		if (_boundIds.Contains(bindable?.Id ?? Guid.Empty)) { return; }
+		_boundIds.Add(bindable.Id);
 
 		if (UsePreviewEvents)
 		{
@@ -25,11 +30,13 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 			platformView.KeyDown += OnKeyDown;
 			platformView.KeyUp += OnKeyUp;
 		}
+
+		base.OnAttachedTo(bindable, platformView);
 	}
 
 	protected override void OnDetachedFrom(VisualElement bindable, FrameworkElement platformView)
 	{
-		base.OnDetachedFrom(bindable, platformView);
+		if ((bindable?.Id ?? Guid.Empty) != Guid.Empty && _boundIds.Contains(bindable.Id)) { _boundIds.Remove(bindable.Id); }
 
 		if (UsePreviewEvents)
 		{
@@ -41,6 +48,8 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 			platformView.KeyDown -= OnKeyDown;
 			platformView.KeyUp -= OnKeyUp;
 		}
+
+		base.OnDetachedFrom(bindable, platformView);
 	}
 
 	void OnPreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -53,7 +62,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		};
 
 		this.RaiseKeyDown(eventArgs);
-
+		
 		e.Handled = eventArgs.Handled;
 	}
 
