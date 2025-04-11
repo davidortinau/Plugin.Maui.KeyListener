@@ -6,7 +6,7 @@
              Title="ComposedButton">
 
     <VerticalStackLayout Spacing="30">
-        <Entry Text="Platform Button">
+        <Entry Text="Platform Button" x:Name="entry">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroupList>
                     <VisualStateGroup Name="CommonStates">
@@ -24,7 +24,7 @@
                 </VisualStateGroupList>
             </VisualStateManager.VisualStateGroups>
         </Entry>
-        <local:FocusableContentView Background="Green" HorizontalOptions="Center" Padding="30">
+        <local:FocusableContentView Background="Green" HorizontalOptions="Center" Padding="30" x:Name="FocusableContentView1">
             <Label 
                 Text="Tap Me"
                 TextColor="White"
@@ -70,5 +70,6 @@
                 HorizontalOptions="Center" />
         </local:FocusableContentView>
         <Entry Text="Platform Button"></Entry>
+        <Button Text="Focus one of the composite buttons" Clicked="Button_Clicked"></Button>
     </VerticalStackLayout>
 </ContentPage>
