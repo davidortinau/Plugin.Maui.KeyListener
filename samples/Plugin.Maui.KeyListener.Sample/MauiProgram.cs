@@ -12,6 +12,12 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseKeyListener()
+			.ConfigureMauiHandlers(handlers =>
+			{
+				#if IOS || MACCATALYST
+				handlers.AddHandler(typeof(FocusableContentView), typeof(Plugin.Maui.KeyListener.Sample.FocusableContentViewPlatformHandler));
+				#endif
+			})
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
