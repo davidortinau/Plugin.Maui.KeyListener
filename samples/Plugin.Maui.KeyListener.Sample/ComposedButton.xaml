@@ -24,7 +24,7 @@
                 </VisualStateGroupList>
             </VisualStateManager.VisualStateGroups>
         </Entry>
-        <local:FocusableContentView Background="Green" HorizontalOptions="Center" Padding="30" x:Name="FocusableContentView1">
+        <local:FocusableContentView Background="Green" HorizontalOptions="Center" Padding="30" x:Name="FocusableContentView1" SemanticProperties.Description="Button 1">
             <Label 
                 Text="Tap Me"
                 TextColor="White"
@@ -47,7 +47,7 @@
             </VisualStateManager.VisualStateGroups>
         </local:FocusableContentView>
 
-        <local:FocusableContentView Background="Green" HorizontalOptions="Center" Padding="30">
+        <local:FocusableContentView Background="Green" HorizontalOptions="Center" Padding="30" SemanticProperties.Description="Button 2">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroupList>
                     <VisualStateGroup Name="CommonStates">

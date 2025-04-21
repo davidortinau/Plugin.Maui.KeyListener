@@ -14,13 +14,17 @@ public class FocusableContentViewPlatform : Microsoft.Maui.Platform.ContentView/
 
     public FocusableContentViewPlatform()
     {
-        //UserInteractionEnabled = true;
     }
 
-	public override bool CanBecomeFocused => true;
-	public override bool CanBecomeFirstResponder => true;
 
-    public override void DidUpdateFocus(UIFocusUpdateContext context, UIFocusAnimationCoordinator coordinator)
+	// You don't really need to override this, if the user has enabled basic Keyboard navigation
+	// through keyboard settings then this view will be focusable if you set the Semantic properties
+	// If you set this to true, this will cause inconsistent behavior with native mac controls
+	// For example, a UIButton can't be reached by a keyboard unless you've enabled keyboard navigation
+	//public override bool CanBecomeFocused => true;
+ 
+
+	public override void DidUpdateFocus(UIFocusUpdateContext context, UIFocusAnimationCoordinator coordinator)
     {
         base.DidUpdateFocus(context, coordinator);
 
@@ -28,7 +32,6 @@ public class FocusableContentViewPlatform : Microsoft.Maui.Platform.ContentView/
         {
 			if(CrossPlatformLayout is IView view)
 			{
-				//BecomeFirstResponder();
 				view.IsFocused = true;
 			}
 		}
@@ -36,45 +39,10 @@ public class FocusableContentViewPlatform : Microsoft.Maui.Platform.ContentView/
         {
 			if(CrossPlatformLayout is IView view)
 			{
-				//ResignFirstResponder();
 				view.IsFocused = false;
 			}
 		}
     }
-
-	public override void TouchesBegan(NSSet touches, UIEvent evt)
-    {
-        base.TouchesBegan(touches, evt);
-        // Ensure we become first responder when touched
-        if (!IsFirstResponder)
-		{
-			//BecomeFirstResponder();
-		}
-	}
-/*
-	 bool IUIKeyInput.HasText => false;
-    
-    async void IUIKeyInput.InsertText(string text)
-    {
-        if (text == "\n" || text == "\r")
-        {
-            if(CrossPlatformLayout is VisualElement view)
-			{
-				await view.Window?.Page?.DisplayAlert("Tapped", "Tapped", "OK");
-			}
-        }
-    }
-
-    void IUIKeyInput.DeleteBackward() { }
-	*/
-
-	/*public UITextAutocapitalizationType AutocapitalizationType => UITextAutocapitalizationType.None;
-    public UITextAutocorrectionType AutocorrectionType => UITextAutocorrectionType.No;
-    public UITextSpellCheckingType SpellCheckingType => UITextSpellCheckingType.No;
-    public UIKeyboardType KeyboardType => UIKeyboardType.Default;
-    public UIReturnKeyType ReturnKeyType => UIReturnKeyType.Default;
-    public bool EnablesReturnKeyAutomatically => false;
-    public bool SecureTextEntry => false;*/
 }
 
 #endif
