@@ -1,5 +1,8 @@
 #if IOS || MACCATALYST
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Core.Views;
+using CommunityToolkit.Maui.Views;
 using Foundation;
 using Microsoft.Maui.Platform;
 using UIKit;
@@ -14,8 +17,8 @@ public class FocusableContentViewPlatform : Microsoft.Maui.Platform.ContentView/
 
     public FocusableContentViewPlatform()
     {
+		this.FocusGroupIdentifier = $"<{this.GetType().FullName}: {this.GetHashCode()}>";
     }
-
 
 	// You don't really need to override this, if the user has enabled basic Keyboard navigation
 	// through keyboard settings then this view will be focusable if you set the Semantic properties

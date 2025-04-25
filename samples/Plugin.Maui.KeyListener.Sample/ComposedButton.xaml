@@ -3,73 +3,78 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Plugin.Maui.KeyListener.Sample"
              x:Class="Plugin.Maui.KeyListener.Sample.ComposedButton"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="ComposedButton">
+             
+    
+    <toolkit:SemanticOrderView x:Name="SemanticOrderView">
+        <VerticalStackLayout Spacing="30">
+            <Entry Text="Platform Button" x:Name="entry">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal">
+                            </VisualState>
 
-    <VerticalStackLayout Spacing="30">
-        <Entry Text="Platform Button" x:Name="entry">
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroupList>
-                    <VisualStateGroup Name="CommonStates">
-                        <VisualState Name="Normal">
-                        </VisualState>
+                            <VisualState Name="Focused">
+                                <VisualState.Setters>
+                                    <Setter Property="FontSize" Value="36" />
+                                    <Setter Property="Background" Value="Lime" />
+                                </VisualState.Setters>
+                            </VisualState>
 
-                        <VisualState Name="Focused">
-                            <VisualState.Setters>
-                                <Setter Property="FontSize" Value="36" />
-                                <Setter Property="Background" Value="Lime" />
-                            </VisualState.Setters>
-                        </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </Entry>
+            <local:FocusableContentView Background="Green" HorizontalOptions="Center" Padding="30" x:Name="FocusableContentView1" 
+                SemanticProperties.Description="Button 1">
+                <Label 
+                    Text="Tap Me"
+                    TextColor="White"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal">
+                            </VisualState>
 
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </VisualStateManager.VisualStateGroups>
-        </Entry>
-        <local:FocusableContentView Background="Green" HorizontalOptions="Center" Padding="30" x:Name="FocusableContentView1" SemanticProperties.Description="Button 1">
-            <Label 
-                Text="Tap Me"
-                TextColor="White"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroupList>
-                    <VisualStateGroup Name="CommonStates">
-                        <VisualState Name="Normal">
-                        </VisualState>
+                            <VisualState Name="Focused">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="Red" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </local:FocusableContentView>
 
-                        <VisualState Name="Focused">
-                            <VisualState.Setters>
-                                <Setter Property="Background" Value="Red" />
-                            </VisualState.Setters>
-                        </VisualState>
-                        
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </VisualStateManager.VisualStateGroups>
-        </local:FocusableContentView>
+            <local:FocusableContentView x:Name="FCW2" Background="Green" HorizontalOptions="Center" Padding="30" SemanticProperties.Description="Button 2">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal">
+                            </VisualState>
 
-        <local:FocusableContentView Background="Green" HorizontalOptions="Center" Padding="30" SemanticProperties.Description="Button 2">
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroupList>
-                    <VisualStateGroup Name="CommonStates">
-                        <VisualState Name="Normal">
-                        </VisualState>
-
-                        <VisualState Name="Focused">
-                            <VisualState.Setters>
-                                <Setter Property="Background" Value="Red" />
-                            </VisualState.Setters>
-                        </VisualState>
-                        
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </VisualStateManager.VisualStateGroups>
-            <Label 
-                Text="Tap Me"
-                TextColor="White"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-        </local:FocusableContentView>
-        <Entry Text="Platform Button"></Entry>
-        <Button Text="Focus one of the composite buttons" Clicked="Button_Clicked"></Button>
-    </VerticalStackLayout>
+                            <VisualState Name="Focused">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="Red" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+                <Label 
+                    Text="Tap Me"
+                    TextColor="White"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+            </local:FocusableContentView>
+            <Entry x:Name="entry1" Text="Platform Button"></Entry>
+            <Button x:Name="entry2" Text="Focus one of the composite buttons" Clicked="Button_Clicked"></Button>
+        </VerticalStackLayout>
+    </toolkit:SemanticOrderView>
 </ContentPage>

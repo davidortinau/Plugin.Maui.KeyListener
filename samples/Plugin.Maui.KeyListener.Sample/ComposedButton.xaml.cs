@@ -5,6 +5,7 @@ public partial class ComposedButton : ContentPage
 	public ComposedButton()
 	{
 		InitializeComponent();
+		this.SemanticOrderView.ViewOrder = new List<View> { entry, entry2,FocusableContentView1, FCW2, entry1 };
 		
 	}
 
