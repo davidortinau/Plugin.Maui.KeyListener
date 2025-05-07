@@ -23,6 +23,18 @@ Install with the dotnet CLI: `dotnet add package Plugin.Maui.KeyListener`, or th
 | Android  | 5.0 (API 21)              |
 | Windows  | 11 and 10 version 1809+   |
 
+## Accessibility Considerations
+
+### Windows
+
+Implementing KeyboardBehavior to manage navigation and interaction on Windows enhances accessibility because Windows accessibility features are tightly integrated with keyboard navigation. This allows users who rely on keyboard input rather than mouse interactions to navigate your application effectively.
+
+
+### Mac
+
+Using KeyboardBehavior on macOS improves navigation for users who have enabled basic keyboard navigation features. However, it provides no benefits for users utilizing Full Keyboard Access mode or VoiceOver screen reader navigation. For comprehensive accessibility support on Mac (and Windows), it's recommended to implement the SemanticOrderView from the MAUI Community Toolkit alongside KeyboardBehavior.
+
+
 ## API Usage
 
 `Plugin.Maui.KeyListener` provides the `Feature` class that has a single property `Property` that you can get or set.
