@@ -29,6 +29,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<MauiVersion>9.0.50</MauiVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -47,5 +48,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Plugin.Maui.KeyListener\Plugin.Maui.KeyListener.csproj" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
 	</ItemGroup>
 </Project>

@@ -8,6 +8,10 @@
 
     <ShellContent
         Title="Feature Plugin"
+        ContentTemplate="{DataTemplate pages:ComposedButton}" />
+
+    <ShellContent
+        Title="Feature Plugin"
         ContentTemplate="{DataTemplate pages:MainPage}" />
 
 </Shell>
