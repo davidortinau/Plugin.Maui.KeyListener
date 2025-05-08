@@ -1,53 +1,69 @@
 ﻿#if WINDOWS
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plugin.Maui.KeyListener;
 
 public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 {
+	public KeyboardBehavior()
+	{
+		// We prefer preview events on Windows
+		UsePreviewEvents = true;
+	}
+
+	// See: https://github.com/CommunityToolkit/Maui/issues/1912
+	private List<Guid> _boundIds = [Guid.Empty];
+
 	protected override void OnAttachedTo(VisualElement bindable, FrameworkElement platformView)
 	{
+		// Handle case where element is bound multiple times, we only allow a single binding for this behavior
+		if (_boundIds.Contains(bindable?.Id ?? Guid.Empty)) { return; }
+		_boundIds.Add(bindable.Id);
+
+		if (UsePreviewEvents)
+		{
+			platformView.PreviewKeyDown += OnPreviewKeyDown;
+			platformView.PreviewKeyUp += OnPreviewKeyUp;
+		}
+		else
+		{
+			platformView.KeyDown += OnKeyDown;
+			platformView.KeyUp += OnKeyUp;
+		}
+
 		base.OnAttachedTo(bindable, platformView);
-
-		var window = bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
-
-		window.Content.KeyDown += OnKeyDown;
-		window.Content.KeyUp += OnKeyUp;
-		window.Content.PreviewKeyDown += OnPreviewKeyDown;
-		window.Content.PreviewKeyUp += OnPreviewKeyUp;
-
-		//platformView.KeyDown += OnKeyDown;
-		//platformView.KeyUp += OnKeyUp;
-		//platformView.PreviewKeyDown += OnPreviewKeyDown;
-		//platformView.PreviewKeyUp += OnPreviewKeyUp;
 	}
 
 	protected override void OnDetachedFrom(VisualElement bindable, FrameworkElement platformView)
 	{
+		if ((bindable?.Id ?? Guid.Empty) != Guid.Empty && _boundIds.Contains(bindable.Id)) { _boundIds.Remove(bindable.Id); }
+
+		if (UsePreviewEvents)
+		{
+			platformView.PreviewKeyDown -= OnPreviewKeyDown;
+			platformView.PreviewKeyUp -= OnPreviewKeyUp;
+		}
+		else
+		{
+			platformView.KeyDown -= OnKeyDown;
+			platformView.KeyUp -= OnKeyUp;
+		}
+
 		base.OnDetachedFrom(bindable, platformView);
-
-		var window = bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
-
-		window.Content.KeyDown -= OnKeyDown;
-		window.Content.KeyUp -= OnKeyUp;
-		window.Content.PreviewKeyDown -= OnPreviewKeyDown;
-		window.Content.PreviewKeyUp -= OnPreviewKeyUp;
-
-		//platformView.KeyDown -= OnKeyDown;
-		//platformView.KeyUp -= OnKeyUp;
-		//platformView.PreviewKeyDown -= OnPreviewKeyDown;
-		//platformView.PreviewKeyUp -= OnPreviewKeyUp;
 	}
 
-	void OnWindowKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+	void OnPreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
 	{
-		Console.WriteLine($"OnWindowKeyDown {e.Key}");
+		char keyChar = ((char)e.Key);
+		var eventArgs = new KeyPressedEventArgs
+		{
+			Key = e.Key.ToKeyboardKey(),
+			KeyChar = keyChar
+		};
+
+		this.RaiseKeyDown(eventArgs);
+		
+		e.Handled = eventArgs.Handled;
 	}
 
 	void OnKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -55,20 +71,26 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		char keyChar = ((char)e.Key);
 		var eventArgs = new KeyPressedEventArgs
 		{
-			Keys = e.Key.ToKeyboardKeys(),
+			Key = e.Key.ToKeyboardKey(),
 			KeyChar = keyChar
 		};
 
 		this.RaiseKeyDown(eventArgs);
-	}
-	void OnPreviewKeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
-	{
-		Console.WriteLine($"OnPreviewKeyUp {e.Key}");
+
+		e.Handled = eventArgs.Handled;
 	}
 
-	void OnPreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+	void OnPreviewKeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
 	{
-		Console.WriteLine($"OnPreviewKeyDown {e.Key}");
+		char keyChar = ((char)e.Key);
+		var eventArgs = new KeyPressedEventArgs
+		{
+			Key = e.Key.ToKeyboardKey(),
+			KeyChar = keyChar
+		};
+
+		this.RaiseKeyUp(eventArgs);
+		e.Handled = eventArgs.Handled;
 	}
 
 	void OnKeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -76,10 +98,11 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		char keyChar = ((char)e.Key);
 		var eventArgs = new KeyPressedEventArgs
 		{
-			Keys = e.Key.ToKeyboardKeys(),
+			Key = e.Key.ToKeyboardKey(),
 			KeyChar = keyChar
 		};
 		this.RaiseKeyUp(eventArgs);
+		e.Handled = eventArgs.Handled;
 	}
 }
 #endif

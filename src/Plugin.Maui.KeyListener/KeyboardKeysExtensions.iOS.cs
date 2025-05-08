@@ -3,7 +3,7 @@ using UIKit;
 
 namespace Plugin.Maui.KeyListener;
 
-internal static class KeyboardKeysExtensions
+internal static partial class KeyboardKeysExtensions
 {
     internal static UIKeyboardHidUsage ToPlatformKeys(this KeyboardKeys keyboardKeys)
     {
@@ -103,7 +103,7 @@ internal static class KeyboardKeysExtensions
         return keyboardKeys;
     }
 
-    static UIKeyboardHidUsage ToPlatformKey(KeyboardKeys keyboardKey) => keyboardKey switch
+    internal static UIKeyboardHidUsage ToPlatformKey(this KeyboardKeys keyboardKey) => keyboardKey switch
     {
         KeyboardKeys.A => UIKeyboardHidUsage.KeyboardA,
         KeyboardKeys.B => UIKeyboardHidUsage.KeyboardB,
@@ -186,7 +186,7 @@ internal static class KeyboardKeysExtensions
         _ => 0
     };
 
-    static KeyboardKeys ToKeyboardKey(UIKeyboardHidUsage platformKey) => platformKey switch
+    internal static KeyboardKeys ToKeyboardKey(this UIKeyboardHidUsage platformKey) => platformKey switch
     {
         UIKeyboardHidUsage.KeyboardA => KeyboardKeys.A,
         UIKeyboardHidUsage.KeyboardB => KeyboardKeys.B,

@@ -10,7 +10,6 @@ public enum KeyboardModifiers
     Alt = 16
 }
 
-[Flags]
 public enum KeyboardKeys
 {
     None,
