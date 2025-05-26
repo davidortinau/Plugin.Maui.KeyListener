@@ -11,16 +11,18 @@ namespace Plugin.Maui.KeyListener;
 
 public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 {
+	UIElement? _content;
+
 	protected override void OnAttachedTo(VisualElement bindable, FrameworkElement platformView)
 	{
 		base.OnAttachedTo(bindable, platformView);
 
 		var window = bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
-
-		window.Content.KeyDown += OnKeyDown;
-		window.Content.KeyUp += OnKeyUp;
-		window.Content.PreviewKeyDown += OnPreviewKeyDown;
-		window.Content.PreviewKeyUp += OnPreviewKeyUp;
+		_content = window.Content;
+		_content.KeyDown += OnKeyDown;
+		_content.KeyUp += OnKeyUp;
+		_content.PreviewKeyDown += OnPreviewKeyDown;
+		_content.PreviewKeyUp += OnPreviewKeyUp;
 
 		//platformView.KeyDown += OnKeyDown;
 		//platformView.KeyUp += OnKeyUp;
@@ -32,12 +34,14 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 	{
 		base.OnDetachedFrom(bindable, platformView);
 
-		var window = bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
+		if (_content is null)
+			return;
 
-		window.Content.KeyDown -= OnKeyDown;
-		window.Content.KeyUp -= OnKeyUp;
-		window.Content.PreviewKeyDown -= OnPreviewKeyDown;
-		window.Content.PreviewKeyUp -= OnPreviewKeyUp;
+		_content.KeyDown -= OnKeyDown;
+		_content.KeyUp -= OnKeyUp;
+		_content.PreviewKeyDown -= OnPreviewKeyDown;
+		_content.PreviewKeyUp -= OnPreviewKeyUp;
+		_content = null;
 
 		//platformView.KeyDown -= OnKeyDown;
 		//platformView.KeyUp -= OnKeyUp;
