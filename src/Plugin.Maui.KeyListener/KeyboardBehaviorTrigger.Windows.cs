@@ -13,7 +13,7 @@ public sealed partial class KeyboardBehaviorTrigger
 
 internal class KeyboardBehaviorTriggerComparer : IEqualityComparer<KeyboardBehaviorTrigger>
 {
-	public bool Equals(KeyboardBehaviorTrigger x, KeyboardBehaviorTrigger y)
+	public bool Equals(KeyboardBehaviorTrigger? x, KeyboardBehaviorTrigger? y)
 	{
 		throw new NotImplementedException();
 		//if (x == null && y == null)

@@ -12,8 +12,8 @@ namespace Plugin.Maui.KeyListener
 
 		public KeyboardBehaviorTriggers Triggers => _triggers ??= new KeyboardBehaviorTriggers();
 
-		public event EventHandler<KeyPressedEventArgs> KeyDown;
-		public event EventHandler<KeyPressedEventArgs> KeyUp;
+		public event EventHandler<KeyPressedEventArgs>? KeyDown;
+		public event EventHandler<KeyPressedEventArgs>? KeyUp;
 
 		internal void RaiseKeyDown(KeyPressedEventArgs args) => KeyDown?.Invoke(this, args);
 		internal void RaiseKeyUp(KeyPressedEventArgs args) => KeyUp?.Invoke(this, args);
