@@ -11,38 +11,35 @@ namespace Plugin.Maui.KeyListener;
 
 public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 {
+	UIElement? _content;
+
 	protected override void OnAttachedTo(VisualElement bindable, FrameworkElement platformView)
 	{
 		base.OnAttachedTo(bindable, platformView);
 
 		var window = bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
-
-		window.Content.KeyDown += OnKeyDown;
-		window.Content.KeyUp += OnKeyUp;
-		window.Content.PreviewKeyDown += OnPreviewKeyDown;
-		window.Content.PreviewKeyUp += OnPreviewKeyUp;
-
-		//platformView.KeyDown += OnKeyDown;
-		//platformView.KeyUp += OnKeyUp;
-		//platformView.PreviewKeyDown += OnPreviewKeyDown;
-		//platformView.PreviewKeyUp += OnPreviewKeyUp;
+		if (bindable.Window?.Handler?.PlatformView is Microsoft.UI.Xaml.Window win && win.Content is UIElement content)
+		{
+			_content = content;
+			_content.KeyDown += OnKeyDown;
+			_content.KeyUp += OnKeyUp;
+			_content.PreviewKeyDown += OnPreviewKeyDown;
+			_content.PreviewKeyUp += OnPreviewKeyUp;
+		}
 	}
 
 	protected override void OnDetachedFrom(VisualElement bindable, FrameworkElement platformView)
 	{
 		base.OnDetachedFrom(bindable, platformView);
 
-		var window = bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
+		if (_content is null)
+			return;
 
-		window.Content.KeyDown -= OnKeyDown;
-		window.Content.KeyUp -= OnKeyUp;
-		window.Content.PreviewKeyDown -= OnPreviewKeyDown;
-		window.Content.PreviewKeyUp -= OnPreviewKeyUp;
-
-		//platformView.KeyDown -= OnKeyDown;
-		//platformView.KeyUp -= OnKeyUp;
-		//platformView.PreviewKeyDown -= OnPreviewKeyDown;
-		//platformView.PreviewKeyUp -= OnPreviewKeyUp;
+		_content.KeyDown -= OnKeyDown;
+		_content.KeyUp -= OnKeyUp;
+		_content.PreviewKeyDown -= OnPreviewKeyDown;
+		_content.PreviewKeyUp -= OnPreviewKeyUp;
+		_content = null;
 	}
 
 	void OnWindowKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
