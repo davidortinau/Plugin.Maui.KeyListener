@@ -3,13 +3,15 @@ using UIKit;
 
 namespace Plugin.Maui.KeyListener;
 
-internal static class KeyboardKeysExtensions
+internal static partial class KeyboardKeysExtensions
 {
+    static readonly UIKeyboardHidUsage[] UIKeyboardHidUsages = Enum.GetValues<UIKeyboardHidUsage>();
+
     internal static UIKeyboardHidUsage ToPlatformKeys(this KeyboardKeys keyboardKeys)
     {
         List<UIKeyboardHidUsage> platformKeyValues = new();
 
-        foreach (KeyboardKeys keyboardKey in Enum.GetValues(typeof(KeyboardKeys)))
+        foreach (KeyboardKeys keyboardKey in KeyboardKeysValues)
         {
             if (keyboardKeys.HasFlag(keyboardKey))
             {
@@ -29,7 +31,7 @@ internal static class KeyboardKeysExtensions
     {
         List<UIKeyboardHidUsage> platformKeyValues = new();
 
-        foreach (KeyboardKeys keyboardKey in Enum.GetValues(typeof(KeyboardKeys)))
+        foreach (KeyboardKeys keyboardKey in KeyboardKeysValues)
         {
             if (keyboardKeys.HasFlag(keyboardKey))
             {
@@ -47,7 +49,7 @@ internal static class KeyboardKeysExtensions
     {
         List<KeyboardKeys> keyboardKeyValues = new();
 
-        foreach (UIKeyboardHidUsage platformKey in Enum.GetValues(typeof(UIKeyboardHidUsage)))
+        foreach (UIKeyboardHidUsage platformKey in UIKeyboardHidUsages)
         {
             if (platformKeys.HasFlag(platformKey))
             {
