@@ -20,7 +20,7 @@ internal class UIPressesData
 
         var keys = new List<UIKeyboardHidUsage>();
 
-        foreach (var press in evt.AllPresses.Cast<UIPress>())
+        foreach (var press in presses)
         {
             if (press.Key is UIKey key && !string.IsNullOrEmpty(key.CharactersIgnoringModifiers))
             {

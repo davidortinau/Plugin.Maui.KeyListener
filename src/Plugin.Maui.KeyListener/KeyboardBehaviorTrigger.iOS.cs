@@ -6,13 +6,13 @@ namespace Plugin.Maui.KeyListener;
 public sealed partial class KeyboardBehaviorTrigger
 {
 	internal UIKeyModifierFlags PlatformModifiers { get; private set; }
-    internal List<UIKeyboardHidUsage> PlatformKeys { get; private set; }
+    internal UIKeyboardHidUsage PlatformKey { get; private set; }
 
     void SetPlatformModifiers(KeyboardModifiers modifiers)
         => PlatformModifiers = modifiers.ToPlatformModifiers();
 
-    void SetPlatformKeys(KeyboardKeys keys)
-        => PlatformKeys = keys.ToPlatformKeyValues();
+	void SetPlatformKeys(KeyboardKeys key)
+		=> PlatformKey = key.ToUIKeyboardHidUsage();
 }
 
 internal class KeyboardBehaviorTriggerComparer : IEqualityComparer<KeyboardBehaviorTrigger>
@@ -23,8 +23,8 @@ internal class KeyboardBehaviorTriggerComparer : IEqualityComparer<KeyboardBehav
             return true;
         if (x == null || y == null)
             return false;
-        
-        return x.PlatformKeys.SequenceEqual(y.PlatformKeys) && x.PlatformModifiers == y.PlatformModifiers;
+
+        return x.PlatformKey == y.PlatformKey && x.PlatformModifiers == y.PlatformModifiers;
     }
 
     public int GetHashCode(KeyboardBehaviorTrigger obj)
@@ -32,7 +32,7 @@ internal class KeyboardBehaviorTriggerComparer : IEqualityComparer<KeyboardBehav
         unchecked
         {
             int hash = 17;
-            hash = hash * 23 + obj.Keys.GetHashCode();
+            hash = hash * 23 + obj.Key.GetHashCode();
             hash = hash * 23 + obj.PlatformModifiers.GetHashCode();
             return hash;
         }

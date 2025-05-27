@@ -1,6 +1,5 @@
 ﻿namespace Plugin.Maui.KeyListener;
 
-[Flags]
 public enum KeyboardKeys
 {
     None,

@@ -6,145 +6,82 @@ namespace Plugin.Maui.KeyListener;
 
 internal static partial class KeyboardKeysExtensions
 {
-	static readonly VirtualKey[] VirtualKeyValues = Enum.GetValues<VirtualKey>();
-
-	internal static VirtualKey ToPlatformKeys(this KeyboardKeys keyboardKeys)
+	public static VirtualKey ToVirtualKey(KeyboardKeys keyboardKey) => keyboardKey switch
 	{
-		List<VirtualKey> platformKeyValues = new();
-
-		foreach (KeyboardKeys keyboardKey in KeyboardKeysValues)
-		{
-			if (keyboardKeys.HasFlag(keyboardKey))
-			{
-				VirtualKey platformKey = ToPlatformKey(keyboardKey);
-
-				if (platformKey != 0)
-					platformKeyValues.Add(platformKey);
-			}
-		}
-
-		var platformKeys = ToPlatformKeys(platformKeyValues);
-
-		return platformKeys;
-	}
-
-	internal static List<VirtualKey> ToPlatformKeyValues(this KeyboardKeys keyboardKeys)
-	{
-		List<VirtualKey> platformKeyValues = new();
-
-		foreach (KeyboardKeys keyboardKey in KeyboardKeysValues)
-		{
-			if (keyboardKeys.HasFlag(keyboardKey))
-			{
-				VirtualKey platformKey = ToPlatformKey(keyboardKey);
-
-				if (platformKey != 0)
-					platformKeyValues.Add(platformKey);
-			}
-		}
-
-		return platformKeyValues;
-	}
-	internal static KeyboardKeys ToKeyboardKeys(this VirtualKey platformKeys)
-	{
-		List<KeyboardKeys> keyboardKeyValues = new();
-
-		foreach (VirtualKey platformKey in VirtualKeyValues)
-		{
-			if (platformKeys.HasFlag(platformKey))
-			{
-				KeyboardKeys keyboardKey = ToKeyboardKey(platformKey);
-
-				if (keyboardKey != 0)
-					keyboardKeyValues.Add(keyboardKey);
-			}
-		}
-
-		var keyboardKeys = ToKeyboardKeys(keyboardKeyValues);
-
-		return keyboardKeys;
-	}
-
-	internal static KeyboardKeys ToKeyboardKeys(this List<VirtualKey> platformKeys)
-	{
-		List<KeyboardKeys> keyboardKeyValues = new();
-
-		foreach (VirtualKey platformKey in platformKeys)
-		{
-			if (platformKeys.Contains(platformKey))
-			{
-				KeyboardKeys keyboardKey = ToKeyboardKey(platformKey);
-
-				if (keyboardKey != 0)
-					keyboardKeyValues.Add(keyboardKey);
-			}
-		}
-
-		var keyboardKeys = ToKeyboardKeys(keyboardKeyValues);
-
-		return keyboardKeys;
-	}
-
-	internal static VirtualKey ToPlatformKeys(List<VirtualKey> platformKeyValues)
-	{
-		VirtualKey platformKeys = 0;
-
-		foreach (VirtualKey platformKey in platformKeyValues)
-			platformKeys |= platformKey;
-
-		return platformKeys;
-	}
-
-	internal static KeyboardKeys ToKeyboardKeys(List<KeyboardKeys> keyboardKeyValues)
-	{
-		KeyboardKeys keyboardKeys = 0;
-
-		foreach (KeyboardKeys keyboardKey in keyboardKeyValues)
-			keyboardKeys |= keyboardKey;
-
-		return keyboardKeys;
-	}
-
-	static VirtualKey ToPlatformKey(KeyboardKeys keyboardKey) => keyboardKey switch 
-	{ 
-		KeyboardKeys.A => VirtualKey.A, KeyboardKeys.B => VirtualKey.B, 
-		KeyboardKeys.C => VirtualKey.C, KeyboardKeys.D => VirtualKey.D, 
-		KeyboardKeys.E => VirtualKey.E, KeyboardKeys.F => VirtualKey.F, 
-		KeyboardKeys.G => VirtualKey.G, KeyboardKeys.H => VirtualKey.H, 
-		KeyboardKeys.I => VirtualKey.I, KeyboardKeys.J => VirtualKey.J, 
-		KeyboardKeys.K => VirtualKey.K, KeyboardKeys.L => VirtualKey.L, 
-		KeyboardKeys.M => VirtualKey.M, KeyboardKeys.N => VirtualKey.N, 
-		KeyboardKeys.O => VirtualKey.O, KeyboardKeys.P => VirtualKey.P, 
-		KeyboardKeys.Q => VirtualKey.Q, KeyboardKeys.R => VirtualKey.R, 
-		KeyboardKeys.S => VirtualKey.S, KeyboardKeys.T => VirtualKey.T, 
-		KeyboardKeys.U => VirtualKey.U, KeyboardKeys.V => VirtualKey.V, 
-		KeyboardKeys.W => VirtualKey.W, KeyboardKeys.X => VirtualKey.X, 
-		KeyboardKeys.Y => VirtualKey.Y, KeyboardKeys.Z => VirtualKey.Z, 
-		KeyboardKeys.Number0 => VirtualKey.Number0, KeyboardKeys.Number1 => VirtualKey.Number1, 
-		KeyboardKeys.Number2 => VirtualKey.Number2, KeyboardKeys.Number3 => VirtualKey.Number3, 
-		KeyboardKeys.Number4 => VirtualKey.Number4, KeyboardKeys.Number5 => VirtualKey.Number5, 
-		KeyboardKeys.Number6 => VirtualKey.Number6, KeyboardKeys.Number7 => VirtualKey.Number7, 
-		KeyboardKeys.Number8 => VirtualKey.Number8, KeyboardKeys.Number9 => VirtualKey.Number9, 
-		KeyboardKeys.Enter => VirtualKey.Enter, KeyboardKeys.Escape => VirtualKey.Escape, 
-		KeyboardKeys.Backspace => VirtualKey.Back, KeyboardKeys.Tab => VirtualKey.Tab, 
-		KeyboardKeys.Space => VirtualKey.Space, KeyboardKeys.Minus => VirtualKey.Subtract, 
-		KeyboardKeys.Plus => VirtualKey.Add, 
-		KeyboardKeys.Slash => VirtualKey.Divide, KeyboardKeys.CapsLock => VirtualKey.CapitalLock,
-		KeyboardKeys.F1 => VirtualKey.F1, KeyboardKeys.F2 => VirtualKey.F2, 
-		KeyboardKeys.F3 => VirtualKey.F3, KeyboardKeys.F4 => VirtualKey.F4, KeyboardKeys.F5 => VirtualKey.F5, 
-		KeyboardKeys.F6 => VirtualKey.F6, KeyboardKeys.F7 => VirtualKey.F7, KeyboardKeys.F8 => VirtualKey.F8, 
-		KeyboardKeys.F9 => VirtualKey.F9, KeyboardKeys.F10 => VirtualKey.F10, KeyboardKeys.F11 => VirtualKey.F11, 
-		KeyboardKeys.F12 => VirtualKey.F12, KeyboardKeys.PrintScreen => VirtualKey.Print, 
-		KeyboardKeys.ScrollLock => VirtualKey.Scroll, KeyboardKeys.Pause => VirtualKey.Pause, 
-		KeyboardKeys.Insert => VirtualKey.Insert, KeyboardKeys.Home => VirtualKey.Home, 
-		KeyboardKeys.PageUp => VirtualKey.PageUp, KeyboardKeys.Delete => VirtualKey.Delete, 
-		KeyboardKeys.End => VirtualKey.End, KeyboardKeys.PageDown => VirtualKey.PageDown, 
-		KeyboardKeys.RightArrow => VirtualKey.Right, KeyboardKeys.LeftArrow => VirtualKey.Left, 
-		KeyboardKeys.DownArrow => VirtualKey.Down, KeyboardKeys.UpArrow => VirtualKey.Up, 
-		_ => 0 
+		KeyboardKeys.A => VirtualKey.A,
+		KeyboardKeys.B => VirtualKey.B,
+		KeyboardKeys.C => VirtualKey.C,
+		KeyboardKeys.D => VirtualKey.D,
+		KeyboardKeys.E => VirtualKey.E,
+		KeyboardKeys.F => VirtualKey.F,
+		KeyboardKeys.G => VirtualKey.G,
+		KeyboardKeys.H => VirtualKey.H,
+		KeyboardKeys.I => VirtualKey.I,
+		KeyboardKeys.J => VirtualKey.J,
+		KeyboardKeys.K => VirtualKey.K,
+		KeyboardKeys.L => VirtualKey.L,
+		KeyboardKeys.M => VirtualKey.M,
+		KeyboardKeys.N => VirtualKey.N,
+		KeyboardKeys.O => VirtualKey.O,
+		KeyboardKeys.P => VirtualKey.P,
+		KeyboardKeys.Q => VirtualKey.Q,
+		KeyboardKeys.R => VirtualKey.R,
+		KeyboardKeys.S => VirtualKey.S,
+		KeyboardKeys.T => VirtualKey.T,
+		KeyboardKeys.U => VirtualKey.U,
+		KeyboardKeys.V => VirtualKey.V,
+		KeyboardKeys.W => VirtualKey.W,
+		KeyboardKeys.X => VirtualKey.X,
+		KeyboardKeys.Y => VirtualKey.Y,
+		KeyboardKeys.Z => VirtualKey.Z,
+		KeyboardKeys.Number0 => VirtualKey.Number0,
+		KeyboardKeys.Number1 => VirtualKey.Number1,
+		KeyboardKeys.Number2 => VirtualKey.Number2,
+		KeyboardKeys.Number3 => VirtualKey.Number3,
+		KeyboardKeys.Number4 => VirtualKey.Number4,
+		KeyboardKeys.Number5 => VirtualKey.Number5,
+		KeyboardKeys.Number6 => VirtualKey.Number6,
+		KeyboardKeys.Number7 => VirtualKey.Number7,
+		KeyboardKeys.Number8 => VirtualKey.Number8,
+		KeyboardKeys.Number9 => VirtualKey.Number9,
+		KeyboardKeys.Enter => VirtualKey.Enter,
+		KeyboardKeys.Escape => VirtualKey.Escape,
+		KeyboardKeys.Backspace => VirtualKey.Back,
+		KeyboardKeys.Tab => VirtualKey.Tab,
+		KeyboardKeys.Space => VirtualKey.Space,
+		KeyboardKeys.Minus => VirtualKey.Subtract,
+		KeyboardKeys.Plus => VirtualKey.Add,
+		KeyboardKeys.Slash => VirtualKey.Divide,
+		KeyboardKeys.CapsLock => VirtualKey.CapitalLock,
+		KeyboardKeys.F1 => VirtualKey.F1,
+		KeyboardKeys.F2 => VirtualKey.F2,
+		KeyboardKeys.F3 => VirtualKey.F3,
+		KeyboardKeys.F4 => VirtualKey.F4,
+		KeyboardKeys.F5 => VirtualKey.F5,
+		KeyboardKeys.F6 => VirtualKey.F6,
+		KeyboardKeys.F7 => VirtualKey.F7,
+		KeyboardKeys.F8 => VirtualKey.F8,
+		KeyboardKeys.F9 => VirtualKey.F9,
+		KeyboardKeys.F10 => VirtualKey.F10,
+		KeyboardKeys.F11 => VirtualKey.F11,
+		KeyboardKeys.F12 => VirtualKey.F12,
+		KeyboardKeys.PrintScreen => VirtualKey.Print,
+		KeyboardKeys.ScrollLock => VirtualKey.Scroll,
+		KeyboardKeys.Pause => VirtualKey.Pause,
+		KeyboardKeys.Insert => VirtualKey.Insert,
+		KeyboardKeys.Home => VirtualKey.Home,
+		KeyboardKeys.PageUp => VirtualKey.PageUp,
+		KeyboardKeys.Delete => VirtualKey.Delete,
+		KeyboardKeys.End => VirtualKey.End,
+		KeyboardKeys.PageDown => VirtualKey.PageDown,
+		KeyboardKeys.RightArrow => VirtualKey.Right,
+		KeyboardKeys.LeftArrow => VirtualKey.Left,
+		KeyboardKeys.DownArrow => VirtualKey.Down,
+		KeyboardKeys.UpArrow => VirtualKey.Up,
+		_ => 0
 	};
 
-	static KeyboardKeys ToKeyboardKey(VirtualKey platformKey) => platformKey switch
+	public static KeyboardKeys ToKeyboardKeys(this VirtualKey platformKey) => platformKey switch
 	{
 		VirtualKey.A => KeyboardKeys.A,
 		VirtualKey.B => KeyboardKeys.B,
@@ -189,16 +126,7 @@ internal static partial class KeyboardKeysExtensions
 		VirtualKey.Space => KeyboardKeys.Space,
 		VirtualKey.Subtract => KeyboardKeys.Minus,
 		VirtualKey.Add => KeyboardKeys.Plus,
-		//VirtualKey.back => KeyboardKeys.LeftBracket,
-		//VirtualKey.RightBracket => KeyboardKeys.RightBracket,
-		//VirtualKey.comm => KeyboardKeys.Backslash,
-		//VirtualKey.Semicolon => KeyboardKeys.Semicolon,
-		//VirtualKey.Apostrophe => KeyboardKeys.Quote,
-		//VirtualKey.Grave => KeyboardKeys.GraveAccent,
-		//VirtualKey.Comma => KeyboardKeys.Comma,
-		//VirtualKey.Period => KeyboardKeys.Period,
 		VirtualKey.Divide => KeyboardKeys.Slash,
-		//VirtualKey.CapsLock => KeyboardKeys.CapsLock,
 		VirtualKey.F1 => KeyboardKeys.F1,
 		VirtualKey.F2 => KeyboardKeys.F2,
 		VirtualKey.F3 => KeyboardKeys.F3,
@@ -211,7 +139,6 @@ internal static partial class KeyboardKeysExtensions
 		VirtualKey.F10 => KeyboardKeys.F10,
 		VirtualKey.F11 => KeyboardKeys.F11,
 		VirtualKey.F12 => KeyboardKeys.F12,
-		//VirtualKey.PrintScreen => KeyboardKeys.PrintScreen,
 		VirtualKey.Scroll => KeyboardKeys.ScrollLock,
 		VirtualKey.Pause => KeyboardKeys.Pause,
 		VirtualKey.Insert => KeyboardKeys.Insert,
