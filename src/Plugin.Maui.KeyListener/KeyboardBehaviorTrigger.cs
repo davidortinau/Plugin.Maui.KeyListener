@@ -33,7 +33,7 @@ public sealed partial class KeyboardBehaviorTrigger
 		}
 	}
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj is not KeyboardBehaviorTrigger trigger)
             return false;

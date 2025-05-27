@@ -45,7 +45,7 @@ namespace Plugin.Maui.KeyListener
 			keyboardPageViewController.UnregisterKeyboardBehavior(this);
 		}
 
-		static Page GetParentPage(VisualElement element)
+		static Page? GetParentPage(VisualElement element)
 		{
 			if (element is Page)
 				return element as Page;
