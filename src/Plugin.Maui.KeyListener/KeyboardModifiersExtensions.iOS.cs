@@ -5,11 +5,15 @@ namespace Plugin.Maui.KeyListener;
 
 internal static class KeyboardModifiersExtensions
 {
+    static readonly KeyboardModifiers[] VirtualModifiersValues = Enum.GetValues<KeyboardModifiers>();
+
+    static readonly UIKeyModifierFlags[] UIKeyModifierFlagsValues = Enum.GetValues<UIKeyModifierFlags>();
+
     internal static UIKeyModifierFlags ToPlatformModifiers(this KeyboardModifiers virtualModifiers)
     {
         List<UIKeyModifierFlags> platformModifierValues = new();
 
-        foreach (KeyboardModifiers virtualModifier in Enum.GetValues(typeof(KeyboardModifiers)))
+        foreach (KeyboardModifiers virtualModifier in VirtualModifiersValues)
         {
             if (virtualModifiers.HasFlag(virtualModifier))
             {
@@ -29,7 +33,7 @@ internal static class KeyboardModifiersExtensions
     {
         List<KeyboardModifiers> virtualModifierValues = new();
 
-        foreach (UIKeyModifierFlags platformModifier in Enum.GetValues(typeof(UIKeyModifierFlags)))
+        foreach (UIKeyModifierFlags platformModifier in UIKeyModifierFlagsValues)
         {
             if (platformModifiers.HasFlag(platformModifier))
             {

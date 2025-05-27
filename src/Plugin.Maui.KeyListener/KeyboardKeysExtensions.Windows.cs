@@ -4,13 +4,15 @@ using Windows.System;
 
 namespace Plugin.Maui.KeyListener;
 
-internal static class KeyboardKeysExtensions
+internal static partial class KeyboardKeysExtensions
 {
+	static readonly VirtualKey[] VirtualKeyValues = Enum.GetValues<VirtualKey>();
+
 	internal static VirtualKey ToPlatformKeys(this KeyboardKeys keyboardKeys)
 	{
 		List<VirtualKey> platformKeyValues = new();
 
-		foreach (KeyboardKeys keyboardKey in Enum.GetValues(typeof(KeyboardKeys)))
+		foreach (KeyboardKeys keyboardKey in KeyboardKeysValues)
 		{
 			if (keyboardKeys.HasFlag(keyboardKey))
 			{
@@ -30,7 +32,7 @@ internal static class KeyboardKeysExtensions
 	{
 		List<VirtualKey> platformKeyValues = new();
 
-		foreach (KeyboardKeys keyboardKey in Enum.GetValues(typeof(KeyboardKeys)))
+		foreach (KeyboardKeys keyboardKey in KeyboardKeysValues)
 		{
 			if (keyboardKeys.HasFlag(keyboardKey))
 			{
@@ -47,7 +49,7 @@ internal static class KeyboardKeysExtensions
 	{
 		List<KeyboardKeys> keyboardKeyValues = new();
 
-		foreach (VirtualKey platformKey in Enum.GetValues(typeof(VirtualKey)))
+		foreach (VirtualKey platformKey in VirtualKeyValues)
 		{
 			if (platformKeys.HasFlag(platformKey))
 			{
