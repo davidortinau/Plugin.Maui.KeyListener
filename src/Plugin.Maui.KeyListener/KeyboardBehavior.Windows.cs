@@ -23,11 +23,6 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		_content.KeyUp += OnKeyUp;
 		_content.PreviewKeyDown += OnPreviewKeyDown;
 		_content.PreviewKeyUp += OnPreviewKeyUp;
-
-		//platformView.KeyDown += OnKeyDown;
-		//platformView.KeyUp += OnKeyUp;
-		//platformView.PreviewKeyDown += OnPreviewKeyDown;
-		//platformView.PreviewKeyUp += OnPreviewKeyUp;
 	}
 
 	protected override void OnDetachedFrom(VisualElement bindable, FrameworkElement platformView)
@@ -41,12 +36,6 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		_content.KeyUp -= OnKeyUp;
 		_content.PreviewKeyDown -= OnPreviewKeyDown;
 		_content.PreviewKeyUp -= OnPreviewKeyUp;
-		_content = null;
-
-		//platformView.KeyDown -= OnKeyDown;
-		//platformView.KeyUp -= OnKeyUp;
-		//platformView.PreviewKeyDown -= OnPreviewKeyDown;
-		//platformView.PreviewKeyUp -= OnPreviewKeyUp;
 	}
 
 	void OnWindowKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
