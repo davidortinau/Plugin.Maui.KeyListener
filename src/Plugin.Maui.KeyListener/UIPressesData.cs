@@ -22,7 +22,7 @@ internal class UIPressesData
 
         foreach (var press in evt.AllPresses.Cast<UIPress>())
         {
-            if (press.Key is UIKey key && !string.IsNullOrWhiteSpace(key.CharactersIgnoringModifiers))
+            if (press.Key is UIKey key && !string.IsNullOrEmpty(key.CharactersIgnoringModifiers))
             {
                 keys.Add(key.KeyCode);
 
