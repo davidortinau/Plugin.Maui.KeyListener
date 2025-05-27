@@ -11,60 +11,32 @@ internal static class KeyboardModifiersExtensions
 
     internal static UIKeyModifierFlags ToPlatformModifiers(this KeyboardModifiers virtualModifiers)
     {
-        List<UIKeyModifierFlags> platformModifierValues = new();
+        UIKeyModifierFlags platformModifiers = 0;
 
         foreach (KeyboardModifiers virtualModifier in VirtualModifiersValues)
         {
             if (virtualModifiers.HasFlag(virtualModifier))
             {
                 UIKeyModifierFlags platformModifier = ToPlatformModifier(virtualModifier);
-
-                if (platformModifier != 0)
-                    platformModifierValues.Add(platformModifier);
+                platformModifiers |= platformModifier;
             }
         }
-
-        var platformModifiers = ToPlatformModifiers(platformModifierValues);
 
         return platformModifiers;
     }
 
     internal static KeyboardModifiers ToVirtualModifiers(this UIKeyModifierFlags platformModifiers)
     {
-        List<KeyboardModifiers> virtualModifierValues = new();
+        KeyboardModifiers virtualModifiers = 0;
 
         foreach (UIKeyModifierFlags platformModifier in UIKeyModifierFlagsValues)
         {
             if (platformModifiers.HasFlag(platformModifier))
             {
                 KeyboardModifiers virtualModifier = ToVirtualModifier(platformModifier);
-
-                if (virtualModifier != 0)
-                    virtualModifierValues.Add(virtualModifier);
+                virtualModifiers |= virtualModifier;
             }
         }
-
-        var virtualModifiers = ToVirtualModifiers(virtualModifierValues);
-
-        return virtualModifiers;
-    }
-
-    static UIKeyModifierFlags ToPlatformModifiers(List<UIKeyModifierFlags> platformModifierValues)
-    {
-        UIKeyModifierFlags platformModifiers = 0;
-
-        foreach (UIKeyModifierFlags platformModifier in platformModifierValues)
-            platformModifiers |= platformModifier;
-
-        return platformModifiers;
-    }
-
-    static KeyboardModifiers ToVirtualModifiers(List<KeyboardModifiers> virtualModifierValues)
-    {
-        KeyboardModifiers virtualModifiers = 0;
-
-        foreach (KeyboardModifiers virtualModifer in virtualModifierValues)
-            virtualModifiers |= virtualModifer;
 
         return virtualModifiers;
     }
