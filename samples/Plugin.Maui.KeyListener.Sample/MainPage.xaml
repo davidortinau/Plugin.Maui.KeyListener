@@ -7,7 +7,8 @@
     <ScrollView>
         <VerticalStackLayout Margin="20" Spacing="20">
             <Label Text="Press any key to see the event details" />
-            <Label x:Name="OutputLabel"/>
+            <Button Text="Clear" Clicked="ClearButton_Clicked"/>
+            <Label x:Name="OutputLabel" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
