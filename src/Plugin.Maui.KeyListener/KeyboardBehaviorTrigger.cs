@@ -5,7 +5,7 @@ public sealed class KeyboardBehaviorTriggers : List<KeyboardBehaviorTrigger> { }
 public sealed partial class KeyboardBehaviorTrigger
 {
     KeyboardModifiers _modifiers;
-    KeyboardKeys _keys;
+    KeyboardKeys _key;
 
     public KeyboardModifiers Modifiers
     {
@@ -20,15 +20,15 @@ public sealed partial class KeyboardBehaviorTrigger
         }
     }
 
-    public KeyboardKeys Keys
+    public KeyboardKeys Key
     {
-        get => _keys;
+        get => _key;
 
         set
         {
-            _keys = value;
+            _key = value;
 #if IOS || MACCATALYST || WINDOWS
-			SetPlatformKeys(_keys);
+			SetPlatformKeys(_key);
 #endif
 		}
 	}
@@ -38,7 +38,7 @@ public sealed partial class KeyboardBehaviorTrigger
         if (obj is not KeyboardBehaviorTrigger trigger)
             return false;
 
-        return Keys == trigger.Keys && Modifiers == trigger.Modifiers;
+        return Key == trigger.Key && Modifiers == trigger.Modifiers;
     }
 
     public override int GetHashCode()
@@ -46,7 +46,7 @@ public sealed partial class KeyboardBehaviorTrigger
         unchecked
         {
             int hash = 17;
-            hash = hash * 23 + Keys.GetHashCode();
+            hash = hash * 23 + Key.GetHashCode();
             hash = hash * 23 + Modifiers.GetHashCode();
             return hash;
         }

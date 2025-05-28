@@ -32,18 +32,6 @@ public sealed class KeyboardKeysExtension : IMarkupExtension
 
     public object ProvideValue(IServiceProvider serviceProvider)
     {
-        if (Enum.TryParse(typeof(KeyboardKeys), Keys, out var enumValue))
-            return enumValue;
-
-        var enumValues = Keys.Split(',').Select(flag => flag.Trim());
-        var combinedFlag = KeyboardKeys.None;
-
-        foreach (var flag in enumValues)
-        {
-            if (Enum.TryParse(typeof(KeyboardKeys), flag, out var singleFlag))
-                combinedFlag |= (KeyboardKeys)singleFlag;
-        }
-
-        return combinedFlag;
+        return Enum.TryParse(typeof(KeyboardKeys), Keys, out var enumValue) ? enumValue : KeyboardKeys.None;
     }
 }

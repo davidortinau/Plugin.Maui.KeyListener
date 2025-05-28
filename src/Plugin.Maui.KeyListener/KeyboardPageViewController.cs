@@ -90,18 +90,22 @@ namespace Plugin.Maui.KeyListener
 				return;
 
 			var firstTarget = targets.First();
+			var modifiers = presses.Modifiers.ToVirtualModifiers();
 
-			char keyChar = presses.Keys.ToKeyboardKeys().ToString().ToCharArray().FirstOrDefault();
-
-			var eventArgs = new KeyPressedEventArgs
+			foreach (var key in  presses.Keys)
 			{
-				Modifiers = presses.Modifiers.ToVirtualModifiers(),
-				Keys = presses.Keys.ToKeyboardKeys(),
-				KeyChar = keyChar
-			};
+				var eventArgs = new KeyPressedEventArgs
+				{
+					Modifiers = modifiers,
+					Keys = key.ToKeyboardKeys(),
+					KeyChar = key.ToString().FirstOrDefault(),
+				};
 
-			if (isKeyUp) firstTarget.RaiseKeyUp(eventArgs);
-				else firstTarget.RaiseKeyDown(eventArgs);
+				if (isKeyUp)
+					firstTarget.RaiseKeyUp(eventArgs);
+				else
+					firstTarget.RaiseKeyDown(eventArgs);
+			}
 
 
 			// var triggers = firstTarget.Triggers;
