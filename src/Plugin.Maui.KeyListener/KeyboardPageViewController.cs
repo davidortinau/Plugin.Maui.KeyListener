@@ -8,8 +8,7 @@ namespace Plugin.Maui.KeyListener
 {
 	public class KeyboardPageViewController : PageViewController
 	{
-		bool _hasRegistrations;
-		readonly List<WeakReference<KeyboardBehavior>> _keyboardBehaviors = new List<WeakReference<KeyboardBehavior>>();
+		readonly List<WeakReference<KeyboardBehavior>> _keyboardBehaviors = new();
 
 		internal KeyboardPageViewController(IView page, IMauiContext mauiContext)
 			: base(page, mauiContext) { }
@@ -34,62 +33,36 @@ namespace Plugin.Maui.KeyListener
 
 		internal void RegisterKeyboardBehavior(KeyboardBehavior keyboardBehavior)
 		{
-			if (TryGetIndexOfKeyboardBehavior(keyboardBehavior))
+			if (_keyboardBehaviors.Any(weakRef => weakRef.WeakReferenceEquals(keyboardBehavior)))
 				return;
 
 			_keyboardBehaviors.Add(new WeakReference<KeyboardBehavior>(keyboardBehavior));
-			_hasRegistrations = true;
 		}
 
 		internal void UnregisterKeyboardBehavior(KeyboardBehavior keyboardBehavior)
 		{
-			if (!TryGetIndexOfKeyboardBehavior(keyboardBehavior, out var index))
-				return;
-
-			_keyboardBehaviors.RemoveAt(index);
-
-			if (!_keyboardBehaviors.Any())
-				_hasRegistrations = false;
-		}
-
-		bool TryGetIndexOfKeyboardBehavior(KeyboardBehavior keyboardBehavior)
-			=> TryGetIndexOfKeyboardBehavior(keyboardBehavior, out _);
-
-		bool TryGetIndexOfKeyboardBehavior(KeyboardBehavior keyboardBehavior, out int index)
-		{
-			index = _keyboardBehaviors.FindIndex(weakRef =>
+			foreach (var weakRef in _keyboardBehaviors)
 			{
-				if (weakRef.TryGetTarget(out var target))
-					return target == keyboardBehavior;
-
-				return false;
-			});
-
-			return index >= 0;
+				if (weakRef.WeakReferenceEquals(keyboardBehavior))
+				{
+					_keyboardBehaviors.Remove(weakRef);
+					break;
+				}
+			}
 		}
 
 		void CleanupTargets()
 		{
-			var targetsToRemove = _keyboardBehaviors.Where(i => !i.TryGetTarget(out var target)).ToList();
-
-			foreach (var target in targetsToRemove)
-				_keyboardBehaviors.Remove(target);
+			_keyboardBehaviors.RemoveAll(weakRef => !weakRef.TryGetTarget(out var target));
 		}
 
 		void ProcessPressses(NSSet<UIPress> presses, UIPressesEvent evt, bool isKeyUp)
 		{
-			if (!_hasRegistrations)
+			CleanupTargets();
+
+			if (_keyboardBehaviors.Count == 0)
 				return;
 
-			var targets = _keyboardBehaviors.Select(i => i.TryGetTarget(out var target) ? target : null).Where(i => i != null).ToList();
-
-			if (targets.Count != _keyboardBehaviors.Count)
-				CleanupTargets();
-
-			if (targets.Count == 0)
-				return;
-
-			var firstTarget = targets.First();
 			var modifiers = evt.ModifierFlags.ToVirtualModifiers();
 
 			foreach (var press in presses)
@@ -105,10 +78,16 @@ namespace Plugin.Maui.KeyListener
 					KeyChar = characters.Length == 1 ? char.ToUpperInvariant(characters[0]) : default,
 				};
 
-				if (isKeyUp)
-					firstTarget.RaiseKeyUp(eventArgs);
-				else
-					firstTarget.RaiseKeyDown(eventArgs);
+				foreach (var weakBehavior in _keyboardBehaviors)
+				{
+					if (weakBehavior.TryGetTarget(out var target) && target is not null)
+					{
+						if (isKeyUp)
+							target.RaiseKeyUp(eventArgs);
+						else
+							target.RaiseKeyDown(eventArgs);
+					}
+				}
 			}
 		}
 	}
