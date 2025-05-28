@@ -72,6 +72,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" IsImplicitlyDefined="true" />
+		<PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.183" Condition="$(TargetFramework.StartsWith('net')) == true AND $(TargetFramework.Contains('-windows')) == true">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<!-- Package additions -->
