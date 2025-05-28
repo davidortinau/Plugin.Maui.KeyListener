@@ -9,7 +9,10 @@ internal static class KeyboardModifiersExtensions
 
     static readonly UIKeyModifierFlags[] UIKeyModifierFlagsValues = Enum.GetValues<UIKeyModifierFlags>();
 
-    internal static UIKeyModifierFlags ToPlatformModifiers(this KeyboardModifiers virtualModifiers)
+	/// <remarks>
+	/// https://developer.apple.com/documentation/uikit/uikeymodifierflags
+	/// </remarks>
+	internal static UIKeyModifierFlags ToPlatformModifiers(this KeyboardModifiers virtualModifiers)
     {
         UIKeyModifierFlags platformModifiers = 0;
 
