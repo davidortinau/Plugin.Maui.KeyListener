@@ -11,7 +11,7 @@ public partial class MainPage : ContentPage
 		AddKeyboardBehavior();
 	}
 
-	async void AddKeyboardBehavior()
+	void AddKeyboardBehavior()
 	{
 		var keyboardBehavior = new KeyboardBehavior();
 		keyboardBehavior.KeyDown += (sender, args) => PrependOutput("KeyDown", args);
