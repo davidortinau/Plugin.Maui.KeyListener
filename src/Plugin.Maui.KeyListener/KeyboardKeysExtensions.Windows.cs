@@ -1,6 +1,8 @@
 ﻿#if WINDOWS
 
+using Microsoft.UI.Xaml.Input;
 using Windows.System;
+using Windows.Win32.UI.Input.KeyboardAndMouse;
 
 namespace Plugin.Maui.KeyListener;
 
@@ -163,5 +165,16 @@ internal static partial class KeyboardKeysExtensions
 		VirtualKey.NumberPad9 => KeyboardKeys.NumPad9,
 		_ => 0
 	};
+
+	public static char ToChar(this VirtualKey key) => (char)Windows.Win32.PInvoke.MapVirtualKey((uint)key, MAP_VIRTUAL_KEY_TYPE.MAPVK_VK_TO_CHAR);
+
+	internal static KeyPressedEventArgs ToKeyPressedEventArgs(this KeyRoutedEventArgs e)
+	{
+		return new KeyPressedEventArgs
+		{
+			Keys = e.Key.ToKeyboardKeys(),
+			KeyChar = e.Key.ToChar(),
+		};
+	}
 }
 #endif

@@ -49,13 +49,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 
 	void OnKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
 	{
-		char keyChar = ((char)e.Key);
-		var eventArgs = new KeyPressedEventArgs
-		{
-			Keys = e.Key.ToKeyboardKeys(),
-			KeyChar = keyChar
-		};
-
+		var eventArgs = e.ToKeyPressedEventArgs();
 		this.RaiseKeyDown(eventArgs);
 	}
 	void OnPreviewKeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -70,12 +64,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 
 	void OnKeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
 	{
-		char keyChar = ((char)e.Key);
-		var eventArgs = new KeyPressedEventArgs
-		{
-			Keys = e.Key.ToKeyboardKeys(),
-			KeyChar = keyChar
-		};
+		var eventArgs = e.ToKeyPressedEventArgs();
 		this.RaiseKeyUp(eventArgs);
 	}
 }
