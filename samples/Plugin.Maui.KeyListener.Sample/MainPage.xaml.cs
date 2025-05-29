@@ -24,7 +24,7 @@ public partial class MainPage : ContentPage
 		OutputLabel.Text = $"{eventName}: {e.Modifiers} {e.Keys} {e.KeyChar}" + Environment.NewLine + OutputLabel.Text;
 	}
 
-	private void ClearButton_Clicked(object sender, EventArgs e)
+	void ClearButton_Clicked(object sender, EventArgs e)
 	{
 		OutputLabel.Text = string.Empty;
 	}

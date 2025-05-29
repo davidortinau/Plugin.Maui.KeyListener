@@ -2,7 +2,6 @@
 
 using Microsoft.UI.Xaml.Input;
 using Windows.System;
-using Windows.Win32;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 
 namespace Plugin.Maui.KeyListener;
@@ -230,7 +229,7 @@ internal static partial class KeyboardKeysExtensions
 		_ => KeyboardKeys.None
 	};
 
-	public static char ToChar(this VirtualKey key) => (char)PInvoke.MapVirtualKey((uint)key, MAP_VIRTUAL_KEY_TYPE.MAPVK_VK_TO_CHAR);
+  public static char ToChar(this VirtualKey key) => (char)Windows.Win32.PInvoke.MapVirtualKey((uint)key, MAP_VIRTUAL_KEY_TYPE.MAPVK_VK_TO_CHAR);
 
 	internal static KeyPressedEventArgs ToKeyPressedEventArgs(this KeyRoutedEventArgs e)
 	{
