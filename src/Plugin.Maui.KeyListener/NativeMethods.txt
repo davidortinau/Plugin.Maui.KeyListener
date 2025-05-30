@@ -1,1 +1,2 @@
-﻿MapVirtualKey
+MapVirtualKey
+VIRTUAL_KEY
