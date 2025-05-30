@@ -1,5 +1,5 @@
 ﻿#if IOS || MACCATALYST
-using System;
+
 using Foundation;
 using Microsoft.Maui.Platform;
 using UIKit;
@@ -16,19 +16,19 @@ namespace Plugin.Maui.KeyListener
 
 		public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
-			ProcessPressses(UIPressesData.Create(presses, evt));
+			ProcessPressses(presses, evt, false);
 			base.PressesBegan(presses, evt);
 		}
 
 		public override void PressesCancelled(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
-			ProcessPressses(UIPressesData.Create(presses, evt), true);
+			ProcessPressses(presses, evt, true);
 			base.PressesCancelled(presses, evt);
 		}
 
 		public override void PressesEnded(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
-			ProcessPressses(UIPressesData.Create(presses, evt), true);
+			ProcessPressses(presses, evt, true);
 			base.PressesEnded(presses, evt);
 		}
 
@@ -76,7 +76,7 @@ namespace Plugin.Maui.KeyListener
 				_keyboardBehaviors.Remove(target);
 		}
 
-		void ProcessPressses(UIPressesData presses, bool isKeyUp = false)
+		void ProcessPressses(NSSet<UIPress> presses, UIPressesEvent evt, bool isKeyUp)
 		{
 			if (!_hasRegistrations)
 				return;
@@ -90,15 +90,19 @@ namespace Plugin.Maui.KeyListener
 				return;
 
 			var firstTarget = targets.First();
-			var modifiers = presses.Modifiers.ToVirtualModifiers();
+			var modifiers = evt.ModifierFlags.ToVirtualModifiers();
 
-			foreach (var key in  presses.Keys)
+			foreach (var press in presses)
 			{
+				if (press.Key is not UIKey key)
+					continue;
+
+				var characters = key.Characters;
 				var eventArgs = new KeyPressedEventArgs
 				{
 					Modifiers = modifiers,
-					Keys = key.ToKeyboardKeys(),
-					KeyChar = key.ToString().FirstOrDefault(),
+					Keys = key.KeyCode.ToKeyboardKeys(),
+					KeyChar = characters.Length == 1 ? char.ToUpperInvariant(characters[0]) : default,
 				};
 
 				if (isKeyUp)
@@ -106,26 +110,6 @@ namespace Plugin.Maui.KeyListener
 				else
 					firstTarget.RaiseKeyDown(eventArgs);
 			}
-
-
-			// var triggers = firstTarget.Triggers;
-			// var trigger = triggers.First();
-
-			// var matchingRegistrations = targets.Where(i => i.Triggers.Any(
-			// 	i => (i.PlatformModifiers) == presses.Modifiers &&
-			// 	i.PlatformKeys.SequenceEqual(presses.Keys))).ToArray();
-
-			// var eventArgs = new KeyPressedEventArgs
-			// {
-			// 	Modifiers = presses.Modifiers.ToVirtualModifiers(),
-			// 	Keys = presses.Keys.ToVirtualKeys()
-			// };
-
-			// foreach (var registration in matchingRegistrations)
-			// {
-			// 	if (isKeyUp) registration.RaiseKeyUp(eventArgs);
-			// 	else registration.RaiseKeyDown(eventArgs);
-			// }
 		}
 	}
 }
