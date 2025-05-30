@@ -1,6 +1,8 @@
 ﻿#if WINDOWS
 
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml.Input;
+using Windows.UI.Core;
 using Windows.System;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 
@@ -8,6 +10,14 @@ namespace Plugin.Maui.KeyListener;
 
 internal static partial class KeyboardKeysExtensions
 {
+	static readonly VirtualKeyModifiers[] VirtualKeyModifierValues = new VirtualKeyModifiers[]
+	{
+		VirtualKeyModifiers.Control,
+		VirtualKeyModifiers.Menu,
+		VirtualKeyModifiers.Shift,
+		VirtualKeyModifiers.Windows
+	};
+
 	public static VirtualKey ToVirtualKey(KeyboardKeys keyboardKey) => keyboardKey switch
 	{
 		KeyboardKeys.A => VirtualKey.A,
@@ -166,12 +176,51 @@ internal static partial class KeyboardKeysExtensions
 		_ => 0
 	};
 
+	public static KeyboardModifiers ToKeyboardModifiers(this VirtualKeyModifiers virtualKeyModifiers)
+	{
+		KeyboardModifiers keyboardModifiers = KeyboardModifiers.None;
+		foreach (var modifier in VirtualKeyModifierValues)
+		{
+			if (virtualKeyModifiers.HasFlag(modifier))
+			{
+				keyboardModifiers |= modifier switch
+				{
+					VirtualKeyModifiers.Control => KeyboardModifiers.Control,
+					VirtualKeyModifiers.Menu => KeyboardModifiers.Alt,
+					VirtualKeyModifiers.Shift => KeyboardModifiers.Shift,
+					VirtualKeyModifiers.Windows => KeyboardModifiers.Command,
+					_ => KeyboardModifiers.None
+				};
+			}
+		}
+
+		return keyboardModifiers;
+	}
+
 	public static char ToChar(this VirtualKey key) => (char)Windows.Win32.PInvoke.MapVirtualKey((uint)key, MAP_VIRTUAL_KEY_TYPE.MAPVK_VK_TO_CHAR);
+
+	internal static VirtualKeyModifiers GetVirtualKeyModifiers()
+	{
+		VirtualKeyModifiers modifiers = VirtualKeyModifiers.None;
+		if (InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
+			modifiers |= VirtualKeyModifiers.Control;
+		if (InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down))
+			modifiers |= VirtualKeyModifiers.Menu;
+		if (InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down))
+			modifiers |= VirtualKeyModifiers.Shift;
+		if (InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.LeftWindows).HasFlag(CoreVirtualKeyStates.Down))
+			modifiers |= VirtualKeyModifiers.Windows;
+		else if (InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.RightWindows).HasFlag(CoreVirtualKeyStates.Down))
+			modifiers |= VirtualKeyModifiers.Windows;
+		return modifiers;
+	}
 
 	internal static KeyPressedEventArgs ToKeyPressedEventArgs(this KeyRoutedEventArgs e)
 	{
+		VirtualKeyModifiers virtualKeyModifiers = GetVirtualKeyModifiers();
 		return new KeyPressedEventArgs
 		{
+			Modifiers = virtualKeyModifiers.ToKeyboardModifiers(),
 			Keys = e.Key.ToKeyboardKeys(),
 			KeyChar = e.Key.ToChar(),
 		};
