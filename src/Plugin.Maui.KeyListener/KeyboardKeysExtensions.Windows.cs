@@ -229,12 +229,14 @@ internal static partial class KeyboardKeysExtensions
 		_ => KeyboardKeys.None
 	};
 
-  public static char ToChar(this VirtualKey key) => (char)Windows.Win32.PInvoke.MapVirtualKey((uint)key, MAP_VIRTUAL_KEY_TYPE.MAPVK_VK_TO_CHAR);
+	public static char ToChar(this VirtualKey key) => (char)Windows.Win32.PInvoke.MapVirtualKey((uint)key, MAP_VIRTUAL_KEY_TYPE.MAPVK_VK_TO_CHAR);
 
 	internal static KeyPressedEventArgs ToKeyPressedEventArgs(this KeyRoutedEventArgs e)
 	{
+		VirtualKeyModifiers virtualKeyModifiers = KeyboardModifiersExtensions.GetVirtualKeyModifiers();
 		return new KeyPressedEventArgs
 		{
+			Modifiers = virtualKeyModifiers.ToKeyboardModifiers(),
 			Keys = e.Key.ToKeyboardKeys(),
 			KeyChar = e.Key.ToChar(),
 		};
