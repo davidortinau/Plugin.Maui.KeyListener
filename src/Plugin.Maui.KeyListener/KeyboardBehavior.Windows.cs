@@ -51,6 +51,8 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 	{
 		var eventArgs = e.ToKeyPressedEventArgs();
 		this.RaiseKeyDown(eventArgs);
+		if (eventArgs.Handled)
+			e.Handled = true;
 	}
 	void OnPreviewKeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
 	{
@@ -66,6 +68,8 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 	{
 		var eventArgs = e.ToKeyPressedEventArgs();
 		this.RaiseKeyUp(eventArgs);
+		if (eventArgs.Handled)
+			e.Handled = true;
 	}
 }
 #endif
