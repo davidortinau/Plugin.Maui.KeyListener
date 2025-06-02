@@ -234,11 +234,12 @@ internal static partial class KeyboardKeysExtensions
 	internal static KeyPressedEventArgs ToKeyPressedEventArgs(this KeyRoutedEventArgs e)
 	{
 		VirtualKeyModifiers virtualKeyModifiers = KeyboardModifiersExtensions.GetVirtualKeyModifiers();
+		var vk = (VirtualKey)Windows.Win32.PInvoke.MapVirtualKey(e.KeyStatus.ScanCode, MAP_VIRTUAL_KEY_TYPE.MAPVK_VSC_TO_VK_EX);
 		return new KeyPressedEventArgs
 		{
 			Modifiers = virtualKeyModifiers.ToKeyboardModifiers(),
-			Keys = e.Key.ToKeyboardKeys(),
-			KeyChar = e.Key.ToChar(),
+			Keys = vk.ToKeyboardKeys(),
+			KeyChar = vk.ToChar(),
 		};
 	}
 }
