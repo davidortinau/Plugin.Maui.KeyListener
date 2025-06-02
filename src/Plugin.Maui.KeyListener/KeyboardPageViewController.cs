@@ -15,19 +15,25 @@ namespace Plugin.Maui.KeyListener
 
 		public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
-			ProcessPressses(presses, evt, false);
+			if (ProcessPresses(presses, evt, false))
+				return;
+
 			base.PressesBegan(presses, evt);
 		}
 
 		public override void PressesCancelled(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
-			ProcessPressses(presses, evt, true);
+			if (ProcessPresses(presses, evt, true))
+				return;
+
 			base.PressesCancelled(presses, evt);
 		}
 
 		public override void PressesEnded(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
-			ProcessPressses(presses, evt, true);
+			if (ProcessPresses(presses, evt, true))
+				return;
+
 			base.PressesEnded(presses, evt);
 		}
 
@@ -56,14 +62,15 @@ namespace Plugin.Maui.KeyListener
 			_keyboardBehaviors.RemoveAll(weakRef => !weakRef.TryGetTarget(out var target));
 		}
 
-		void ProcessPressses(NSSet<UIPress> presses, UIPressesEvent evt, bool isKeyUp)
+		bool ProcessPresses(NSSet<UIPress> presses, UIPressesEvent evt, bool isKeyUp)
 		{
 			CleanupTargets();
 
 			if (_keyboardBehaviors.Count == 0)
-				return;
+				return false;
 
 			var modifiers = evt.ModifierFlags.ToVirtualModifiers();
+			bool handled = false;
 
 			foreach (var press in presses)
 			{
@@ -86,9 +93,17 @@ namespace Plugin.Maui.KeyListener
 							target.RaiseKeyUp(eventArgs);
 						else
 							target.RaiseKeyDown(eventArgs);
+
+						if (eventArgs.Handled)
+						{
+							handled = true;
+							break;
+						}
 					}
 				}
 			}
+
+			return handled;
 		}
 	}
 }
