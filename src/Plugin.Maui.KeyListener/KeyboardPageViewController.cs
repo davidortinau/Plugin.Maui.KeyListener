@@ -13,6 +13,17 @@ namespace Plugin.Maui.KeyListener
 		internal KeyboardPageViewController(IView page, IMauiContext mauiContext)
 			: base(page, mauiContext) { }
 
+#if IOS // Workaround to allow receiving keys when the root page is a Shell
+		public override bool CanBecomeFirstResponder => true;
+
+		public override void ViewIsAppearing(bool animated)
+		{
+			base.ViewIsAppearing(animated);
+
+			BecomeFirstResponder();
+		}
+#endif
+
 		public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
 			if (ProcessPresses(presses, evt, false))
