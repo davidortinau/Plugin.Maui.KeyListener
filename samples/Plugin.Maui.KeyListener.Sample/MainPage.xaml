@@ -14,7 +14,7 @@
         <VerticalStackLayout Margin="20" Spacing="20">
             <Label FontAttributes="Bold" Text="Press any key to see the event details" />
 
-            <HorizontalStackLayout>
+			<HorizontalStackLayout Spacing="20">
                 <Label
                     FontAttributes="Bold"
                     HorizontalOptions="End"
@@ -33,7 +33,7 @@
                 </Entry>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout>
+			<HorizontalStackLayout Spacing="20">
                 <Label
                     FontAttributes="Bold"
                     HorizontalOptions="End"
