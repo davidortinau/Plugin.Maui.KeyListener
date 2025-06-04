@@ -55,7 +55,6 @@ public enum KeyboardKeys
     PrintScreen,
     ScrollLock,
     Pause,
-    Backquote,
     Minus,
     Equals,
     Backspace,

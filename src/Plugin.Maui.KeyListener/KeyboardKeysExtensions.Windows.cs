@@ -66,7 +66,6 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.PrintScreen => VirtualKey.Print,
 		KeyboardKeys.ScrollLock => VirtualKey.Scroll,
 		KeyboardKeys.Pause => VirtualKey.Pause,
-		KeyboardKeys.Backquote => (VirtualKey)VIRTUAL_KEY.VK_OEM_3,
 		KeyboardKeys.Minus => VirtualKey.Subtract, // -
 		KeyboardKeys.Equals => VirtualKey.Add, // =
 		KeyboardKeys.Backspace => VirtualKey.Back,
@@ -179,7 +178,7 @@ internal static partial class KeyboardKeysExtensions
 		VirtualKey.Print => KeyboardKeys.PrintScreen,
 		VirtualKey.Scroll => KeyboardKeys.ScrollLock,
 		VirtualKey.Pause => KeyboardKeys.Pause,
-		(VirtualKey)VIRTUAL_KEY.VK_OEM_3 => KeyboardKeys.Backquote,
+		(VirtualKey)VIRTUAL_KEY.VK_OEM_3 => KeyboardKeys.GraveAccent,
 		VirtualKey.Subtract => KeyboardKeys.Minus,
 		VirtualKey.Add => KeyboardKeys.Equals,
 		VirtualKey.Back => KeyboardKeys.Backspace,
