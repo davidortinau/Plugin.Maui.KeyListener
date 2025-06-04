@@ -15,6 +15,7 @@ public partial class MainPage : ContentPage
 		OutputLabel3.Text = string.Empty;
 		EntryTester1.Text = string.Empty;
 		EntryTester2.Text = string.Empty;
+		ButtonKeyFeedback.Text = string.Empty;
 	}
 
 	void OnKeyDown_Entry1(object sender, KeyPressedEventArgs e)
@@ -37,9 +38,16 @@ public partial class MainPage : ContentPage
 	{
 		string newValue = $"KeyPressed= {e.Keys}, Modifiers={e.Modifiers}";
 		OutputLabel3.Text = newValue + Environment.NewLine + OutputLabel3.Text;
-		//e.Handled = true;
+
 	}
 
 	
+	void OnKeyDown_ButtonTest(object sender, KeyPressedEventArgs e)
+	{
+		string newValue = $"KeyPressed= {e.Keys}, Modifiers={e.Modifiers}";
+		ButtonKeyFeedback.Text = newValue;
+		//e.Handled = true;
+	}
+
 
 }

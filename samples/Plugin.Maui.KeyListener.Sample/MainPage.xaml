@@ -12,29 +12,60 @@
 
     <ScrollView>
         <VerticalStackLayout Margin="20" Spacing="20">
-            <Label Text="Press any key to see the event details" />
-            <Button Clicked="ClearButton_Clicked" Text="Clear" />
-            <Entry
-                x:Name="EntryTester1"
-                BackgroundColor="LightBlue"
-                MinimumWidthRequest="400"
-                Placeholder="Text Test 1"
-                TextColor="Black">
-                <Entry.Behaviors>
-                    <keyListener:KeyboardBehavior KeyDown="OnKeyDown_Entry1" />
-                </Entry.Behaviors>
-            </Entry>
-            <Entry
-                x:Name="EntryTester2"
-                BackgroundColor="LightBlue"
-                MinimumWidthRequest="400"
-                Placeholder="Text Test 2"
-                TextColor="Black">
-                <Entry.Behaviors>
-                    <keyListener:KeyboardBehavior KeyDown="OnKeyDown_Entry2" />
-                </Entry.Behaviors>
-            </Entry>
-            <Button Text="Does Nothing, is tab stop" />
+            <Label FontAttributes="Bold" Text="Press any key to see the event details" />
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    HorizontalOptions="End"
+                    HorizontalTextAlignment="End"
+                    Text="First Entry Control"
+                    WidthRequest="300" />
+                <Entry
+                    x:Name="EntryTester1"
+                    BackgroundColor="LightBlue"
+                    MinimumWidthRequest="400"
+                    Placeholder="Text Test 1"
+                    TextColor="Black">
+                    <Entry.Behaviors>
+                        <keyListener:KeyboardBehavior KeyDown="OnKeyDown_Entry1" />
+                    </Entry.Behaviors>
+                </Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    HorizontalOptions="End"
+                    HorizontalTextAlignment="End"
+                    Text="Second Entry Control"
+                    WidthRequest="300" />
+                <Entry
+                    x:Name="EntryTester2"
+                    BackgroundColor="LightBlue"
+                    MinimumWidthRequest="400"
+                    Placeholder="Text Test 2"
+                    TextColor="Black">
+                    <Entry.Behaviors>
+                        <keyListener:KeyboardBehavior KeyDown="OnKeyDown_Entry2" />
+                    </Entry.Behaviors>
+                </Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="20">
+                <Button Text="KeyTest, Key Presses to the right--->">
+                    <Button.Behaviors>
+                        <keyListener:KeyboardBehavior KeyDown="OnKeyDown_ButtonTest" />
+                    </Button.Behaviors>
+                </Button>
+                <Entry
+                    x:Name="ButtonKeyFeedback"
+                    Width="400"
+                    IsReadOnly="True"
+                    Placeholder="read only" />
+                <Button Clicked="ClearButton_Clicked" Text="Clear" />
+            </HorizontalStackLayout>
+
             <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto,*">
                 <HorizontalStackLayout Grid.Row="0" Grid.Column="0">
                     <Label
@@ -49,20 +80,20 @@
                         HorizontalOptions="Start"
                         VerticalOptions="Center" />
                 </HorizontalStackLayout>
-	            <HorizontalStackLayout Grid.Row="0" Grid.Column="1">
-		            <Label
-			            FontAttributes="Bold"
-			            HorizontalOptions="Start"
-			            HorizontalTextAlignment="Start"
-			            Text="Toggle Handled: "
-			            VerticalOptions="Center"
-			            VerticalTextAlignment="Center" />
-		            <CheckBox
-			            x:Name="HandledCheckBox2"
-			            HorizontalOptions="Start"
-			            VerticalOptions="Center" />
-	            </HorizontalStackLayout>
-				<Label
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="1">
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Start"
+                        HorizontalTextAlignment="Start"
+                        Text="Toggle Handled: "
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+                    <CheckBox
+                        x:Name="HandledCheckBox2"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Label
                     Grid.Row="1"
                     Grid.Column="0"
                     FontAttributes="Bold"
