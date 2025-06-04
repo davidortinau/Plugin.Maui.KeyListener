@@ -12,6 +12,7 @@ public partial class MainPage : ContentPage
 	{
 		OutputLabel1.Text = string.Empty;
 		OutputLabel2.Text = string.Empty;
+		OutputLabel3.Text = string.Empty;
 		EntryTester1.Text = string.Empty;
 		EntryTester2.Text = string.Empty;
 	}
@@ -21,7 +22,7 @@ public partial class MainPage : ContentPage
 		string newValue = $"KeyPressed= {e.Keys}, Modifiers={e.Modifiers}";
 		EntryTester1.Text = newValue;
 		OutputLabel1.Text = newValue + Environment.NewLine + OutputLabel1.Text;
-		e.Handled = true;
+		e.Handled = HandledCheckBox1.IsChecked;
 	}
 
 	void OnKeyDown_Entry2(object sender, KeyPressedEventArgs e)
@@ -29,6 +30,16 @@ public partial class MainPage : ContentPage
 		string newValue = $"KeyPressed= {e.Keys}, Modifiers={e.Modifiers}";
 		EntryTester2.Text = newValue;
 		OutputLabel2.Text = newValue + Environment.NewLine + OutputLabel2.Text;
-		e.Handled = true;
+		e.Handled = HandledCheckBox2.IsChecked;
 	}
+
+	void OnKeyDown_MockGlobal(object sender, KeyPressedEventArgs e)
+	{
+		string newValue = $"KeyPressed= {e.Keys}, Modifiers={e.Modifiers}";
+		OutputLabel3.Text = newValue + Environment.NewLine + OutputLabel3.Text;
+		//e.Handled = true;
+	}
+
+	
+
 }

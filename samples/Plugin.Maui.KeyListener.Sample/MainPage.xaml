@@ -6,6 +6,10 @@
     xmlns:keyListener="clr-namespace:Plugin.Maui.KeyListener;assembly=Plugin.Maui.KeyListener"
     Title="Feature Plugin">
 
+    <ContentPage.Behaviors>
+        <keyListener:KeyboardBehavior KeyDown="OnKeyDown_MockGlobal" />
+    </ContentPage.Behaviors>
+
     <ScrollView>
         <VerticalStackLayout Margin="20" Spacing="20">
             <Label Text="Press any key to see the event details" />
@@ -31,24 +35,60 @@
                 </Entry.Behaviors>
             </Entry>
             <Button Text="Does Nothing, is tab stop" />
-            <Grid ColumnDefinitions="*,50,*" Grid.RowDefinitions="Auto,*">
-                <Label
-                    Grid.Row="0"
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto,*">
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="0">
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Start"
+                        HorizontalTextAlignment="Start"
+                        Text="Toggle Handled: "
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+                    <CheckBox
+                        x:Name="HandledCheckBox1"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+	            <HorizontalStackLayout Grid.Row="0" Grid.Column="1">
+		            <Label
+			            FontAttributes="Bold"
+			            HorizontalOptions="Start"
+			            HorizontalTextAlignment="Start"
+			            Text="Toggle Handled: "
+			            VerticalOptions="Center"
+			            VerticalTextAlignment="Center" />
+		            <CheckBox
+			            x:Name="HandledCheckBox2"
+			            HorizontalOptions="Start"
+			            VerticalOptions="Center" />
+	            </HorizontalStackLayout>
+				<Label
+                    Grid.Row="1"
                     Grid.Column="0"
                     FontAttributes="Bold"
                     Text="First Entry Output" />
                 <Label
-                    Grid.Row="0"
-                    Grid.Column="2"
+                    Grid.Row="1"
+                    Grid.Column="1"
                     FontAttributes="Bold"
                     Text="Second Entry Output" />
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    FontAttributes="Bold"
+                    Text="Page Level Keyboard Output" />
                 <Label
                     x:Name="OutputLabel1"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Grid.Column="0" />
                 <Label
                     x:Name="OutputLabel2"
-                    Grid.Row="1"
+                    Grid.Row="2"
+                    Grid.Column="1" />
+                <Label
+                    x:Name="OutputLabel3"
+                    Grid.Row="2"
                     Grid.Column="2" />
             </Grid>
 
