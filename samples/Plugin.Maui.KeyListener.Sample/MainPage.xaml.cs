@@ -21,7 +21,7 @@ public partial class MainPage : ContentPage
 
 	void PrependOutput(string eventName, KeyPressedEventArgs e)
 	{
-		OutputLabel.Text = $"{eventName}: {e.Modifiers} {e.Keys} {e.KeyChar}" + Environment.NewLine + OutputLabel.Text;
+		OutputLabel.Text = $"{eventName}: {e.Modifiers} {e.Key} {e.KeyChar}" + Environment.NewLine + OutputLabel.Text;
 	}
 
 	void ClearButton_Clicked(object sender, EventArgs e)

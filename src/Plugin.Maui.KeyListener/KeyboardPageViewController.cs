@@ -92,7 +92,7 @@ namespace Plugin.Maui.KeyListener
 				var eventArgs = new KeyPressedEventArgs
 				{
 					Modifiers = modifiers,
-					Keys = key.KeyCode.ToKeyboardKeys(),
+					Key = key.KeyCode.ToKeyboardKeys(),
 					KeyChar = characters.Length == 1 ? char.ToUpperInvariant(characters[0]) : default,
 				};
 

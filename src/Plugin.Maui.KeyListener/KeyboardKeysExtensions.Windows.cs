@@ -238,7 +238,7 @@ internal static partial class KeyboardKeysExtensions
 		return new KeyPressedEventArgs
 		{
 			Modifiers = virtualKeyModifiers.ToKeyboardModifiers(),
-			Keys = vk.ToKeyboardKeys(),
+			Key = vk.ToKeyboardKeys(),
 			KeyChar = vk.ToChar(),
 		};
 	}
