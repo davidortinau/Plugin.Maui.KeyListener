@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Window = Microsoft.UI.Xaml.Window;
 
 namespace Plugin.Maui.KeyListener;
 
@@ -17,8 +18,12 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 	{
 		base.OnAttachedTo(bindable, platformView);
 
-		var window = bindable.Window.Handler.PlatformView as Microsoft.UI.Xaml.Window;
-		if (bindable.Window?.Handler?.PlatformView is Microsoft.UI.Xaml.Window win && win.Content is UIElement content)
+		var window = bindable?.Window?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
+
+		if (window == null)
+			return;
+
+		if (bindable.Handler?.PlatformView is UIElement content)
 		{
 			_content = content;
 			_content.KeyDown += OnKeyDown;
