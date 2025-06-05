@@ -47,10 +47,10 @@ namespace Plugin.Maui.KeyListener
 
 		static Page? GetParentPage(VisualElement element)
 		{
-			if (element is Page)
-				return element as Page;
+			if (element is Page page)
+				return page;
 
-			Element currentElement = element;
+			Element currentElement = element.Parent;
 
 			while (currentElement != null && currentElement is not Page)
 				currentElement = currentElement.Parent;
