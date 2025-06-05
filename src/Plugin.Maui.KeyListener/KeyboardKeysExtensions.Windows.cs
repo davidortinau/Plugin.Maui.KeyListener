@@ -119,6 +119,7 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.Comma => (VirtualKey)VIRTUAL_KEY.VK_OEM_COMMA,
 		KeyboardKeys.Period => (VirtualKey)VIRTUAL_KEY.VK_OEM_PERIOD,
 		KeyboardKeys.Slash => (VirtualKey)VIRTUAL_KEY.VK_OEM_2,
+		KeyboardKeys.Application => VirtualKey.Application,
 		_ => VirtualKey.None
 	};
 
@@ -227,6 +228,7 @@ internal static partial class KeyboardKeysExtensions
 		(VirtualKey)VIRTUAL_KEY.VK_OEM_COMMA => KeyboardKeys.Comma,
 		(VirtualKey)VIRTUAL_KEY.VK_OEM_PERIOD => KeyboardKeys.Period,
 		(VirtualKey)VIRTUAL_KEY.VK_OEM_2 => KeyboardKeys.Slash,
+		VirtualKey.Application => KeyboardKeys.Application,
 		_ => KeyboardKeys.None
 	};
 

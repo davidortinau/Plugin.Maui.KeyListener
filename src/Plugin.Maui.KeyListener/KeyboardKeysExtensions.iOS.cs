@@ -116,6 +116,7 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.Comma => UIKeyboardHidUsage.KeyboardComma,
 		KeyboardKeys.Period => UIKeyboardHidUsage.KeyboardPeriod,
 		KeyboardKeys.Slash => UIKeyboardHidUsage.KeyboardSlash,
+		KeyboardKeys.Application => UIKeyboardHidUsage.KeyboardApplication,
 		_ => 0
 	};
 
@@ -222,6 +223,7 @@ internal static partial class KeyboardKeysExtensions
 		UIKeyboardHidUsage.KeyboardComma => KeyboardKeys.Comma,
 		UIKeyboardHidUsage.KeyboardPeriod => KeyboardKeys.Period,
 		UIKeyboardHidUsage.KeyboardSlash => KeyboardKeys.Slash,
+		UIKeyboardHidUsage.KeyboardApplication => KeyboardKeys.Application,
 		_ => KeyboardKeys.None
 	};
 }

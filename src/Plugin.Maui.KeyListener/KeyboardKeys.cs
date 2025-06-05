@@ -108,4 +108,5 @@ public enum KeyboardKeys
     Comma,
     Period,
     Slash,
+    Application,
 }

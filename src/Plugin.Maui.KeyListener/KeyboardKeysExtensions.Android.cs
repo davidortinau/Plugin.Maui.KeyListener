@@ -112,6 +112,7 @@ internal static partial class KeyboardKeysExtensions
         KeyboardKeys.Comma => Keycode.Comma,
         KeyboardKeys.Period => Keycode.Period,
         KeyboardKeys.Slash => Keycode.Slash,
+        KeyboardKeys.Application => Keycode.Menu,
         _ => Keycode.Unknown
     };
 
@@ -221,6 +222,7 @@ internal static partial class KeyboardKeysExtensions
         Keycode.Comma => KeyboardKeys.Comma,
         Keycode.Period => KeyboardKeys.Period,
         Keycode.Slash => KeyboardKeys.Slash,
+        Keycode.Menu => KeyboardKeys.Application,
         _ => KeyboardKeys.None
     };
 }
