@@ -55,7 +55,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		{
 			Keys = @event.KeyCode.ToKeyboardKeys(),
 			Modifiers = KeyboardModifiersExtensions.ToKeyboardModifiers(@event.MetaState),
-			KeyChar = (char)@event.UnicodeChar
+			KeyChar = char.ToUpper((char)@event.UnicodeChar)
 		};
 
 		switch (@event.Action)
