@@ -63,7 +63,7 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.F10 => VirtualKey.F10,
 		KeyboardKeys.F11 => VirtualKey.F11,
 		KeyboardKeys.F12 => VirtualKey.F12,
-		KeyboardKeys.PrintScreen => VirtualKey.Print,
+		KeyboardKeys.PrintScreen => VirtualKey.Snapshot,
 		KeyboardKeys.ScrollLock => VirtualKey.Scroll,
 		KeyboardKeys.Pause => VirtualKey.Pause,
 		KeyboardKeys.Minus => VirtualKey.Subtract, // -
@@ -174,7 +174,7 @@ internal static partial class KeyboardKeysExtensions
 		VirtualKey.F10 => KeyboardKeys.F10,
 		VirtualKey.F11 => KeyboardKeys.F11,
 		VirtualKey.F12 => KeyboardKeys.F12,
-		VirtualKey.Print => KeyboardKeys.PrintScreen,
+		VirtualKey.Snapshot => KeyboardKeys.PrintScreen,
 		VirtualKey.Scroll => KeyboardKeys.ScrollLock,
 		VirtualKey.Pause => KeyboardKeys.Pause,
 		(VirtualKey)VIRTUAL_KEY.VK_OEM_3 => KeyboardKeys.GraveAccent,
