@@ -227,12 +227,25 @@ internal static partial class KeyboardKeysExtensions
 		_ => KeyboardKeys.None
 	};
 
+	static bool IsModifierKey(this VirtualKey key) => key is
+		VirtualKey.Shift or
+		VirtualKey.LeftShift or
+		VirtualKey.RightShift or
+		VirtualKey.Control or
+		VirtualKey.LeftControl or
+		VirtualKey.RightControl or
+		VirtualKey.Menu or
+		VirtualKey.LeftMenu or
+		VirtualKey.RightMenu or
+		VirtualKey.LeftWindows or
+		VirtualKey.RightWindows;
+
 	public static char ToChar(this VirtualKey key) => (char)Windows.Win32.PInvoke.MapVirtualKey((uint)key, MAP_VIRTUAL_KEY_TYPE.MAPVK_VK_TO_CHAR);
 
 	internal static KeyPressedEventArgs ToKeyPressedEventArgs(this KeyRoutedEventArgs e)
 	{
 		VirtualKeyModifiers virtualKeyModifiers = KeyboardModifiersExtensions.GetVirtualKeyModifiers();
-		var vk = (VirtualKey)Windows.Win32.PInvoke.MapVirtualKey(e.KeyStatus.ScanCode, MAP_VIRTUAL_KEY_TYPE.MAPVK_VSC_TO_VK_EX);
+		var vk = e.Key.IsModifierKey() ? (VirtualKey)Windows.Win32.PInvoke.MapVirtualKey(e.KeyStatus.ScanCode, MAP_VIRTUAL_KEY_TYPE.MAPVK_VSC_TO_VK_EX) : e.Key;
 		return new KeyPressedEventArgs
 		{
 			Modifiers = virtualKeyModifiers.ToKeyboardModifiers(),
