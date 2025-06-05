@@ -1,7 +1,7 @@
 ﻿namespace Plugin.Maui.KeyListener;
 
 [ContentProperty(nameof(Modifiers))]
-public sealed class KeyboardModifiersExtension : IMarkupExtension
+public sealed class KeyboardModifiersMarkupExtension : IMarkupExtension
 {
     public string Modifiers { get; set; }
 
@@ -22,16 +22,5 @@ public sealed class KeyboardModifiersExtension : IMarkupExtension
         }
 
         return combinedFlag;
-    }
-}
-
-[ContentProperty(nameof(Keys))]
-public sealed class KeyboardKeysExtension : IMarkupExtension
-{
-    public string Keys { get; set; }
-
-    public object ProvideValue(IServiceProvider serviceProvider)
-    {
-        return Enum.TryParse(typeof(KeyboardKeys), Keys, out var enumValue) ? enumValue : KeyboardKeys.None;
     }
 }

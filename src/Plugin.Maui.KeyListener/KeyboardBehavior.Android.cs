@@ -53,7 +53,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 
 		var args = new KeyPressedEventArgs
 		{
-			Keys = @event.KeyCode.ToKeyboardKeys(),
+			Key = @event.KeyCode.ToKeyboardKeys(),
 			Modifiers = KeyboardModifiersExtensions.ToKeyboardModifiers(@event.MetaState),
 			KeyChar = (char)@event.UnicodeChar
 		};

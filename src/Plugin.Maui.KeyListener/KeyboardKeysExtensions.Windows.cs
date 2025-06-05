@@ -63,10 +63,9 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.F10 => VirtualKey.F10,
 		KeyboardKeys.F11 => VirtualKey.F11,
 		KeyboardKeys.F12 => VirtualKey.F12,
-		KeyboardKeys.PrintScreen => VirtualKey.Print,
+		KeyboardKeys.PrintScreen => VirtualKey.Snapshot,
 		KeyboardKeys.ScrollLock => VirtualKey.Scroll,
 		KeyboardKeys.Pause => VirtualKey.Pause,
-		KeyboardKeys.Backquote => (VirtualKey)VIRTUAL_KEY.VK_OEM_3,
 		KeyboardKeys.Minus => VirtualKey.Subtract, // -
 		KeyboardKeys.Equals => VirtualKey.Add, // =
 		KeyboardKeys.Backspace => VirtualKey.Back,
@@ -119,8 +118,8 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.GraveAccent => (VirtualKey)VIRTUAL_KEY.VK_OEM_3,
 		KeyboardKeys.Comma => (VirtualKey)VIRTUAL_KEY.VK_OEM_COMMA,
 		KeyboardKeys.Period => (VirtualKey)VIRTUAL_KEY.VK_OEM_PERIOD,
-		KeyboardKeys.Slash => VirtualKey.Divide,
-		KeyboardKeys.NumPadDecimal => VirtualKey.Delete,
+		KeyboardKeys.Slash => (VirtualKey)VIRTUAL_KEY.VK_OEM_2,
+		KeyboardKeys.Application => VirtualKey.Application,
 		_ => VirtualKey.None
 	};
 
@@ -176,12 +175,12 @@ internal static partial class KeyboardKeysExtensions
 		VirtualKey.F10 => KeyboardKeys.F10,
 		VirtualKey.F11 => KeyboardKeys.F11,
 		VirtualKey.F12 => KeyboardKeys.F12,
-		VirtualKey.Print => KeyboardKeys.PrintScreen,
+		VirtualKey.Snapshot => KeyboardKeys.PrintScreen,
 		VirtualKey.Scroll => KeyboardKeys.ScrollLock,
 		VirtualKey.Pause => KeyboardKeys.Pause,
-		(VirtualKey)VIRTUAL_KEY.VK_OEM_3 => KeyboardKeys.Backquote,
-		VirtualKey.Subtract => KeyboardKeys.Minus,
-		VirtualKey.Add => KeyboardKeys.Equals,
+		(VirtualKey)VIRTUAL_KEY.VK_OEM_3 => KeyboardKeys.GraveAccent,
+		(VirtualKey)VIRTUAL_KEY.VK_OEM_MINUS => KeyboardKeys.Minus,
+		(VirtualKey)VIRTUAL_KEY.VK_OEM_PLUS => KeyboardKeys.Equals, // VK_OEM_PLUS is the same as the Equals key
 		VirtualKey.Back => KeyboardKeys.Backspace,
 		VirtualKey.Tab => KeyboardKeys.Tab,
 		(VirtualKey)VIRTUAL_KEY.VK_OEM_4 => KeyboardKeys.LeftBracket,
@@ -213,6 +212,8 @@ internal static partial class KeyboardKeysExtensions
 		VirtualKey.NumberKeyLock => KeyboardKeys.NumLock,
 		VirtualKey.Divide => KeyboardKeys.NumPadDivide,
 		VirtualKey.Multiply => KeyboardKeys.NumPadMultiply,
+		VirtualKey.Subtract => KeyboardKeys.NumPadMinus,
+		VirtualKey.Add => KeyboardKeys.NumPadPlus,
 		VirtualKey.NumberPad0 => KeyboardKeys.NumPad0,
 		VirtualKey.NumberPad1 => KeyboardKeys.NumPad1,
 		VirtualKey.NumberPad2 => KeyboardKeys.NumPad2,
@@ -226,19 +227,34 @@ internal static partial class KeyboardKeysExtensions
 		VirtualKey.Decimal => KeyboardKeys.NumPadPeriod,
 		(VirtualKey)VIRTUAL_KEY.VK_OEM_COMMA => KeyboardKeys.Comma,
 		(VirtualKey)VIRTUAL_KEY.VK_OEM_PERIOD => KeyboardKeys.Period,
+		(VirtualKey)VIRTUAL_KEY.VK_OEM_2 => KeyboardKeys.Slash,
+		VirtualKey.Application => KeyboardKeys.Application,
 		_ => KeyboardKeys.None
 	};
+
+	static bool IsModifierKey(this VirtualKey key) => key is
+		VirtualKey.Shift or
+		VirtualKey.LeftShift or
+		VirtualKey.RightShift or
+		VirtualKey.Control or
+		VirtualKey.LeftControl or
+		VirtualKey.RightControl or
+		VirtualKey.Menu or
+		VirtualKey.LeftMenu or
+		VirtualKey.RightMenu or
+		VirtualKey.LeftWindows or
+		VirtualKey.RightWindows;
 
 	public static char ToChar(this VirtualKey key) => (char)Windows.Win32.PInvoke.MapVirtualKey((uint)key, MAP_VIRTUAL_KEY_TYPE.MAPVK_VK_TO_CHAR);
 
 	internal static KeyPressedEventArgs ToKeyPressedEventArgs(this KeyRoutedEventArgs e)
 	{
 		VirtualKeyModifiers virtualKeyModifiers = KeyboardModifiersExtensions.GetVirtualKeyModifiers();
-		var vk = (VirtualKey)Windows.Win32.PInvoke.MapVirtualKey(e.KeyStatus.ScanCode, MAP_VIRTUAL_KEY_TYPE.MAPVK_VSC_TO_VK_EX);
+		var vk = e.Key.IsModifierKey() ? (VirtualKey)Windows.Win32.PInvoke.MapVirtualKey(e.KeyStatus.ScanCode, MAP_VIRTUAL_KEY_TYPE.MAPVK_VSC_TO_VK_EX) : e.Key;
 		return new KeyPressedEventArgs
 		{
 			Modifiers = virtualKeyModifiers.ToKeyboardModifiers(),
-			Keys = vk.ToKeyboardKeys(),
+			Key = vk.ToKeyboardKeys(),
 			KeyChar = vk.ToChar(),
 		};
 	}

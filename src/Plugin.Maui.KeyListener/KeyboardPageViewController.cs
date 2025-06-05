@@ -6,7 +6,7 @@ using UIKit;
 
 namespace Plugin.Maui.KeyListener
 {
-	public class KeyboardPageViewController : PageViewController
+	internal sealed class KeyboardPageViewController : PageViewController
 	{
 		readonly List<WeakReference<KeyboardBehavior>> _keyboardBehaviors = new();
 
@@ -92,7 +92,7 @@ namespace Plugin.Maui.KeyListener
 				var eventArgs = new KeyPressedEventArgs
 				{
 					Modifiers = modifiers,
-					Keys = key.KeyCode.ToKeyboardKeys(),
+					Key = key.KeyCode.ToKeyboardKeys(),
 					KeyChar = characters.Length == 1 ? char.ToUpperInvariant(characters[0]) : default,
 				};
 
