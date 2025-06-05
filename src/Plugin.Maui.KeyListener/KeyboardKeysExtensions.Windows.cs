@@ -118,7 +118,7 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.GraveAccent => (VirtualKey)VIRTUAL_KEY.VK_OEM_3,
 		KeyboardKeys.Comma => (VirtualKey)VIRTUAL_KEY.VK_OEM_COMMA,
 		KeyboardKeys.Period => (VirtualKey)VIRTUAL_KEY.VK_OEM_PERIOD,
-		KeyboardKeys.Slash => VirtualKey.Divide,
+		KeyboardKeys.Slash => (VirtualKey)VIRTUAL_KEY.VK_OEM_2,
 		_ => VirtualKey.None
 	};
 
@@ -224,6 +224,7 @@ internal static partial class KeyboardKeysExtensions
 		VirtualKey.Decimal => KeyboardKeys.NumPadPeriod,
 		(VirtualKey)VIRTUAL_KEY.VK_OEM_COMMA => KeyboardKeys.Comma,
 		(VirtualKey)VIRTUAL_KEY.VK_OEM_PERIOD => KeyboardKeys.Period,
+		(VirtualKey)VIRTUAL_KEY.VK_OEM_2 => KeyboardKeys.Slash,
 		_ => KeyboardKeys.None
 	};
 
