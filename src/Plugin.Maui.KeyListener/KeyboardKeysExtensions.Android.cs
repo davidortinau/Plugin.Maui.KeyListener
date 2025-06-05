@@ -112,7 +112,6 @@ internal static partial class KeyboardKeysExtensions
         KeyboardKeys.Comma => Keycode.Comma,
         KeyboardKeys.Period => Keycode.Period,
         KeyboardKeys.Slash => Keycode.Slash,
-        KeyboardKeys.NumPadDecimal => Keycode.NumpadDot,
         _ => Keycode.Unknown
     };
 

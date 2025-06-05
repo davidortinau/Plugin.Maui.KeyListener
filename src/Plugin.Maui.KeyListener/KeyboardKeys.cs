@@ -108,5 +108,4 @@ public enum KeyboardKeys
     Comma,
     Period,
     Slash,
-    NumPadDecimal
 }

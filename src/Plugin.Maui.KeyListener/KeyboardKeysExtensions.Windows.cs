@@ -119,7 +119,6 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.Comma => (VirtualKey)VIRTUAL_KEY.VK_OEM_COMMA,
 		KeyboardKeys.Period => (VirtualKey)VIRTUAL_KEY.VK_OEM_PERIOD,
 		KeyboardKeys.Slash => VirtualKey.Divide,
-		KeyboardKeys.NumPadDecimal => VirtualKey.Delete,
 		_ => VirtualKey.None
 	};
 

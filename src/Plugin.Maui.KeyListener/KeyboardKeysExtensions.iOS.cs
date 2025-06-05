@@ -116,7 +116,6 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.Comma => UIKeyboardHidUsage.KeyboardComma,
 		KeyboardKeys.Period => UIKeyboardHidUsage.KeyboardPeriod,
 		KeyboardKeys.Slash => UIKeyboardHidUsage.KeyboardSlash,
-		KeyboardKeys.NumPadDecimal => UIKeyboardHidUsage.KeypadPeriod,
 		_ => 0
 	};
 
