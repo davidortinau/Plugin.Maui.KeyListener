@@ -18,6 +18,8 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 	{
 		base.OnAttachedTo(bindable, platformView);
 
+		ScopedElement = bindable;
+
 		var window = bindable?.Window?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
 
 		if (window == null)
@@ -28,8 +30,6 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 			_content = content;
 			_content.KeyDown += OnKeyDown;
 			_content.KeyUp += OnKeyUp;
-			_content.PreviewKeyDown += OnPreviewKeyDown;
-			_content.PreviewKeyUp += OnPreviewKeyUp;
 		}
 	}
 
@@ -42,14 +42,9 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 
 		_content.KeyDown -= OnKeyDown;
 		_content.KeyUp -= OnKeyUp;
-		_content.PreviewKeyDown -= OnPreviewKeyDown;
-		_content.PreviewKeyUp -= OnPreviewKeyUp;
 		_content = null;
-	}
 
-	void OnWindowKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
-	{
-		Console.WriteLine($"OnWindowKeyDown {e.Key}");
+		ScopedElement = null;
 	}
 
 	void OnKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -58,15 +53,6 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		this.RaiseKeyDown(eventArgs);
 		if (eventArgs.Handled)
 			e.Handled = true;
-	}
-	void OnPreviewKeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
-	{
-		Console.WriteLine($"OnPreviewKeyUp {e.Key}");
-	}
-
-	void OnPreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
-	{
-		Console.WriteLine($"OnPreviewKeyDown {e.Key}");
 	}
 
 	void OnKeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
