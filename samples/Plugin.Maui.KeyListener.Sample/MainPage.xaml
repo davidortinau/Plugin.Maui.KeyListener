@@ -14,13 +14,13 @@
         <VerticalStackLayout Margin="20" Spacing="20">
             <Label FontAttributes="Bold" Text="Press any key to see the event details" />
 
-			<HorizontalStackLayout Spacing="20">
+            <HorizontalStackLayout Spacing="20">
                 <Label
                     FontAttributes="Bold"
                     HorizontalOptions="End"
                     HorizontalTextAlignment="End"
                     Text="First Entry Control"
-                    WidthRequest="300" />
+                    WidthRequest="200" />
                 <Entry
                     x:Name="EntryTester1"
                     BackgroundColor="LightBlue"
@@ -33,13 +33,13 @@
                 </Entry>
             </HorizontalStackLayout>
 
-			<HorizontalStackLayout Spacing="20">
+            <HorizontalStackLayout Spacing="20">
                 <Label
                     FontAttributes="Bold"
                     HorizontalOptions="End"
                     HorizontalTextAlignment="End"
                     Text="Second Entry Control"
-                    WidthRequest="300" />
+                    WidthRequest="200" />
                 <Entry
                     x:Name="EntryTester2"
                     BackgroundColor="LightBlue"
@@ -53,7 +53,7 @@
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Spacing="20">
-                <Button Text="KeyTest, Key Presses to the right--->">
+                <Button Text="KeyTest, Key Presses to the right---&gt;">
                     <Button.Behaviors>
                         <keyListener:KeyboardBehavior KeyDown="OnKeyDown_ButtonTest" />
                     </Button.Behaviors>

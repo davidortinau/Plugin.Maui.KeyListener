@@ -36,9 +36,8 @@ public partial class MainPage : ContentPage
 
 	void OnKeyDown_MockGlobal(object sender, KeyPressedEventArgs e)
 	{
-		string newValue = $"KeyPressed= {e.Keys}, Modifiers={e.Modifiers}";
+		string newValue = $"KeyPressed= {e.Keys}, Modifiers={e.Modifiers}, Handled={e.Handled}";
 		OutputLabel3.Text = newValue + Environment.NewLine + OutputLabel3.Text;
-
 	}
 
 	
@@ -48,6 +47,4 @@ public partial class MainPage : ContentPage
 		ButtonKeyFeedback.Text = newValue;
 		//e.Handled = true;
 	}
-
-
 }
