@@ -1,0 +1,95 @@
+﻿<ContentView
+    x:Class="Plugin.Maui.KeyListener.Sample.Controls.NavigableUserControl"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:keyListener="clr-namespace:Plugin.Maui.KeyListener;assembly=Plugin.Maui.KeyListener"
+    x:Name="this"
+    HeightRequest="100"
+    WidthRequest="300">
+	<ContentView.GestureRecognizers>
+		<TapGestureRecognizer Tapped="OnTapped" />
+	</ContentView.GestureRecognizers>
+	<ContentView.Behaviors>
+		<keyListener:KeyboardBehavior KeyDown="OnKeyDown" />
+	</ContentView.Behaviors>
+
+	<Grid
+        x:Name="Layout"
+        BindingContext="{x:Reference this}"
+        ColumnDefinitions="3,*"
+        ColumnSpacing="0"
+        MinimumHeightRequest="40"
+        MinimumWidthRequest="100"
+        VerticalOptions="Fill">
+		<Border
+            Grid.Column="1"
+            BackgroundColor="Transparent"
+            HorizontalOptions="Fill"
+            Stroke="LightGreen"
+            StrokeThickness="1"
+            VerticalOptions="Fill">
+			<VerticalStackLayout HorizontalOptions="Fill" VerticalOptions="Start">
+				<Label
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Text="{Binding Path=Text}"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+				<HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+					<Label
+                        HorizontalOptions="Center"
+                        Text="LastKeyPressed:   "
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+					<Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Text="{Binding LastKeyPressed}"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+				</HorizontalStackLayout>
+				<HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+					<Label
+                        HorizontalOptions="Center"
+                        Text="IsFocused:   "
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+					<Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Text="{Binding IsFocused}"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+				</HorizontalStackLayout>
+			</VerticalStackLayout>
+		</Border>
+		<Border
+            x:Name="ControlFocusOverlayBorder"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            IsVisible="{Binding IsFocused}"
+            Stroke="Red"
+            StrokeShape="RoundRectangle 0,3,0,3"
+            StrokeThickness="2" />
+
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroupList>
+				<VisualStateGroup Name="CommonStates">
+					<VisualState Name="Normal">
+						<VisualState.Setters>
+							<Setter Property="BackgroundColor" Value="White" />
+						</VisualState.Setters>
+					</VisualState>
+					<VisualState Name="PointerOver">
+						<VisualState.Setters>
+							<Setter Property="Background" Value="LightCoral" />
+						</VisualState.Setters>
+					</VisualState>
+				</VisualStateGroup>
+			</VisualStateGroupList>
+		</VisualStateManager.VisualStateGroups>
+	</Grid>
+
+
+
+</ContentView>

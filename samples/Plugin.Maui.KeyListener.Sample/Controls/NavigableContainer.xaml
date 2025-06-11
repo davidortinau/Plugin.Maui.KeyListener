@@ -1,0 +1,17 @@
+﻿<ContentView
+    x:Class="Plugin.Maui.KeyListener.Sample.Controls.NavigableContainer"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="using:Plugin.Maui.KeyListener.Sample.Controls"
+    xmlns:keyListener="clr-namespace:Plugin.Maui.KeyListener;assembly=Plugin.Maui.KeyListener">
+    <ContentView.Behaviors>
+        <keyListener:KeyboardBehavior KeyDown="OnKeyDown" />
+    </ContentView.Behaviors>
+
+    <VerticalStackLayout
+        x:Name="NavContainer"
+        HorizontalOptions="Start"
+        Spacing="10">
+    </VerticalStackLayout>
+
+</ContentView>

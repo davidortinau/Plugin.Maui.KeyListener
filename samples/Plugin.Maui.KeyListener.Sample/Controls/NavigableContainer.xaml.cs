@@ -1,0 +1,56 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Plugin.Maui.KeyListener.Sample.Controls;
+
+public partial class NavigableContainer : ContentView
+{
+	public NavigableContainer()
+	{
+		InitializeComponent();
+
+		Loaded += OnLoaded;
+	}
+
+	private void OnLoaded(object sender, EventArgs e)
+	{
+		for (int i = 1; i < 5; i++)
+		{
+			NavContainer.Add(new NavigableUserControl(){Text=$"Nav Control {i}"});
+		}
+		Loaded -= OnLoaded;
+	}
+
+	public void OnKeyDown(object sender, KeyPressedEventArgs e)
+	{
+		NavigableUserControl currentlyActiveControl =
+			(NavigableUserControl)NavContainer.Children.FirstOrDefault(o => o.IsFocused == true);
+
+		if (currentlyActiveControl == null)
+		{
+			return;
+		}
+
+		int currentIndex = NavContainer.Children.IndexOf(currentlyActiveControl);
+
+		if (e.Keys == KeyboardKeys.UpArrow)
+		{
+			//navigate up
+			if (currentIndex > 0)
+			{
+				NavContainer.Children[currentIndex - 1].Focus();
+			}
+		}
+		else if (e.Keys == KeyboardKeys.DownArrow)
+		{
+			//navigate down
+			if (currentIndex < NavContainer.Count - 1)
+			{
+				NavContainer.Children[currentIndex + 1].Focus();
+			}
+		}
+	}
+}
