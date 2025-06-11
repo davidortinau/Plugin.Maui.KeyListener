@@ -6,9 +6,11 @@
     x:Name="this"
     HeightRequest="100"
     WidthRequest="300">
+
 	<ContentView.GestureRecognizers>
 		<TapGestureRecognizer Tapped="OnTapped" />
 	</ContentView.GestureRecognizers>
+
 	<ContentView.Behaviors>
 		<keyListener:KeyboardBehavior KeyDown="OnKeyDown" />
 	</ContentView.Behaviors>
@@ -61,6 +63,15 @@
                         TextColor="Black"
                         VerticalOptions="Center" />
 				</HorizontalStackLayout>
+				<HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+					<Label
+						HorizontalOptions="Center"
+						Text="Hit Space to Activate:  "
+						TextColor="Black"
+						VerticalOptions="Center" />
+					<CheckBox x:Name="SpaceKeyActivatedCheckbox" IsEnabled="False"/>
+				</HorizontalStackLayout>
+
 			</VerticalStackLayout>
 		</Border>
 		<Border

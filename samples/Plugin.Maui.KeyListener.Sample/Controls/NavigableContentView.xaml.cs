@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-#if WINDOWS
+﻿#if WINDOWS
 using Microsoft.UI.Xaml;
 #endif
-
 
 namespace Plugin.Maui.KeyListener.Sample.Controls;
 
@@ -51,8 +45,6 @@ public partial class NavigableContentView : ContentView
 	}
 
 
-
-
 	public NavigableContentView()
 	{
 		InitializeComponent();
@@ -72,19 +64,24 @@ public partial class NavigableContentView : ContentView
 			nativeElement.IsTabStop = true;
 		}
 #endif
+		//TODO:  How do we make the Mac/IOS focusable ???
 	}
 
 	public void OnKeyDown(object sender, KeyPressedEventArgs e)
 	{
 		LastKeyPressed = $"Key={e.Keys}, Modifiers={e.Modifiers}";
-		e.Handled = false;
+
+		if (e.Keys == KeyboardKeys.Space)
+		{
+			SpaceKeyActivatedCheckbox.IsChecked = !SpaceKeyActivatedCheckbox.IsChecked;
+		}
 	}
 
 	protected void OnTapped(object sender, TappedEventArgs e)
 	{
-		Focus();
+		if (IsFocused == false)
+		{
+			Focus();
+		}
 	}
-
-
-
 }

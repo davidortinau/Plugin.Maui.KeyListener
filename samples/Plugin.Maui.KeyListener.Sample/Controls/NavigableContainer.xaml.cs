@@ -15,7 +15,7 @@ public partial class NavigableContainer : ContentView
 		Loaded += OnLoaded;
 	}
 
-	private void OnLoaded(object sender, EventArgs e)
+	protected void OnLoaded(object sender, EventArgs e)
 	{
 		for (int i = 1; i < 5; i++)
 		{
