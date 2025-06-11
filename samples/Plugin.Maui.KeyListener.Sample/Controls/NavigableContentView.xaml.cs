@@ -10,12 +10,12 @@ using Microsoft.UI.Xaml;
 
 namespace Plugin.Maui.KeyListener.Sample.Controls;
 
-public partial class NavigableUserControl : ContentView
+public partial class NavigableContentView : ContentView
 {
 	public static readonly BindableProperty TextProperty =
 		BindableProperty.Create(nameof(Text),
 			typeof(string),
-			typeof(NavigableUserControl),
+			typeof(NavigableContentView),
 			string.Empty);
 
 	public string Text
@@ -28,7 +28,7 @@ public partial class NavigableUserControl : ContentView
 	public static readonly BindableProperty LastKeyPressedProperty =
 		BindableProperty.Create(nameof(LastKeyPressed),
 			typeof(string),
-			typeof(NavigableUserControl),
+			typeof(NavigableContentView),
 			string.Empty);
 
 	public string LastKeyPressed
@@ -40,7 +40,7 @@ public partial class NavigableUserControl : ContentView
 	public static readonly BindableProperty FocusStateTextProperty =
 		BindableProperty.Create(nameof(FocusStateText),
 			typeof(string),
-			typeof(NavigableUserControl),
+			typeof(NavigableContentView),
 			string.Empty);
 
 
@@ -53,7 +53,7 @@ public partial class NavigableUserControl : ContentView
 
 
 
-	public NavigableUserControl()
+	public NavigableContentView()
 	{
 		InitializeComponent();
 

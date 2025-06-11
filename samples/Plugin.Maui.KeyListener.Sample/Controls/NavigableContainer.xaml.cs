@@ -19,15 +19,15 @@ public partial class NavigableContainer : ContentView
 	{
 		for (int i = 1; i < 5; i++)
 		{
-			NavContainer.Add(new NavigableUserControl(){Text=$"Nav Control {i}"});
+			NavContainer.Add(new NavigableContentView(){Text=$"Nav Control {i}"});
 		}
 		Loaded -= OnLoaded;
 	}
 
 	public void OnKeyDown(object sender, KeyPressedEventArgs e)
 	{
-		NavigableUserControl currentlyActiveControl =
-			(NavigableUserControl)NavContainer.Children.FirstOrDefault(o => o.IsFocused == true);
+		NavigableContentView currentlyActiveControl =
+			(NavigableContentView)NavContainer.Children.FirstOrDefault(o => o.IsFocused == true);
 
 		if (currentlyActiveControl == null)
 		{
