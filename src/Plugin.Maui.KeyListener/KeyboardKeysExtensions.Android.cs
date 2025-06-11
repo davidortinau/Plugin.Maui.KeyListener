@@ -59,7 +59,6 @@ internal static partial class KeyboardKeysExtensions
         KeyboardKeys.PrintScreen => Keycode.Sysrq,
         KeyboardKeys.ScrollLock => Keycode.ScrollLock,
         KeyboardKeys.Pause => Keycode.Break,
-        KeyboardKeys.Backquote => Keycode.Grave,
         KeyboardKeys.Minus => Keycode.Minus,
         KeyboardKeys.Equals => Keycode.Equals,
         KeyboardKeys.Backspace => Keycode.Del,
@@ -113,7 +112,7 @@ internal static partial class KeyboardKeysExtensions
         KeyboardKeys.Comma => Keycode.Comma,
         KeyboardKeys.Period => Keycode.Period,
         KeyboardKeys.Slash => Keycode.Slash,
-        KeyboardKeys.NumPadDecimal => Keycode.NumpadDot,
+        KeyboardKeys.Application => Keycode.Menu,
         _ => Keycode.Unknown
     };
 
@@ -171,7 +170,7 @@ internal static partial class KeyboardKeysExtensions
         Keycode.Sysrq => KeyboardKeys.PrintScreen,
         Keycode.ScrollLock => KeyboardKeys.ScrollLock,
         Keycode.Break => KeyboardKeys.Pause,
-        Keycode.Grave => KeyboardKeys.Backquote,
+        Keycode.Grave => KeyboardKeys.GraveAccent,
         Keycode.Minus => KeyboardKeys.Minus,
         Keycode.Equals => KeyboardKeys.Equals,
         Keycode.Del => KeyboardKeys.Backspace,
@@ -223,6 +222,7 @@ internal static partial class KeyboardKeysExtensions
         Keycode.Comma => KeyboardKeys.Comma,
         Keycode.Period => KeyboardKeys.Period,
         Keycode.Slash => KeyboardKeys.Slash,
+        Keycode.Menu => KeyboardKeys.Application,
         _ => KeyboardKeys.None
     };
 }

@@ -55,8 +55,8 @@ public enum KeyboardKeys
     PrintScreen,
     ScrollLock,
     Pause,
-    Backquote,
     Minus,
+    Plus,
     Equals,
     Backspace,
     Tab,
@@ -104,10 +104,9 @@ public enum KeyboardKeys
     NumPad8,
     NumPad9,
     Enter,
-    Plus,
     GraveAccent,
     Comma,
     Period,
     Slash,
-    NumPadDecimal
+    Application,
 }

@@ -63,7 +63,6 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.PrintScreen => UIKeyboardHidUsage.KeyboardPrintScreen,
 		KeyboardKeys.ScrollLock => UIKeyboardHidUsage.KeyboardScrollLock,
 		KeyboardKeys.Pause => UIKeyboardHidUsage.KeyboardPause,
-		KeyboardKeys.Backquote => UIKeyboardHidUsage.KeyboardGraveAccentAndTilde,
 		KeyboardKeys.Minus => UIKeyboardHidUsage.KeyboardHyphen,
 		KeyboardKeys.Equals => UIKeyboardHidUsage.KeyboardEqualSign,
 		KeyboardKeys.Backspace => UIKeyboardHidUsage.KeyboardDeleteOrBackspace,
@@ -117,7 +116,7 @@ internal static partial class KeyboardKeysExtensions
 		KeyboardKeys.Comma => UIKeyboardHidUsage.KeyboardComma,
 		KeyboardKeys.Period => UIKeyboardHidUsage.KeyboardPeriod,
 		KeyboardKeys.Slash => UIKeyboardHidUsage.KeyboardSlash,
-		KeyboardKeys.NumPadDecimal => UIKeyboardHidUsage.KeypadPeriod,
+		KeyboardKeys.Application => UIKeyboardHidUsage.KeyboardApplication,
 		_ => 0
 	};
 
@@ -175,7 +174,7 @@ internal static partial class KeyboardKeysExtensions
 		UIKeyboardHidUsage.KeyboardPrintScreen => KeyboardKeys.PrintScreen,
 		UIKeyboardHidUsage.KeyboardScrollLock => KeyboardKeys.ScrollLock,
 		UIKeyboardHidUsage.KeyboardPause => KeyboardKeys.Pause,
-		UIKeyboardHidUsage.KeyboardGraveAccentAndTilde => KeyboardKeys.Backquote,
+		UIKeyboardHidUsage.KeyboardGraveAccentAndTilde => KeyboardKeys.GraveAccent,
 		UIKeyboardHidUsage.KeyboardHyphen => KeyboardKeys.Minus,
 		UIKeyboardHidUsage.KeyboardEqualSign => KeyboardKeys.Equals,
 		UIKeyboardHidUsage.KeyboardDeleteOrBackspace => KeyboardKeys.Backspace,
@@ -224,6 +223,7 @@ internal static partial class KeyboardKeysExtensions
 		UIKeyboardHidUsage.KeyboardComma => KeyboardKeys.Comma,
 		UIKeyboardHidUsage.KeyboardPeriod => KeyboardKeys.Period,
 		UIKeyboardHidUsage.KeyboardSlash => KeyboardKeys.Slash,
+		UIKeyboardHidUsage.KeyboardApplication => KeyboardKeys.Application,
 		_ => KeyboardKeys.None
 	};
 }
