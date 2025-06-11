@@ -15,6 +15,8 @@ namespace Plugin.Maui.KeyListener
 		{
 		}
 
+		public override bool CanBecomeFirstResponder => true;
+
 		public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
 			if (ProcessPresses(presses, evt, false))
