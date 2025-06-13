@@ -8,7 +8,7 @@ public static class MauiProgramExtensions
 	{
 		builder.ConfigureMauiHandlers(handlers =>
 		{
-			#if IOS || MACCATALYST
+			#if MACCATALYST
 				PageHandler.PlatformViewFactory = (handler) =>
 				{
 					if (handler is not PageHandler pageHandler)

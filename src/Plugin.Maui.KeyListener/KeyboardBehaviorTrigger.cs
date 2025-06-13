@@ -14,7 +14,7 @@ public sealed partial class KeyboardBehaviorTrigger
         set
         {
             _modifiers = value;
-#if IOS || MACCATALYST || WINDOWS
+#if MACCATALYST || WINDOWS
             SetPlatformModifiers(_modifiers);
 #endif
         }
@@ -27,7 +27,7 @@ public sealed partial class KeyboardBehaviorTrigger
         set
         {
             _key = value;
-#if IOS || MACCATALYST || WINDOWS
+#if MACCATALYST || WINDOWS
 			SetPlatformKeys(_key);
 #endif
 		}

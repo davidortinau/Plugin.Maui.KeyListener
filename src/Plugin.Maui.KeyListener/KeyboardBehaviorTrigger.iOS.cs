@@ -1,4 +1,4 @@
-﻿#if IOS || MACCATALYST
+﻿#if MACCATALYST
 using UIKit;
 
 namespace Plugin.Maui.KeyListener;

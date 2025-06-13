@@ -1,4 +1,4 @@
-﻿#if IOS || MACCATALYST
+﻿#if MACCATALYST
 
 using Foundation;
 using Microsoft.Maui.Platform;
