@@ -1,7 +1,7 @@
-using Plugin.Maui.KeyListener;
+namespace Plugin.Maui.KeyListener;
+
 using Microsoft.Maui.Handlers;
 
-namespace Plugin.Maui.KeyListener;
 public static class MauiProgramExtensions
 {
 	public static MauiAppBuilder UseKeyListener(this MauiAppBuilder builder)
