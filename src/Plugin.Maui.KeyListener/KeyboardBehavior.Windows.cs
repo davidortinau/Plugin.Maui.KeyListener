@@ -1,4 +1,7 @@
 ﻿#if WINDOWS
+
+namespace Plugin.Maui.KeyListener;
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using System;
@@ -8,7 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Window = Microsoft.UI.Xaml.Window;
 
-namespace Plugin.Maui.KeyListener;
 
 public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 {
