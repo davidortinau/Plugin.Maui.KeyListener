@@ -1,4 +1,4 @@
-﻿#if WINDOWS
+﻿
 
 namespace Plugin.Maui.KeyListener;
 
@@ -56,4 +56,3 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 			e.Handled = true;
 	}
 }
-#endif

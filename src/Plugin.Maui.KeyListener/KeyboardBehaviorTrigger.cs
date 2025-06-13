@@ -1,8 +1,8 @@
 ﻿namespace Plugin.Maui.KeyListener;
 
-public sealed class KeyboardBehaviorTriggers : List<KeyboardBehaviorTrigger> { }
+public class KeyboardBehaviorTriggers : List<KeyboardBehaviorTrigger> { }
 
-public sealed partial class KeyboardBehaviorTrigger
+public partial class KeyboardBehaviorTrigger
 {
     KeyboardModifiers _modifiers;
     KeyboardKeys _key;
@@ -14,9 +14,9 @@ public sealed partial class KeyboardBehaviorTrigger
         set
         {
             _modifiers = value;
-#if MACCATALYST || WINDOWS
+
             SetPlatformModifiers(_modifiers);
-#endif
+
         }
     }
 
@@ -27,9 +27,9 @@ public sealed partial class KeyboardBehaviorTrigger
         set
         {
             _key = value;
-#if MACCATALYST || WINDOWS
+
 			SetPlatformKeys(_key);
-#endif
+
 		}
 	}
 
@@ -51,4 +51,16 @@ public sealed partial class KeyboardBehaviorTrigger
             return hash;
         }
     }
+
+    /// <summary>
+    /// Sets the modifiers for the platform
+    /// </summary>
+    /// <param name="modifiers"></param>
+    partial void SetPlatformModifiers(KeyboardModifiers modifiers);
+
+    /// <summary>
+    /// Sets the modifiers for the platform
+    /// </summary>
+    /// <param name="key"></param>
+    partial void SetPlatformKeys(KeyboardKeys key);
 }

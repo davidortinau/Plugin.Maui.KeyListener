@@ -1,8 +1,8 @@
-﻿using Microsoft.UI.Input;
+﻿namespace Plugin.Maui.KeyListener;
+
+using Microsoft.UI.Input;
 using Windows.System;
 using Windows.UI.Core;
-
-namespace Plugin.Maui.KeyListener;
 
 internal static class KeyboardModifiersExtensions
 {

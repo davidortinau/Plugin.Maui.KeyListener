@@ -79,9 +79,5 @@
 	<ItemGroup>
 		<None Include="..\..\nuget.png" PackagePath="icon.png" Pack="true" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Platforms\MacCatalyst\" />
-	  <Folder Include="Platforms\Windows\" />
-	</ItemGroup>
 
 </Project>

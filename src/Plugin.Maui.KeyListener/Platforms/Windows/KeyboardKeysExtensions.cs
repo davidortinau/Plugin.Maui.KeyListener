@@ -1,4 +1,4 @@
-﻿#if WINDOWS
+﻿
 
 using Microsoft.UI.Xaml.Input;
 using Windows.System;
@@ -243,4 +243,3 @@ internal static partial class KeyboardKeysExtensions
 		};
 	}
 }
-#endif

@@ -1,4 +1,4 @@
-﻿#if MACCATALYST
+﻿
 using UIKit;
 
 namespace Plugin.Maui.KeyListener;
@@ -227,4 +227,3 @@ internal static partial class KeyboardKeysExtensions
 		_ => KeyboardKeys.None
 	};
 }
-#endif

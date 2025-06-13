@@ -1,5 +1,4 @@
-﻿#if MACCATALYST
-namespace Plugin.Maui.KeyListener;
+﻿namespace Plugin.Maui.KeyListener;
 
 using System;
 using System.Collections.Generic;
@@ -63,4 +62,4 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		return currentElement as Page;
 	}
 }
-#endif
+

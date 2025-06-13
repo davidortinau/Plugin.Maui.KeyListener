@@ -1,7 +1,7 @@
-﻿#if MACCATALYST
+﻿namespace Plugin.Maui.KeyListener;
+
 using UIKit;
 
-namespace Plugin.Maui.KeyListener;
 
 internal static class KeyboardModifiersExtensions
 {
@@ -63,4 +63,3 @@ internal static class KeyboardModifiersExtensions
         _ => 0
     };
 }
-#endif
