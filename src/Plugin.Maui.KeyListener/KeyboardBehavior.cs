@@ -10,6 +10,8 @@ namespace Plugin.Maui.KeyListener
 	{
 		KeyboardBehaviorTriggers _triggers;
 
+		public VisualElement? ScopedElement { get; private set; }
+
 		public KeyboardBehaviorTriggers Triggers => _triggers ??= new KeyboardBehaviorTriggers();
 
 		public event EventHandler<KeyPressedEventArgs>? KeyDown;

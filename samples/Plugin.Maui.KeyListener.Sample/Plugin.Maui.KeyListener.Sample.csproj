@@ -48,4 +48,22 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Plugin.Maui.KeyListener\Plugin.Maui.KeyListener.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Controls\NavigableContainer.xaml.cs">
+	    <DependentUpon>NavigableContainer.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Controls\NavigableContentView.xaml.cs">
+	    <DependentUpon>NavigableContentView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Controls\NavigableContainer.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\NavigableContentView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
 </Project>

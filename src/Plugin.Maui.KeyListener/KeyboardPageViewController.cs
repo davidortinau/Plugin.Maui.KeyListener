@@ -11,7 +11,11 @@ namespace Plugin.Maui.KeyListener
 		readonly List<WeakReference<KeyboardBehavior>> _keyboardBehaviors = new();
 
 		internal KeyboardPageViewController(IView page, IMauiContext mauiContext)
-			: base(page, mauiContext) { }
+			: base(page, mauiContext)
+		{
+		}
+
+		public override bool CanBecomeFirstResponder => true;
 
 		public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
 		{
@@ -89,6 +93,11 @@ namespace Plugin.Maui.KeyListener
 				{
 					if (weakBehavior.TryGetTarget(out var target) && target is not null)
 					{
+						//only route events to behaviors that are associated with a visual element or their children
+						if (target.ScopedElement == null ||
+						    ContainsFocus(target.ScopedElement) == false)
+							continue;
+
 						if (isKeyUp)
 							target.RaiseKeyUp(eventArgs);
 						else
@@ -104,6 +113,23 @@ namespace Plugin.Maui.KeyListener
 			}
 
 			return handled;
+		}
+
+		bool ContainsFocus(VisualElement? element)
+		{
+			if (element == null)
+				return false;
+
+			// Include self
+			if (element.IsFocused)
+				return true;
+
+			// Check all visual tree descendants
+			return element
+				.GetVisualTreeDescendants()
+				.OfType<VisualElement>()
+				.Any(x => x.IsFocused);
+
 		}
 	}
 }

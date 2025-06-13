@@ -15,6 +15,8 @@ namespace Plugin.Maui.KeyListener
 		{
 			base.OnAttachedTo(bindable, platformView);
 
+			ScopedElement = bindable;
+
 			var page = GetParentPage(bindable);
 
 			if (page == null)
@@ -41,6 +43,8 @@ namespace Plugin.Maui.KeyListener
 			if (page.Handler is not IPlatformViewHandler viewHandler ||
 				viewHandler.ViewController is not KeyboardPageViewController keyboardPageViewController)
 				return;
+
+			ScopedElement = null;
 
 			keyboardPageViewController.UnregisterKeyboardBehavior(this);
 		}
