@@ -4,133 +4,153 @@ using Foundation;
 using Microsoft.Maui.Platform;
 using UIKit;
 
-namespace Plugin.Maui.KeyListener
+namespace Plugin.Maui.KeyListener;
+
+public class KeyboardPageViewController : PageViewController
 {
-	public class KeyboardPageViewController : PageViewController
+	readonly List<WeakReference<KeyboardBehavior>> _keyboardBehaviors = new();
+
+	internal KeyboardPageViewController(IView page, IMauiContext mauiContext)
+		: base(page, mauiContext)
 	{
-		readonly List<WeakReference<KeyboardBehavior>> _keyboardBehaviors = new();
+	}
 
-		internal KeyboardPageViewController(IView page, IMauiContext mauiContext)
-			: base(page, mauiContext)
+	public override bool CanBecomeFirstResponder => true;
+
+	public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
+	{
+		if (ProcessPresses(presses, evt, false))
 		{
+			return;
 		}
 
-		public override bool CanBecomeFirstResponder => true;
+		base.PressesBegan(presses, evt);
+	}
 
-		public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
+	public override void PressesCancelled(NSSet<UIPress> presses, UIPressesEvent evt)
+	{
+		if (ProcessPresses(presses, evt, true))
 		{
-			if (ProcessPresses(presses, evt, false))
-				return;
-
-			base.PressesBegan(presses, evt);
+			return;
 		}
 
-		public override void PressesCancelled(NSSet<UIPress> presses, UIPressesEvent evt)
-		{
-			if (ProcessPresses(presses, evt, true))
-				return;
+		base.PressesCancelled(presses, evt);
+	}
 
-			base.PressesCancelled(presses, evt);
+	public override void PressesEnded(NSSet<UIPress> presses, UIPressesEvent evt)
+	{
+		if (ProcessPresses(presses, evt, true))
+		{
+			return;
 		}
 
-		public override void PressesEnded(NSSet<UIPress> presses, UIPressesEvent evt)
-		{
-			if (ProcessPresses(presses, evt, true))
-				return;
+		base.PressesEnded(presses, evt);
+	}
 
-			base.PressesEnded(presses, evt);
+	internal void RegisterKeyboardBehavior(KeyboardBehavior keyboardBehavior)
+	{
+		if (_keyboardBehaviors.Any(weakRef => weakRef.WeakReferenceEquals(keyboardBehavior)))
+		{
+			return;
 		}
 
-		internal void RegisterKeyboardBehavior(KeyboardBehavior keyboardBehavior)
-		{
-			if (_keyboardBehaviors.Any(weakRef => weakRef.WeakReferenceEquals(keyboardBehavior)))
-				return;
+		_keyboardBehaviors.Add(new WeakReference<KeyboardBehavior>(keyboardBehavior));
+	}
 
-			_keyboardBehaviors.Add(new WeakReference<KeyboardBehavior>(keyboardBehavior));
-		}
-
-		internal void UnregisterKeyboardBehavior(KeyboardBehavior keyboardBehavior)
+	internal void UnregisterKeyboardBehavior(KeyboardBehavior keyboardBehavior)
+	{
+		foreach (var weakRef in _keyboardBehaviors)
 		{
-			foreach (var weakRef in _keyboardBehaviors)
+			if (weakRef.WeakReferenceEquals(keyboardBehavior))
 			{
-				if (weakRef.WeakReferenceEquals(keyboardBehavior))
-				{
-					_keyboardBehaviors.Remove(weakRef);
-					break;
-				}
+				_keyboardBehaviors.Remove(weakRef);
+				break;
 			}
 		}
+	}
 
-		void CleanupTargets()
+	void CleanupTargets()
+	{
+		_keyboardBehaviors.RemoveAll(weakRef => !weakRef.TryGetTarget(out var target));
+	}
+
+	bool ProcessPresses(NSSet<UIPress> presses, UIPressesEvent evt, bool isKeyUp)
+	{
+		CleanupTargets();
+
+		if (_keyboardBehaviors.Count == 0)
 		{
-			_keyboardBehaviors.RemoveAll(weakRef => !weakRef.TryGetTarget(out var target));
+			return false;
 		}
 
-		bool ProcessPresses(NSSet<UIPress> presses, UIPressesEvent evt, bool isKeyUp)
+		var modifiers = evt.ModifierFlags.ToVirtualModifiers();
+		var handled = false;
+
+		foreach (var press in presses)
 		{
-			CleanupTargets();
-
-			if (_keyboardBehaviors.Count == 0)
-				return false;
-
-			var modifiers = evt.ModifierFlags.ToVirtualModifiers();
-			bool handled = false;
-
-			foreach (var press in presses)
+			if (press.Key is not UIKey key)
 			{
-				if (press.Key is not UIKey key)
-					continue;
+				continue;
+			}
 
-				var characters = key.Characters;
-				var eventArgs = new KeyPressedEventArgs
-				{
-					Modifiers = modifiers,
-					Keys = key.KeyCode.ToKeyboardKeys(),
-					KeyChar = characters.Length == 1 ? char.ToUpperInvariant(characters[0]) : default,
-				};
+			var characters = key.Characters;
+			var eventArgs = new KeyPressedEventArgs
+			{
+				Modifiers = modifiers,
+				Keys = key.KeyCode.ToKeyboardKeys(),
+				KeyChar = characters.Length == 1 ? char.ToUpperInvariant(characters[0]) : default
+			};
 
-				foreach (var weakBehavior in _keyboardBehaviors)
+			foreach (var weakBehavior in _keyboardBehaviors)
+			{
+				if (weakBehavior.TryGetTarget(out var target) && target is not null)
 				{
-					if (weakBehavior.TryGetTarget(out var target) && target is not null)
+					//only route events to behaviors that are associated with a visual element or their children
+					if (target.ScopedElement == null ||
+					    ContainsFocus(target.ScopedElement) == false)
 					{
-						//only route events to behaviors that are associated with a visual element or their children
-						if (target.ScopedElement == null ||
-						    ContainsFocus(target.ScopedElement) == false)
-							continue;
+						continue;
+					}
 
-						if (isKeyUp)
-							target.RaiseKeyUp(eventArgs);
-						else
-							target.RaiseKeyDown(eventArgs);
+					if (isKeyUp)
+					{
+						target.RaiseKeyUp(eventArgs);
+					}
+					else
+					{
+						target.RaiseKeyDown(eventArgs);
+					}
 
-						if (eventArgs.Handled)
-						{
-							handled = true;
-							break;
-						}
+					if (eventArgs.Handled)
+					{
+						handled = true;
+						break;
 					}
 				}
 			}
-
-			return handled;
 		}
 
-		bool ContainsFocus(VisualElement? element)
+		return handled;
+	}
+
+	bool ContainsFocus(VisualElement? element)
+	{
+		if (element == null)
 		{
-			if (element == null)
-				return false;
-
-			// Include self
-			if (element.IsFocused)
-				return true;
-
-			// Check all visual tree descendants
-			return element
-				.GetVisualTreeDescendants()
-				.OfType<VisualElement>()
-				.Any(x => x.IsFocused);
-
+			return false;
 		}
+
+		// Include self
+		if (element.IsFocused)
+		{
+			return true;
+		}
+
+		// Check all visual tree descendants
+		return element
+			.GetVisualTreeDescendants()
+			.OfType<VisualElement>()
+			.Any(x => x.IsFocused);
 	}
 }
 #endif
