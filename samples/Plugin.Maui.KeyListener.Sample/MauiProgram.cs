@@ -20,6 +20,13 @@ public static class MauiProgram
 
 		builder.Services.AddTransient<MainPage>();
 
+#if MACCATALYST
+		builder.ConfigureMauiHandlers(handlers =>
+		{
+			handlers.AddHandler(typeof(NavigableContentView), typeof(NavigableContentViewHandler));
+		});
+#endif
+
 		return builder.Build();
 	}
 }
