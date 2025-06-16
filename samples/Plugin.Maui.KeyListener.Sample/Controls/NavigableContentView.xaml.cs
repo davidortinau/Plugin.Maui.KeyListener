@@ -1,4 +1,4 @@
-﻿using Foundation;
+﻿//using Foundation;
 #if MACCATALYST
 using UIKit;
 #endif
@@ -7,7 +7,7 @@ using UIKit;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Plugin.Maui.KeyListener.Sample.Controls;
+namespace Plugin.Maui.KeyListener.Sample;
 
 public partial class NavigableContentView : ContentView
 {
@@ -48,6 +48,9 @@ public partial class NavigableContentView : ContentView
 		get => (string)GetValue(FocusStateTextProperty);
 		set => SetValue(FocusStateTextProperty, value);
 	}
+
+
+
 
 
 	public NavigableContentView()
