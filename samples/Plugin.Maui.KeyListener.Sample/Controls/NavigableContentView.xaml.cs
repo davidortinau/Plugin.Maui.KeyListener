@@ -1,4 +1,9 @@
-﻿#if WINDOWS
+﻿using Foundation;
+#if MACCATALYST
+using UIKit;
+#endif
+
+#if WINDOWS
 using Microsoft.UI.Xaml;
 #endif
 
@@ -64,6 +69,14 @@ public partial class NavigableContentView : ContentView
 			nativeElement.IsTabStop = true;
 		}
 #endif
+#if MACCATALYST
+		if (Handler?.PlatformView is UIView nativeView)
+		{
+			nativeView.UserInteractionEnabled = true;
+			nativeView.BecomeFirstResponder();
+		}
+#endif
+
 		//TODO:  How do we make the Mac/IOS focusable ???
 	}
 

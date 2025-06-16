@@ -130,8 +130,7 @@
 
         </VerticalStackLayout>
 
-		<controls:NavigableContainer 
-			Grid.Column="1" />
+        <controls:NavigableContainer Grid.Column="1" />
 
     </Grid>
 
