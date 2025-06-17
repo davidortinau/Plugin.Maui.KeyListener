@@ -71,12 +71,12 @@ public partial class NavigableContentView : ContentView
 			nativeElement.IsTabStop = true;
 		}
 #endif
-//#if MACCATALYST
-//		if (Handler?.PlatformView is UIView nativeView)
-//		{
-//			nativeView.UserInteractionEnabled = true;
-//		}
-//#endif
+#if MACCATALYST
+		if (Handler?.PlatformView is UIView nativeView)
+		{
+			nativeView.UserInteractionEnabled = true;
+		}
+#endif
 
 		//TODO:  How do we make the Mac/IOS focusable ???
 	}
