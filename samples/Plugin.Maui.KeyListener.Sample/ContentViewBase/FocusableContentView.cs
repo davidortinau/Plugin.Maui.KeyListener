@@ -13,11 +13,13 @@ public class FocusableContentView : ContentView
             Command = new Command(async () =>
             {
                 await this.Window.Page.DisplayAlert("Tapped", "Tapped", "OK");
+                Focus();
             })
         });
     }
 
 	void OnFocused(object sender, FocusEventArgs e)
 	{
+
 	}
 }
