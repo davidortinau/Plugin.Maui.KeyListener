@@ -9,7 +9,7 @@ using Microsoft.UI.Xaml;
 
 namespace Plugin.Maui.KeyListener.Sample;
 
-public partial class NavigableContentView : ContentView
+public partial class NavigableContentView : FocusableContentView
 {
 	public static readonly BindableProperty TextProperty =
 		BindableProperty.Create(nameof(Text),
