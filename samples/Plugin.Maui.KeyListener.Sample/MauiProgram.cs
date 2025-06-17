@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Plugin.Maui.KeyListener;
-using Microsoft.Maui.Handlers;
-
-namespace Plugin.Maui.KeyListener.Sample;
+﻿namespace Plugin.Maui.KeyListener.Sample;
 
 public static class MauiProgram
 {
@@ -12,6 +8,12 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseKeyListener()
+			.ConfigureMauiHandlers(handlers =>
+			{
+#if MACCATALYST
+				handlers.AddHandler(typeof(FocusableContentView), typeof(FocusableContentViewPlatformHandler));
+#endif
+			})
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
