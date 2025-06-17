@@ -11,6 +11,7 @@ namespace Plugin.Maui.KeyListener.Sample;
 
 public partial class NavigableContentView : FocusableContentView
 {
+	#region Properties
 	public static readonly BindableProperty TextProperty =
 		BindableProperty.Create(nameof(Text),
 			typeof(string),
@@ -49,8 +50,7 @@ public partial class NavigableContentView : FocusableContentView
 		set => SetValue(FocusStateTextProperty, value);
 	}
 
-
-
+	#endregion
 
 
 	public NavigableContentView()
@@ -58,7 +58,6 @@ public partial class NavigableContentView : FocusableContentView
 		InitializeComponent();
 
 		Loaded += OnLoaded;
-
 
 		LastKeyPressed = "Start Value";
 	}
@@ -76,7 +75,6 @@ public partial class NavigableContentView : FocusableContentView
 		if (Handler?.PlatformView is UIView nativeView)
 		{
 			nativeView.UserInteractionEnabled = true;
-			nativeView.BecomeFirstResponder();
 		}
 #endif
 
