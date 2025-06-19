@@ -28,4 +28,9 @@ public partial class MainPage : ContentPage
 	{
 		OutputLabel.Text = string.Empty;
 	}
+
+	async void NavigateToTest_Clicked(object sender, EventArgs e)
+	{
+		await Shell.Current.GoToAsync("//navigation");
+	}
 }
