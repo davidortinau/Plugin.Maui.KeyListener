@@ -8,6 +8,25 @@
 
     <ShellContent
         Title="Feature Plugin"
+        Route="main"
         ContentTemplate="{DataTemplate pages:MainPage}" />
+
+    <ShellContent
+        Title="Navigation Test"
+        Route="navigation"
+        ContentTemplate="{DataTemplate pages:TestNavigationPage}" />
+
+    <!-- Transient page - creates new instance each time -->
+    <ShellContent
+        Title="Transient Test"
+        Route="transient"
+        Content="{x:Type pages:TransientTestPage}" />
+
+    <!-- Singleton page - reuses same instance -->
+    <ShellContent
+        Title="Singleton Test"
+        Route="singleton">
+        <pages:SingletonTestPage />
+    </ShellContent>
 
 </Shell>

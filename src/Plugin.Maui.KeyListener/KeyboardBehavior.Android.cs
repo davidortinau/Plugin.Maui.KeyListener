@@ -8,6 +8,8 @@ namespace Plugin.Maui.KeyListener;
 
 public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 {
+	private Android.Views.View? _attachedLayout;
+
 	/// <summary>
 	/// Similarly to the Apple and Windows implementations, find the outermost layout to connect the key events to.
 	/// </summary>
@@ -34,6 +36,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		if (layout is null)
 			return;
 
+		_attachedLayout = layout;
 		layout.KeyPress += OnKeyPress;
 		layout.Focusable = true;
 		layout.FocusableInTouchMode = true;
@@ -41,7 +44,22 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 
 	protected override void OnDetachedFrom(VisualElement bindable, Android.Views.View platformView)
 	{
-		platformView.KeyPress -= OnKeyPress;
+		if (_attachedLayout is not null)
+		{
+			try
+			{
+				_attachedLayout.KeyPress -= OnKeyPress;
+			}
+			catch (ObjectDisposedException)
+			{
+				// Layout may already be disposed for transient pages
+				// This is expected behavior and can be safely ignored
+			}
+			finally
+			{
+				_attachedLayout = null;
+			}
+		}
 
 		base.OnDetachedFrom(bindable, platformView);
 	}
