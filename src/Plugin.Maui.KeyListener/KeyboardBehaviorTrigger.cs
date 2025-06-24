@@ -1,54 +1,68 @@
 ﻿namespace Plugin.Maui.KeyListener;
 
-public sealed class KeyboardBehaviorTriggers : List<KeyboardBehaviorTrigger> { }
-
-public sealed partial class KeyboardBehaviorTrigger
+public class KeyboardBehaviorTriggers : List<KeyboardBehaviorTrigger>
 {
-    KeyboardModifiers _modifiers;
-    KeyboardKeys _key;
+}
 
-    public KeyboardModifiers Modifiers
-    {
-        get => _modifiers;
+public partial class KeyboardBehaviorTrigger
+{
+	KeyboardModifiers _modifiers;
+	KeyboardKeys _key;
 
-        set
-        {
-            _modifiers = value;
-#if IOS || MACCATALYST || WINDOWS
-            SetPlatformModifiers(_modifiers);
-#endif
-        }
-    }
+	public KeyboardModifiers Modifiers
+	{
+		get => _modifiers;
 
-    public KeyboardKeys Key
-    {
-        get => _key;
+		set
+		{
+			_modifiers = value;
 
-        set
-        {
-            _key = value;
-#if IOS || MACCATALYST || WINDOWS
-			SetPlatformKeys(_key);
-#endif
+			SetPlatformModifiers(_modifiers);
 		}
 	}
 
-    public override bool Equals(object? obj)
-    {
-        if (obj is not KeyboardBehaviorTrigger trigger)
-            return false;
+	public KeyboardKeys Key
+	{
+		get => _key;
 
-        return Key == trigger.Key && Modifiers == trigger.Modifiers;
-    }
+		set
+		{
+			_key = value;
 
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            int hash = 17;
-            hash = hash * 23 + Key.GetHashCode();
-            hash = hash * 23 + Modifiers.GetHashCode();
-            return hash;
-        }
-    }
+			SetPlatformKeys(_key);
+		}
+	}
+
+	public override bool Equals(object? obj)
+	{
+		if (obj is not KeyboardBehaviorTrigger trigger)
+		{
+			return false;
+		}
+
+		return Key == trigger.Key && Modifiers == trigger.Modifiers;
+	}
+
+	public override int GetHashCode()
+	{
+		unchecked
+		{
+			var hash = 17;
+			hash = hash * 23 + Key.GetHashCode();
+			hash = hash * 23 + Modifiers.GetHashCode();
+			return hash;
+		}
+	}
+
+	/// <summary>
+	///     Sets the modifiers for the platform
+	/// </summary>
+	/// <param name="modifiers"></param>
+	partial void SetPlatformModifiers(KeyboardModifiers modifiers);
+
+	/// <summary>
+	///     Sets the modifiers for the platform
+	/// </summary>
+	/// <param name="key"></param>
+	partial void SetPlatformKeys(KeyboardKeys key);
 }

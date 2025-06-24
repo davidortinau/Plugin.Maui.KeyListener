@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plugin.Maui.KeyListener.Sample.Controls;
+namespace Plugin.Maui.KeyListener.Sample;
 
 public partial class NavigableContainer : ContentView
 {
@@ -19,7 +19,9 @@ public partial class NavigableContainer : ContentView
 	{
 		for (int i = 1; i < 5; i++)
 		{
-			NavContainer.Add(new NavigableContentView(){Text=$"Nav Control {i}"});
+			var item = new NavigableContentView() { Text = $"Nav Control {i}" };
+			SemanticProperties.SetDescription(item, item.Text);
+			NavContainer.Add(item);
 		}
 		Loaded -= OnLoaded;
 	}

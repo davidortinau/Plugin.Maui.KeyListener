@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Plugin.Maui.KeyListener;
 
-namespace Plugin.Maui.KeyListener;
-
-internal static class WeakReferenceExtensions
+static class WeakReferenceExtensions
 {
 	public static bool WeakReferenceEquals<T>(this WeakReference<T> weakRef, T target) where T : class
 	{

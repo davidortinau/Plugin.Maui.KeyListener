@@ -1,11 +1,17 @@
-﻿#if WINDOWS
+﻿//using Foundation;
+#if MACCATALYST
+using UIKit;
+#endif
+
+#if WINDOWS
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Plugin.Maui.KeyListener.Sample.Controls;
+namespace Plugin.Maui.KeyListener.Sample;
 
-public partial class NavigableContentView : ContentView
+public partial class NavigableContentView : FocusableContentView
 {
+	#region Properties
 	public static readonly BindableProperty TextProperty =
 		BindableProperty.Create(nameof(Text),
 			typeof(string),
@@ -44,13 +50,14 @@ public partial class NavigableContentView : ContentView
 		set => SetValue(FocusStateTextProperty, value);
 	}
 
+	#endregion
+
 
 	public NavigableContentView()
 	{
 		InitializeComponent();
 
 		Loaded += OnLoaded;
-
 
 		LastKeyPressed = "Start Value";
 	}
@@ -64,6 +71,13 @@ public partial class NavigableContentView : ContentView
 			nativeElement.IsTabStop = true;
 		}
 #endif
+#if MACCATALYST
+		if (Handler?.PlatformView is UIView nativeView)
+		{
+			nativeView.UserInteractionEnabled = true;
+		}
+#endif
+
 		//TODO:  How do we make the Mac/IOS focusable ???
 	}
 
