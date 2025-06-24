@@ -15,12 +15,12 @@ public class FocusableContentView : ContentView
             NumberOfTapsRequired = 1,
             Command = new Command(async () =>
             {
-                await this.Window.Page.DisplayAlert("Tapped", "Tapped", "OK");
+                //await this.Window.Page.DisplayAlert("Tapped", "Tapped", "OK");
                 Focus();
             })
         });
 
-
+        //The control will not get keyboard focus without this.
         AutomationProperties.SetIsInAccessibleTree(this, true);
 }
 
@@ -44,7 +44,7 @@ public class FocusableContentView : ContentView
 			nativeView.UserInteractionEnabled = true;
 
 			// Make it the first responder to test focus
-			nativeView.BecomeFirstResponder();
+			//nativeView.BecomeFirstResponder();
 		}
 #endif
 	}
