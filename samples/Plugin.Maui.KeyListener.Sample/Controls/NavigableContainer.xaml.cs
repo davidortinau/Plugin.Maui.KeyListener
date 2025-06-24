@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Plugin.Maui.KeyListener.Sample;
 
 public partial class NavigableContainer : ContentView
@@ -55,4 +56,5 @@ public partial class NavigableContainer : ContentView
 			}
 		}
 	}
+
 }

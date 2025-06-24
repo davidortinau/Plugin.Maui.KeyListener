@@ -98,4 +98,18 @@ public partial class NavigableContentView : FocusableContentView
 			Focus();
 		}
 	}
+
+
+	protected override void OnHandlerChanged()
+	{
+		base.OnHandlerChanged();
+
+#if MACCATALYST
+		if (Handler?.PlatformView is UIView nativeView)
+		{
+			nativeView.IsAccessibilityElement = true;
+			nativeView.AccessibilityTraits = UIAccessibilityTrait.Button;
+		}
+#endif
+	}
 }
