@@ -10,25 +10,50 @@ public class FocusableContentView : ContentView
     public FocusableContentView()
     {
         this.Focused += OnFocused;
+        Loaded += OnLoaded;
+
         this.GestureRecognizers.Add(new TapGestureRecognizer
         {
             NumberOfTapsRequired = 1,
             Command = new Command(async () =>
             {
-                //await this.Window.Page.DisplayAlert("Tapped", "Tapped", "OK");
                 Focus();
             })
         });
 
         //The control will not get keyboard focus without this.
         AutomationProperties.SetIsInAccessibleTree(this, true);
-}
+	}
+    
+    void OnLoaded(object? sender, EventArgs e)
+    {
+#if WINDOWS
+		if (Handler?.PlatformView is FrameworkElement nativeElement)
+		{
+			nativeElement.IsTabStop = true;
+		}
+#endif
+#if MACCATALYST
+	    if (Handler?.PlatformView is UIView nativeView)
+	    {
+		    nativeView.IsAccessibilityElement = true;
+		    nativeView.UserInteractionEnabled = true;
+		    //nativeView.BecomeFirstResponder();
+	    }
+#endif 
+	    Loaded -= OnLoaded;
+    }
 
 	void OnFocused(object sender, FocusEventArgs e)
 	{
-
+#if MACCATALYST
+		if (Handler?.PlatformView is UIView nativeView)
+		{
+			//nativeView.UserInteractionEnabled = true;
+			nativeView.BecomeFirstResponder();
+		}
+#endif
 	}
-
 
 	protected override void OnHandlerChanged()
 	{
@@ -38,13 +63,8 @@ public class FocusableContentView : ContentView
 		if (Handler?.PlatformView is UIView nativeView)
 		{
 			nativeView.IsAccessibilityElement = true;
-			//nativeView.AccessibilityLabel = "Focusable content view for accessibility.";
-			//nativeView.AccessibilityTraits = UIAccessibilityTrait.Button;
-
 			nativeView.UserInteractionEnabled = true;
-
-			// Make it the first responder to test focus
-			//nativeView.BecomeFirstResponder();
+			nativeView.BecomeFirstResponder();
 		}
 #endif
 	}
