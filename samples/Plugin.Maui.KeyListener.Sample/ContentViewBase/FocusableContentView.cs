@@ -1,5 +1,7 @@
 using Microsoft.Maui.Controls;
-
+#if WINDOWS
+using Microsoft.UI.Xaml;
+#endif
 #if MACCATALYST
 using UIKit;
 #endif
