@@ -57,29 +57,10 @@ public partial class NavigableContentView : FocusableContentView
 	{
 		InitializeComponent();
 
-		Loaded += OnLoaded;
-
 		LastKeyPressed = "Start Value";
 	}
 
-	void OnLoaded(object? sender, EventArgs e)
-	{
-#if WINDOWS
 
-		if (Handler?.PlatformView is FrameworkElement nativeElement)
-		{
-			nativeElement.IsTabStop = true;
-		}
-#endif
-#if MACCATALYST
-		if (Handler?.PlatformView is UIView nativeView)
-		{
-			nativeView.UserInteractionEnabled = true;
-		}
-#endif
-
-		//TODO:  How do we make the Mac/IOS focusable ???
-	}
 
 	public void OnKeyDown(object sender, KeyPressedEventArgs e)
 	{

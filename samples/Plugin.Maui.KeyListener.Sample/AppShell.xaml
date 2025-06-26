@@ -6,8 +6,6 @@
     xmlns:pages="clr-namespace:Plugin.Maui.KeyListener.Sample"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Feature Plugin"
-        ContentTemplate="{DataTemplate pages:MainPage}" />
+    <ShellContent Title="Feature Plugin" ContentTemplate="{DataTemplate pages:MainPage}" />
 
 </Shell>
