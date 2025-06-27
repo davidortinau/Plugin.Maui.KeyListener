@@ -93,12 +93,12 @@ public class KeyboardPageViewController : PageViewController
 				continue;
 			}
 
-			var characters = key.Characters;
+			var keyEnum = key.KeyCode.ToKeyboardKeys();
 			var eventArgs = new KeyPressedEventArgs
 			{
 				Modifiers = modifiers,
-				Keys = key.KeyCode.ToKeyboardKeys(),
-				KeyChar = characters.Length == 1 ? char.ToUpperInvariant(characters[0]) : default
+				Keys = keyEnum,
+				KeyName = keyEnum.ToString() 
 			};
 
 			foreach (var weakBehavior in _keyboardBehaviors)
