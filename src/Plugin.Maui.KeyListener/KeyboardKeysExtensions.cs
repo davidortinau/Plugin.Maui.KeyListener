@@ -2,5 +2,5 @@
 
 static partial class KeyboardKeysExtensions
 {
-	static readonly KeyboardKeys[] KeyboardKeysValues = Enum.GetValues<KeyboardKeys>();
+	public static readonly KeyboardKeys[] KeyboardKeysValues = Enum.GetValues<KeyboardKeys>();
 }

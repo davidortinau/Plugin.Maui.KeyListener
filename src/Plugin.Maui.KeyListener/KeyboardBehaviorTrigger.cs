@@ -1,34 +1,44 @@
 ﻿namespace Plugin.Maui.KeyListener;
 
+/// <summary>
+/// Placeholder for future keyboard trigger functionality.
+/// Currently not used in the library, but reserved for advanced keyboard shortcut or trigger scenarios.
+/// </summary>
 public class KeyboardBehaviorTriggers : List<KeyboardBehaviorTrigger>
 {
 }
 
+/// <summary>
+/// Placeholder for a keyboard trigger definition.
+/// Not currently used, but reserved for future expansion to support custom keyboard triggers or shortcuts.
+/// </summary>
 public partial class KeyboardBehaviorTrigger
 {
 	KeyboardModifiers _modifiers;
 	KeyboardKeys _key;
 
+	/// <summary>
+	/// Gets or sets the keyboard modifier(s) for this trigger.
+	/// </summary>
 	public KeyboardModifiers Modifiers
 	{
 		get => _modifiers;
-
 		set
 		{
 			_modifiers = value;
-
 			SetPlatformModifiers(_modifiers);
 		}
 	}
 
+	/// <summary>
+	/// Gets or sets the keyboard key for this trigger.
+	/// </summary>
 	public KeyboardKeys Key
 	{
 		get => _key;
-
 		set
 		{
 			_key = value;
-
 			SetPlatformKeys(_key);
 		}
 	}
@@ -40,29 +50,27 @@ public partial class KeyboardBehaviorTrigger
 			return false;
 		}
 
-		return Key == trigger.Key && Modifiers == trigger.Modifiers;
+		return this.Key == trigger.Key && this.Modifiers == trigger.Modifiers;
 	}
 
 	public override int GetHashCode()
 	{
 		unchecked
 		{
-			var hash = 17;
-			hash = hash * 23 + Key.GetHashCode();
-			hash = hash * 23 + Modifiers.GetHashCode();
+			int hash = 17;
+			hash = hash * 23 + this.Key.GetHashCode();
+			hash = hash * 23 + this.Modifiers.GetHashCode();
 			return hash;
 		}
 	}
 
 	/// <summary>
-	///     Sets the modifiers for the platform
+	/// Platform-specific partial method for setting modifiers.
 	/// </summary>
-	/// <param name="modifiers"></param>
 	partial void SetPlatformModifiers(KeyboardModifiers modifiers);
 
 	/// <summary>
-	///     Sets the modifiers for the platform
+	/// Platform-specific partial method for setting keys.
 	/// </summary>
-	/// <param name="key"></param>
 	partial void SetPlatformKeys(KeyboardKeys key);
 }
