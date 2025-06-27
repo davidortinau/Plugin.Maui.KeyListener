@@ -1,5 +1,6 @@
 ﻿using Windows.System;
 using Microsoft.UI.Xaml.Input;
+using System.Diagnostics;
 
 namespace Plugin.Maui.KeyListener;
 
@@ -10,9 +11,9 @@ static partial class KeyboardKeysExtensions
     /// </remarks>
     public static VirtualKey ToVirtualKey(KeyboardKeys keyboardKey)
     {
-        return keyboardKey switch
+        VirtualKey vk = keyboardKey switch
         {
-            KeyboardKeys.None => VirtualKey.None,
+            #region Letters
             KeyboardKeys.A => VirtualKey.A,
             KeyboardKeys.B => VirtualKey.B,
             KeyboardKeys.C => VirtualKey.C,
@@ -39,6 +40,9 @@ static partial class KeyboardKeysExtensions
             KeyboardKeys.X => VirtualKey.X,
             KeyboardKeys.Y => VirtualKey.Y,
             KeyboardKeys.Z => VirtualKey.Z,
+            #endregion
+
+            #region Numbers
             KeyboardKeys.Number0 => VirtualKey.Number0,
             KeyboardKeys.Number1 => VirtualKey.Number1,
             KeyboardKeys.Number2 => VirtualKey.Number2,
@@ -49,6 +53,9 @@ static partial class KeyboardKeysExtensions
             KeyboardKeys.Number7 => VirtualKey.Number7,
             KeyboardKeys.Number8 => VirtualKey.Number8,
             KeyboardKeys.Number9 => VirtualKey.Number9,
+            #endregion
+
+            #region Function Keys
             KeyboardKeys.Escape => VirtualKey.Escape,
             KeyboardKeys.F1 => VirtualKey.F1,
             KeyboardKeys.F2 => VirtualKey.F2,
@@ -65,9 +72,12 @@ static partial class KeyboardKeysExtensions
             KeyboardKeys.PrintScreen => VirtualKey.Print,
             KeyboardKeys.ScrollLock => VirtualKey.Scroll,
             KeyboardKeys.Pause => VirtualKey.Pause,
+            #endregion
+
+            #region Symbols and Editing
             KeyboardKeys.Backquote or KeyboardKeys.GraveAccent => (VirtualKey)0xC0, // VK_OEM_3
-            KeyboardKeys.Minus => VirtualKey.Subtract, // -
-            KeyboardKeys.Equals => VirtualKey.Add, // =
+            KeyboardKeys.Minus => VirtualKey.Subtract,
+            KeyboardKeys.Equals => VirtualKey.Add,
             KeyboardKeys.Backspace => VirtualKey.Back,
             KeyboardKeys.Tab => VirtualKey.Tab,
             KeyboardKeys.LeftBracket => (VirtualKey)0xDB, // VK_OEM_4
@@ -83,6 +93,7 @@ static partial class KeyboardKeysExtensions
             KeyboardKeys.RightControl => VirtualKey.RightControl,
             KeyboardKeys.LeftAlt => VirtualKey.LeftMenu,
             KeyboardKeys.RightAlt => VirtualKey.RightMenu,
+            // Windows: Command keys mapped to Windows keys
             KeyboardKeys.LeftCommand => VirtualKey.LeftWindows,
             KeyboardKeys.RightCommand => VirtualKey.RightWindows,
             KeyboardKeys.Space => VirtualKey.Space,
@@ -96,6 +107,9 @@ static partial class KeyboardKeysExtensions
             KeyboardKeys.RightArrow => VirtualKey.Right,
             KeyboardKeys.UpArrow => VirtualKey.Up,
             KeyboardKeys.DownArrow => VirtualKey.Down,
+            #endregion
+
+            #region Numpad
             KeyboardKeys.NumLock => VirtualKey.NumberKeyLock,
             KeyboardKeys.NumPadDivide => VirtualKey.Divide,
             KeyboardKeys.NumPadMultiply => VirtualKey.Multiply,
@@ -119,8 +133,20 @@ static partial class KeyboardKeysExtensions
             KeyboardKeys.Period => (VirtualKey)0xBE, // VK_OEM_PERIOD
             KeyboardKeys.Slash => VirtualKey.Divide,
             KeyboardKeys.NumPadDecimal => VirtualKey.Delete,
+            #endregion
+
+            KeyboardKeys.None => VirtualKey.None,
+
             _ => VirtualKey.None
         };
+
+        // Log unmapped keys for debug purposes
+        if (vk == VirtualKey.None && keyboardKey != KeyboardKeys.None)
+        {
+            Debug.WriteLine($"[KeyboardKeysExtensions] Unmapped KeyboardKey: {keyboardKey}");
+        }
+
+        return vk;
     }
 
     public static KeyboardKeys ToKeyboardKeys(this VirtualKey platformKey)
@@ -231,16 +257,15 @@ static partial class KeyboardKeysExtensions
         };
     }
 
-
     internal static KeyPressedEventArgs ToKeyPressedEventArgs(this KeyRoutedEventArgs e)
     {
         var virtualKeyModifiers = KeyboardModifiersExtensions.GetVirtualKeyModifiers();
         var vk = (VirtualKey)e.Key; // Use e.Key directly for more accurate mapping
         return new KeyPressedEventArgs
         {
-			Modifiers = virtualKeyModifiers.ToKeyboardModifiers(),
-			Keys = vk.ToKeyboardKeys(),
-			KeyName = vk.ToKeyboardKeys().ToString()
-		};
+            Modifiers = virtualKeyModifiers.ToKeyboardModifiers(),
+            Keys = vk.ToKeyboardKeys(),
+            KeyName = vk.ToKeyboardKeys().ToString()
+        };
     }
 }

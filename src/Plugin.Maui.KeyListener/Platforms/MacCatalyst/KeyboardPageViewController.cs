@@ -8,7 +8,7 @@ namespace Plugin.Maui.KeyListener;
 
 public class KeyboardPageViewController : PageViewController
 {
-	readonly List<WeakReference<KeyboardBehavior>> _keyboardBehaviors = new();
+	readonly List<WeakReference<KeyboardBehavior>> keyboardBehaviors = new();
 
 	internal KeyboardPageViewController(IView page, IMauiContext mauiContext)
 		: base(page, mauiContext)
@@ -49,21 +49,21 @@ public class KeyboardPageViewController : PageViewController
 
 	internal void RegisterKeyboardBehavior(KeyboardBehavior keyboardBehavior)
 	{
-		if (_keyboardBehaviors.Any(weakRef => weakRef.WeakReferenceEquals(keyboardBehavior)))
+		if (keyboardBehaviors.Any(weakRef => weakRef.WeakReferenceEquals(keyboardBehavior)))
 		{
 			return;
 		}
 
-		_keyboardBehaviors.Add(new WeakReference<KeyboardBehavior>(keyboardBehavior));
+		keyboardBehaviors.Add(new WeakReference<KeyboardBehavior>(keyboardBehavior));
 	}
 
 	internal void UnregisterKeyboardBehavior(KeyboardBehavior keyboardBehavior)
 	{
-		foreach (var weakRef in _keyboardBehaviors)
+		foreach (var weakRef in keyboardBehaviors)
 		{
 			if (weakRef.WeakReferenceEquals(keyboardBehavior))
 			{
-				_keyboardBehaviors.Remove(weakRef);
+				keyboardBehaviors.Remove(weakRef);
 				break;
 			}
 		}
@@ -71,14 +71,14 @@ public class KeyboardPageViewController : PageViewController
 
 	void CleanupTargets()
 	{
-		_keyboardBehaviors.RemoveAll(weakRef => !weakRef.TryGetTarget(out var target));
+		keyboardBehaviors.RemoveAll(weakRef => !weakRef.TryGetTarget(out var target));
 	}
 
 	bool ProcessPresses(NSSet<UIPress> presses, UIPressesEvent evt, bool isKeyUp)
 	{
 		CleanupTargets();
 
-		if (_keyboardBehaviors.Count == 0)
+		if (keyboardBehaviors.Count == 0)
 		{
 			return false;
 		}
@@ -101,7 +101,7 @@ public class KeyboardPageViewController : PageViewController
 				KeyName = keyEnum.ToString() 
 			};
 
-			foreach (var weakBehavior in _keyboardBehaviors)
+			foreach (var weakBehavior in keyboardBehaviors)
 			{
 				if (weakBehavior.TryGetTarget(out var target) && target is not null)
 				{
