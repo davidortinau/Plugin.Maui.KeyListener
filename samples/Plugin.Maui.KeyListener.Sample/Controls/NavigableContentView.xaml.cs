@@ -6,6 +6,7 @@ using UIKit;
 #if WINDOWS
 using Microsoft.UI.Xaml;
 #endif
+using  Plugin.Maui.KeyListener;
 
 namespace Plugin.Maui.KeyListener.Sample;
 

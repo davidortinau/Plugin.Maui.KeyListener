@@ -2,7 +2,7 @@
 using Microsoft.Maui.Handlers;
 using ContentView = Microsoft.Maui.Platform.ContentView;
 
-namespace Plugin.Maui.KeyListener.Sample;
+namespace Plugin.Maui.KeyListener;
 
 public class FocusableContentViewPlatformHandler : ContentViewHandler
 {

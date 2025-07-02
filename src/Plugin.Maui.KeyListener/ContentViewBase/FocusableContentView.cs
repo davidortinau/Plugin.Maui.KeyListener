@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml;
 #if MACCATALYST
 using UIKit;
 #endif
-namespace Plugin.Maui.KeyListener.Sample;
+namespace Plugin.Maui.KeyListener;
 
 public class FocusableContentView : ContentView
 {

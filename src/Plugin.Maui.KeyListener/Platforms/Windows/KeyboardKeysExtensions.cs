@@ -260,7 +260,7 @@ static partial class KeyboardKeysExtensions
     internal static KeyPressedEventArgs ToKeyPressedEventArgs(this KeyRoutedEventArgs e)
     {
         var virtualKeyModifiers = KeyboardModifiersExtensions.GetVirtualKeyModifiers();
-        var vk = (VirtualKey)e.Key; // Use e.Key directly for more accurate mapping
+            var vk = (VirtualKey)e.Key; // Use e.Key directly for more accurate mapping
         return new KeyPressedEventArgs
         {
             Modifiers = virtualKeyModifiers.ToKeyboardModifiers(),

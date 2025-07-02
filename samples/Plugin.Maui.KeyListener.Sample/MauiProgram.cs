@@ -1,4 +1,5 @@
-﻿namespace Plugin.Maui.KeyListener.Sample;
+﻿using Plugin.Maui.KeyListener;
+namespace Plugin.Maui.KeyListener.Sample;
 
 public static class MauiProgram
 {
