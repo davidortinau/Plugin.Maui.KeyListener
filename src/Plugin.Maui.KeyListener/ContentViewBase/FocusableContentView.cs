@@ -22,16 +22,18 @@ public partial class FocusableContentView : ContentView
         AutomationProperties.SetIsInAccessibleTree(this, true);
 	}
 
-    protected void OnLoaded(object? sender, EventArgs e)
+    void OnLoaded(object sender, EventArgs e)
     {
 	    OnPlatformLoaded(sender, e);
     }
 
-    protected void OnFocused(object sender, FocusEventArgs e)
+    void OnFocused(object sender, FocusEventArgs e)
     {
 	    OnPlatformFocused(sender, e);
     }
 
+    partial void OnPlatformLoaded(object sender, EventArgs e);
 
+	partial void OnPlatformFocused(object sender, FocusEventArgs e);
 }
 

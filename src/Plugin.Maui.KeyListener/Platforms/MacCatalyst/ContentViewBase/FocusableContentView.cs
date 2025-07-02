@@ -1,15 +1,11 @@
 using Microsoft.Maui.Controls;
-#if WINDOWS
-using Microsoft.UI.Xaml;
-#endif
-#if MACCATALYST
 using UIKit;
-#endif
+
 namespace Plugin.Maui.KeyListener;
 
 public partial class FocusableContentView : ContentView
 {
-    public void OnPlatformLoaded(object? sender, EventArgs e)
+    partial void OnPlatformLoaded(object sender, EventArgs e)
     {
 	    if (Handler?.PlatformView is UIView nativeView)
 	    {
@@ -18,7 +14,7 @@ public partial class FocusableContentView : ContentView
 	    }
     }
 
-	public void OnPlatformFocused(object sender, FocusEventArgs e)
+	partial void OnPlatformFocused(object sender, FocusEventArgs e)
 	{
 		if (Handler?.PlatformView is UIView nativeView)
 		{

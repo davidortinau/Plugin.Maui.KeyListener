@@ -5,7 +5,7 @@ namespace Plugin.Maui.KeyListener;
 
 public partial class FocusableContentView : ContentView
 {
-    public void OnPlatformLoaded(object? sender, EventArgs e)
+	partial void OnPlatformLoaded(object sender, EventArgs e)
     {
 		if (Handler?.PlatformView is FrameworkElement nativeElement)
 		{
@@ -13,7 +13,7 @@ public partial class FocusableContentView : ContentView
 		}
     }
 
-    public void OnPlatformFocused(object sender, FocusEventArgs e)
+	partial void OnPlatformFocused(object sender, FocusEventArgs e)
     {
 	    return;
     }

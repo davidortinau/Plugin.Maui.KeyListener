@@ -1,11 +1,5 @@
 ﻿//using Foundation;
-#if MACCATALYST
-using UIKit;
-#endif
 
-#if WINDOWS
-using Microsoft.UI.Xaml;
-#endif
 using  Plugin.Maui.KeyListener;
 
 namespace Plugin.Maui.KeyListener.Sample;
