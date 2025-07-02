@@ -20,7 +20,7 @@ public static partial class MauiProgramExtensions
 
 				KeyboardPageViewController vc = new(handler.VirtualView, handler.MauiContext);
 				handler.ViewController = vc;
-				return (ContentView)vc.View.Subviews[0];
+				return (Microsoft.Maui.Platform.ContentView)vc.View.Subviews[0];
 			};
 		});
 
