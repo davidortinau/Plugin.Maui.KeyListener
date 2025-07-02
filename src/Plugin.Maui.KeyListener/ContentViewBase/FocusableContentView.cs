@@ -11,10 +11,10 @@ public class FocusableContentView : ContentView
 {
     public FocusableContentView()
     {
-        this.Focused += OnFocused;
+        Focused += OnFocused;
         Loaded += OnLoaded;
 
-        this.GestureRecognizers.Add(new TapGestureRecognizer
+        GestureRecognizers.Add(new TapGestureRecognizer
         {
             NumberOfTapsRequired = 1,
             Command = new Command(async () =>
@@ -40,7 +40,6 @@ public class FocusableContentView : ContentView
 	    {
 		    nativeView.IsAccessibilityElement = true;
 		    nativeView.UserInteractionEnabled = true;
-		    //nativeView.BecomeFirstResponder();
 	    }
 #endif 
 	    Loaded -= OnLoaded;

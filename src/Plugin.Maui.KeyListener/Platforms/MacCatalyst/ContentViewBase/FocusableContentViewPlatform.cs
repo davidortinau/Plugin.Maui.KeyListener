@@ -1,4 +1,3 @@
-#if MACCATALYST
 using UIKit;
 using ContentView = Microsoft.Maui.Platform.ContentView;
 
@@ -39,5 +38,3 @@ public class FocusableContentViewPlatform : ContentView
 		}
 	}
 }
-
-#endif

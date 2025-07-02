@@ -1,4 +1,3 @@
-#if MACCATALYST
 using Microsoft.Maui.Handlers;
 using ContentView = Microsoft.Maui.Platform.ContentView;
 
@@ -11,4 +10,3 @@ public class FocusableContentViewPlatformHandler : ContentViewHandler
 		return new FocusableContentViewPlatform();
 	}
 }
-#endif
