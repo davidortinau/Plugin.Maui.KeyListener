@@ -2,27 +2,13 @@ namespace Plugin.Maui.KeyListener;
 
 using Microsoft.Maui.Handlers;
 
-public static class MauiProgramExtensions
+public static partial class MauiProgramExtensions
 {
 	public static MauiAppBuilder UseKeyListener(this MauiAppBuilder builder)
 	{
-		builder.ConfigureMauiHandlers(handlers =>
-		{
-			#if MACCATALYST
-				PageHandler.PlatformViewFactory = (handler) =>
-				{
-					if (handler is not PageHandler pageHandler)
-					{
-						return null;
-					}
-
-					var vc = new KeyboardPageViewController(handler.VirtualView, handler.MauiContext);
-					handler.ViewController = vc;
-					return (Microsoft.Maui.Platform.ContentView)vc.View.Subviews[0];
-				};
-			#endif
-		});
-
+		SetupPlatformKeyListener(builder);
 		return builder;
 	}
+
+	static partial void SetupPlatformKeyListener(MauiAppBuilder builder);
 }

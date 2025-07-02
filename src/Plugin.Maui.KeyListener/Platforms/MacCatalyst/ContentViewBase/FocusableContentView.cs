@@ -1,7 +1,8 @@
+namespace Plugin.Maui.KeyListener;
+
 using Microsoft.Maui.Controls;
 using UIKit;
 
-namespace Plugin.Maui.KeyListener;
 
 public partial class FocusableContentView : ContentView
 {

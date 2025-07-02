@@ -17,6 +17,5 @@ public partial class FocusableContentView : ContentView
     {
 	    return;
     }
-
 }
 
