@@ -2,13 +2,7 @@
 
 public partial class KeyboardBehaviorTrigger
 {
-	partial void SetPlatformModifiers(KeyboardModifiers modifiers)
-	{
-		throw new NotImplementedException();
-	}
+	partial void SetPlatformModifiers(KeyboardModifiers modifiers) { }
 
-	partial void SetPlatformKeys(KeyboardKeys keys)
-	{
-		throw new NotImplementedException();
-	}
+	partial void SetPlatformKeys(KeyboardKeys keys) { }
 }

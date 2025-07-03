@@ -10,15 +10,10 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 
 		ScopedElement = bindable;
 
-		var page = GetParentPage(bindable);
-
-		if (page == null)
-		{
-			return;
-		}
+		Page page = GetParentPage(bindable);
 
 		// Register to key press events
-		if (page.Handler is not IPlatformViewHandler viewHandler ||
+		if (page?.Handler is not IPlatformViewHandler viewHandler ||
 		    viewHandler.ViewController is not KeyboardPageViewController keyboardPageViewController)
 		{
 			return;
@@ -31,15 +26,11 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 	{
 		base.OnDetachedFrom(bindable, platformView);
 
-		var page = GetParentPage(bindable);
+		Page page = GetParentPage(bindable);
 
-		if (page == null)
-		{
-			return;
-		}
 
 		// Unregister from key press events
-		if (page.Handler is not IPlatformViewHandler viewHandler ||
+		if (page?.Handler is not IPlatformViewHandler viewHandler ||
 		    viewHandler.ViewController is not KeyboardPageViewController keyboardPageViewController)
 		{
 			return;
@@ -50,7 +41,7 @@ public partial class KeyboardBehavior : PlatformBehavior<VisualElement>
 		keyboardPageViewController.UnregisterKeyboardBehavior(this);
 	}
 
-	static Page? GetParentPage(VisualElement element)
+	private static Page? GetParentPage(VisualElement element)
 	{
 		if (element is Page)
 		{

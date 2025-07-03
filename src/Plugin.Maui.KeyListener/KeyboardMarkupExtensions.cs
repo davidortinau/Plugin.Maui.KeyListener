@@ -7,17 +7,17 @@ public sealed class KeyboardModifiersExtension : IMarkupExtension
 
 	public object ProvideValue(IServiceProvider serviceProvider)
 	{
-		if (Enum.TryParse(typeof(KeyboardModifiers), Modifiers, out var enumValue))
+		if (Enum.TryParse(typeof(KeyboardModifiers), Modifiers, out object enumValue))
 		{
 			return enumValue;
 		}
 
-		var enumValues = Modifiers.Split(',').Select(flag => flag.Trim());
-		var combinedFlag = KeyboardModifiers.None;
+		IEnumerable<string> enumValues = Modifiers.Split(',').Select(flag => flag.Trim());
+		KeyboardModifiers combinedFlag = KeyboardModifiers.None;
 
-		foreach (var flag in enumValues)
+		foreach (string flag in enumValues)
 		{
-			if (Enum.TryParse(typeof(KeyboardModifiers), flag, out var singleFlag))
+			if (Enum.TryParse(typeof(KeyboardModifiers), flag, out object singleFlag))
 			{
 				combinedFlag |= (KeyboardModifiers)singleFlag;
 			}
@@ -34,6 +34,6 @@ public sealed class KeyboardKeysExtension : IMarkupExtension
 
 	public object ProvideValue(IServiceProvider serviceProvider)
 	{
-		return Enum.TryParse(typeof(KeyboardKeys), Keys, out var enumValue) ? enumValue : KeyboardKeys.None;
+		return Enum.TryParse(typeof(KeyboardKeys), Keys, out object enumValue) ? enumValue : KeyboardKeys.None;
 	}
 }
